@@ -88,6 +88,11 @@ report a padding issue:
 The following patterns are considered problems:
 
 ````ts
+/**  Indented on first line
+*/
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be no indentation.
+
 /**  foo */
 function quux () {
 

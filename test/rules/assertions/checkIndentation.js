@@ -5,6 +5,20 @@ import {
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: '/**  Indented on first line\n */',
+      errors: [
+        {
+          line: 1,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
       code: `
           /**  foo */
           function quux () {
@@ -258,7 +272,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           message: 'There must be no indentation.',
         },
       ],
