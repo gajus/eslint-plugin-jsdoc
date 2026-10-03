@@ -3301,7 +3301,7 @@ export interface Rules {
            */
           stringQuotes?: "double" | "single";
           /**
-           * If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline
+           * If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing punctuation is only added when the type is multiline
            */
           trailingPunctuationMultilineOnly?: boolean;
           /**

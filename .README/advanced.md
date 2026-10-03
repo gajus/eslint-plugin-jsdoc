@@ -54,7 +54,7 @@ To know all of the AST definitions one may target, it will depend on the
 [parser](https://eslint.org/docs/user-guide/configuring#specifying-parser)
 you are using with ESLint (e.g., `espree` is the default parser for ESLint,
 and this follows [EStree AST](https://github.com/estree/estree) but
-to support the the latest experimental features of JavaScript, one may use
+to support the latest experimental features of JavaScript, one may use
 `@babel/eslint-parser` or to be able to have one's rules (including JSDoc rules)
 apply to TypeScript, one may use `typescript-eslint`, etc.
 
@@ -108,7 +108,7 @@ For each `forbid` key, add the name of the context (this will be appended to
 created will be `forbid-Any`). Then provide an optional `description` and
 `url` keys (which will be used for the created rule's `meta.docs`
 `description` and `url` properties) and the `contexts` array.
-See the `jsdoc/restricted-syntax` rule for more details.
+See the `jsdoc/no-restricted-syntax` rule for more details.
 
 ```js
 import {jsdoc} from 'eslint-plugin-jsdoc';
@@ -194,7 +194,7 @@ export default [
         promise: {
           description: 'This rule disallows Promises without a generic type',
           overrideSettings: {
-            // Uses the same keys are are available on the `preferredTypes` settings
+            // Uses the same keys as are available on the `preferredTypes` settings
 
             // This key will indicate the type node name to find
             Promise: {

@@ -668,7 +668,7 @@ or \`double\`. Defaults to 'double'.`,
             type: 'string',
           },
           trailingPunctuationMultilineOnly: {
-            description: 'If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline',
+            description: 'If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing punctuation is only added when the type is multiline',
             type: 'boolean',
           },
           typeBracketSpacing: {
