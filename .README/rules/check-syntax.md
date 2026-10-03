@@ -15,6 +15,13 @@ Note that "jsdoc" actually allows Closure syntax, but with another
 option available for optional parameters (enclosing the name in brackets), the
 rule is enforced (except under "permissive" and "closure" modes).
 
+With the `enableFixer` option, `{type=} name` on `@param` and `@property` tags
+is fixed to `{type} [name]`.
+
+## Options
+
+{"gitdown": "options"}
+
 ## Context and settings
 
 |||
@@ -22,6 +29,7 @@ rule is enforced (except under "permissive" and "closure" modes).
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|false|
+|Options|`enableFixer`|
 
 ## Failing examples
 
