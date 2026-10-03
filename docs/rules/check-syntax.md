@@ -2,6 +2,7 @@
 <a name="check-syntax"></a>
 # <code>check-syntax</code>
 
+* [Fixer](#user-content-check-syntax-fixer)
 * [Options](#user-content-check-syntax-options)
     * [`enableFixer`](#user-content-check-syntax-options-enablefixer)
 * [Context and settings](#user-content-check-syntax-context-and-settings)
@@ -22,8 +23,21 @@ Note that "jsdoc" actually allows Closure syntax, but with another
 option available for optional parameters (enclosing the name in brackets), the
 rule is enforced (except under "permissive" and "closure" modes).
 
-With the `enableFixer` option, `{type=} name` on `@param` and `@property` tags
-is fixed to `{type} [name]`.
+<a name="user-content-check-syntax-fixer"></a>
+<a name="check-syntax-fixer"></a>
+## Fixer
+
+With the `enableFixer` option, the Closure style `{type=}` is fixed:
+
+- On `@param` (`@arg`, `@argument`) and `@property` (`@prop`) tags, `{type=} name`
+  becomes `{type} [name]`, which also marks the name optional.
+- On other tags (and on those tags when there is no name), the type is joined with
+  `undefined`, e.g., `{string=}` becomes `{string|undefined}`, and a type that is
+  not a plain name is wrapped in parentheses, e.g., `{() => void=}` becomes
+  `{(() => void)|undefined}`.
+
+All the tags of the block are fixed at once, and the problem is reported once
+per block.
 
 <a name="user-content-check-syntax-options"></a>
 <a name="check-syntax-options"></a>
@@ -36,7 +50,8 @@ A single options object has the following properties.
 ### <code>enableFixer</code>
 
 Whether to enable the fixer to replace the Closure Compiler style `{type=}`
-on `@param` and `@property` tags with the bracketed name `{type} [name]`.
+with `{type} [name]` on `@param` and `@property` tags, and with
+`{type|undefined}` on other tags.
 Defaults to `false`.
 
 
@@ -127,6 +142,52 @@ function quux (foo) {
  * @param {Array<
  *   string
  * >=} foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-syntax": ["error"|"warn", {"enableFixer":true}]
+// Message: Syntax should not be Google Closure Compiler style.
+
+/**
+ * @returns {() => void=}
+ */
+function quux () {
+
+}
+// "jsdoc/check-syntax": ["error"|"warn", {"enableFixer":true}]
+// Message: Syntax should not be Google Closure Compiler style.
+
+/**
+ * @returns {Array<
+ *   string
+ * >=}
+ */
+function quux () {
+
+}
+// "jsdoc/check-syntax": ["error"|"warn", {"enableFixer":true}]
+// Message: Syntax should not be Google Closure Compiler style.
+
+/**
+ * @type {number=}
+ */
+const quux = 5;
+// "jsdoc/check-syntax": ["error"|"warn", {"enableFixer":true}]
+// Message: Syntax should not be Google Closure Compiler style.
+
+/**
+ * @param {string=} foo
+ * @returns {Promise<void>=}
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-syntax": ["error"|"warn", {"enableFixer":true}]
+// Message: Syntax should not be Google Closure Compiler style.
+
+/**
+ * @param {string=} foo=bar
  */
 function quux (foo) {
 

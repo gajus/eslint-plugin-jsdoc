@@ -15,8 +15,19 @@ Note that "jsdoc" actually allows Closure syntax, but with another
 option available for optional parameters (enclosing the name in brackets), the
 rule is enforced (except under "permissive" and "closure" modes).
 
-With the `enableFixer` option, `{type=} name` on `@param` and `@property` tags
-is fixed to `{type} [name]`.
+## Fixer
+
+With the `enableFixer` option, the Closure style `{type=}` is fixed:
+
+- On `@param` (`@arg`, `@argument`) and `@property` (`@prop`) tags, `{type=} name`
+  becomes `{type} [name]`, which also marks the name optional.
+- On other tags (and on those tags when there is no name), the type is joined with
+  `undefined`, e.g., `{string=}` becomes `{string|undefined}`, and a type that is
+  not a plain name is wrapped in parentheses, e.g., `{() => void=}` becomes
+  `{(() => void)|undefined}`.
+
+All the tags of the block are fixed at once, and the problem is reported once
+per block.
 
 ## Options
 
