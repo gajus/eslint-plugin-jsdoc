@@ -266,7 +266,18 @@ export interface Rules {
       ];
 
   /** Reports against syntax not valid for the mode (e.g., Google Closure Compiler in non-Closure mode). */
-  "jsdoc/check-syntax": [];
+  "jsdoc/check-syntax": 
+    | []
+    | [
+        {
+          /**
+           * Whether to enable the fixer to replace the Closure Compiler style `{type=}`
+           * on `@param` and `@property` tags with the bracketed name `{type} [name]`.
+           * Defaults to `false`.
+           */
+          enableFixer?: boolean;
+        }
+      ];
 
   /** Reports invalid block tag names. */
   "jsdoc/check-tag-names": 

@@ -494,7 +494,7 @@ non-default-recommended fixer).
 ||:wrench:| [check-line-alignment](./docs/rules/check-line-alignment.md#readme) | Reports invalid alignment of JSDoc block lines. |
 |:heavy_check_mark:|:wrench:| [check-param-names](./docs/rules/check-param-names.md#readme) | Checks for dupe `@param` names, that nested param names have roots, and that parameter names in function declarations match JSDoc param names. |
 |:heavy_check_mark:|:wrench:| [check-property-names](./docs/rules/check-property-names.md#readme) | Ensures that property names in JSDoc are not duplicated on the same block and that nested properties have defined roots. |
-||| [check-syntax](./docs/rules/check-syntax.md#readme) | Reports against syntax not valid for the mode (e.g., Google Closure Compiler in non-Closure mode). |
+||:wrench:| [check-syntax](./docs/rules/check-syntax.md#readme) | Reports against syntax not valid for the mode (e.g., Google Closure Compiler in non-Closure mode). |
 |:heavy_check_mark:|:wrench:| [check-tag-names](./docs/rules/check-tag-names.md#readme) | Reports invalid block tag names. |
 ||| [check-template-names](./docs/rules/check-template-names.md#readme) | Checks that any `@template` names are actually used in the connected `@typedef` or type alias. |
 |:heavy_check_mark:|:wrench:| [check-types](./docs/rules/check-types.md#readme) | Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements). |
