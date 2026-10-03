@@ -5,24 +5,66 @@ const namedTags = new Set([
   'arg', 'argument', 'param', 'prop', 'property',
 ]);
 
+// Types that do not need parentheses before `|undefined`
+const simpleType = /^[\w$.]+$/v;
+
 /**
+ * Builds the fix for a tag with a Closure style optional type (`{type=}`), if
+ * there is one.
+ *
+ * Named tags (`@param {type=} name`) become `{type} [name]`; for other tags
+ * (or a missing or defaulted name), the type is joined with `undefined`.
  * @param {import('comment-parser').Spec} tag
- * @returns {import('comment-parser').Tokens|undefined}
+ * @returns {() => void}
  */
-const getFixableTokens = (tag) => {
-  if (!namedTags.has(tag.tag)) {
-    return undefined;
-  }
-
+const getFix = (tag) => {
   const {
-    tokens,
-  } = tag.source[0];
+    source,
+  } = tag;
 
-  if (!tokens.type.endsWith('=}') || !tokens.name || tokens.name.includes('=')) {
-    return undefined;
+  // For a type over several lines, the end of the type is on the line that has the name
+  const lastTypeLine = /** @type {import('comment-parser').Line} */ (source.findLast(({
+    tokens,
+  }) => {
+    return tokens.type.endsWith('=}');
+  }));
+
+  const firstTypeLine = /** @type {import('comment-parser').Line} */ (source.find(({
+    tokens,
+  }) => {
+    return tokens.type;
+  }));
+
+  const nameTokens = source.find(({
+    tokens,
+  }) => {
+    return tokens.name;
+  })?.tokens;
+
+  // A name with a default (`[foo=bar]`) is already bracketed; a bare `foo=bar` is not a valid name
+  if (namedTags.has(tag.tag) && nameTokens && (!nameTokens.name.includes('=') || nameTokens.name.startsWith('['))) {
+    return () => {
+      lastTypeLine.tokens.type = `${lastTypeLine.tokens.type.slice(0, -2)}}`;
+      if (!nameTokens.name.startsWith('[')) {
+        nameTokens.name = `[${nameTokens.name}]`;
+      }
+
+      tag.optional = true;
+    };
   }
 
-  return tokens;
+  const isSingleLine = firstTypeLine === lastTypeLine;
+  const inner = lastTypeLine.tokens.type.slice(isSingleLine ? 1 : 0, -2);
+  if (isSingleLine && simpleType.test(inner)) {
+    return () => {
+      lastTypeLine.tokens.type = `{${inner}|undefined}`;
+    };
+  }
+
+  return () => {
+    firstTypeLine.tokens.type = `{(${firstTypeLine.tokens.type.slice(1)}`;
+    lastTypeLine.tokens.type = `${lastTypeLine.tokens.type.slice(0, -2)})|undefined}`;
+  };
 };
 
 export default iterateJsdoc(({
@@ -42,26 +84,33 @@ export default iterateJsdoc(({
 
   // Don't check for "permissive" and "closure"
   if (mode === 'jsdoc' || mode === 'typescript') {
-    for (const tag of jsdoc.tags) {
-      if (tag.type.slice(-1) === '=') {
-        const message = 'Syntax should not be Google Closure Compiler style.';
-        if (enableFixer && getFixableTokens(tag)) {
-          utils.reportJSDoc(message, tag, () => {
-            for (const fixableTag of jsdoc.tags) {
-              const tokens = getFixableTokens(fixableTag);
-              if (tokens) {
-                tokens.type = `${tokens.type.slice(0, -2)}}`;
-                if (!tokens.name.startsWith('[')) {
-                  tokens.name = `[${tokens.name}]`;
-                }
-              }
-            }
-          });
-        } else {
-          report(message, null, tag);
-        }
+    /** @type {import('comment-parser').Spec|undefined} */
+    let firstTag;
+    /** @type {(() => void)[]} */
+    const fixes = [];
 
-        break;
+    for (const tag of jsdoc.tags) {
+      if (tag.type.slice(-1) !== '=') {
+        continue;
+      }
+
+      firstTag ??= tag;
+
+      if (enableFixer) {
+        fixes.push(getFix(tag));
+      }
+    }
+
+    if (firstTag) {
+      const message = 'Syntax should not be Google Closure Compiler style.';
+      if (fixes.length) {
+        utils.reportJSDoc(message, firstTag, () => {
+          for (const fix of fixes) {
+            fix();
+          }
+        });
+      } else {
+        report(message, null, firstTag);
       }
     }
   }
@@ -79,7 +128,8 @@ export default iterateJsdoc(({
         properties: {
           enableFixer: {
             description: `Whether to enable the fixer to replace the Closure Compiler style \`{type=}\`
-on \`@param\` and \`@property\` tags with the bracketed name \`{type} [name]\`.
+with \`{type} [name]\` on \`@param\` and \`@property\` tags, and with
+\`{type|undefined}\` on other tags.
 Defaults to \`false\`.`,
             type: 'boolean',
           },

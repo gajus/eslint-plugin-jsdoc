@@ -272,7 +272,8 @@ export interface Rules {
         {
           /**
            * Whether to enable the fixer to replace the Closure Compiler style `{type=}`
-           * on `@param` and `@property` tags with the bracketed name `{type} [name]`.
+           * with `{type} [name]` on `@param` and `@property` tags, and with
+           * `{type|undefined}` on other tags.
            * Defaults to `false`.
            */
           enableFixer?: boolean;
