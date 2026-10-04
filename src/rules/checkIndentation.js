@@ -118,8 +118,8 @@ export default iterateJsdoc(({
         hasSeenContent = true;
       }
 
-      // Reset section indent when we encounter a tag
-      if (/@\w+/v.test(line)) {
+      // Reset section indent when we encounter a block tag
+      if (/^(?:\/?\**|[\t ]*)\*[ \t]*@\w+/v.test(line)) {
         currentSectionIndent = null;
       }
     }
