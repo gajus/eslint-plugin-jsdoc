@@ -687,5 +687,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * Two ordered items, the second holding a nested bullet list whose items
+         * carry inline link tags.
+         *
+         * 1. **First** runs first; if the session is missing, it re-authenticates
+         *    before the request leaves the method.
+         * 2. **{@link Second}** chain — nests them with outer to inner order:
+         *    - {@link Outer} (outermost): short-circuits with {@link Error} if
+         *      the gate is paused.
+         *    - {@link Middle}: consume a token and replay exactly once.
+         *    - {@link Inner} (innermost): retries with exponential backoff.
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
   ],
 });
