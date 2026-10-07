@@ -8,6 +8,10 @@ export interface Rules {
     | [
         {
           /**
+           * Whether to ignore empty and whitespace-only lines (e.g., to allow a formatter to handle)
+           */
+          ignoreEmptyLines?: boolean;
+          /**
            * Set to 0 if you wish to avoid the normal requirement for an inner indentation of
            * one space. Defaults to 1 (one space of normal inner indentation).
            */

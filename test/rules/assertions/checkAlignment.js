@@ -320,6 +320,60 @@ export const myVar = {/**
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef {object} MyType
+         * @property {string} [property]
+
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          ignoreEmptyLines: false,
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} MyType
+         * @property {string} [property]
+         ${''}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} MyType
+         * @property {string} [property]
+          *
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          ignoreEmptyLines: true,
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} MyType
+         * @property {string} [property]
+         *
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -420,6 +474,20 @@ export const myVar = {/**
       options: [
         {
           innerIndent: 0,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} MyType
+         * @property {string} [property]
+
+         */
+      `,
+      options: [
+        {
+          ignoreEmptyLines: true,
         },
       ],
     },

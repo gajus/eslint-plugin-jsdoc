@@ -19,7 +19,7 @@ Fixes alignment.
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
-|Options|`innerIndent`|
+|Options|`ignoreEmptyLines`, `innerIndent`|
 
 ## Failing examples
 
