@@ -4,6 +4,7 @@
 
 * [Fixer](#user-content-check-alignment-fixer)
 * [Options](#user-content-check-alignment-options)
+    * [`ignoreEmptyLines`](#user-content-check-alignment-options-ignoreemptylines)
     * [`innerIndent`](#user-content-check-alignment-options-innerindent)
 * [Context and settings](#user-content-check-alignment-context-and-settings)
 * [Failing examples](#user-content-check-alignment-failing-examples)
@@ -24,6 +25,12 @@ Fixes alignment.
 
 A single options object has the following properties.
 
+<a name="user-content-check-alignment-options-ignoreemptylines"></a>
+<a name="check-alignment-options-ignoreemptylines"></a>
+### <code>ignoreEmptyLines</code>
+
+Whether to ignore empty and whitespace-only lines (e.g., to allow a formatter to handle)
+
 <a name="user-content-check-alignment-options-innerindent"></a>
 <a name="check-alignment-options-innerindent"></a>
 ### <code>innerIndent</code>
@@ -41,7 +48,7 @@ one space. Defaults to 1 (one space of normal inner indentation).
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
-|Options|`innerIndent`|
+|Options|`ignoreEmptyLines`, `innerIndent`|
 
 <a name="user-content-check-alignment-failing-examples"></a>
 <a name="check-alignment-failing-examples"></a>
@@ -155,6 +162,22 @@ function quux (foo) {
 }
 // "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
 // Message: Expected JSDoc block to be aligned.
+
+/**
+ * @typedef {object} MyType
+ * @property {string} [property]
+
+ */
+// "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":false}]
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @typedef {object} MyType
+ * @property {string} [property]
+  *
+ */
+// "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
+// Message: Expected JSDoc block to be aligned.
 ````
 
 
@@ -229,5 +252,12 @@ function quux (foo) {
   // with spaces
 }
 // "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
+
+/**
+ * @typedef {object} MyType
+ * @property {string} [property]
+
+ */
+// "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
 ````
 

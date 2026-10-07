@@ -8,6 +8,7 @@ export default iterateJsdoc(({
   sourceCode,
 }) => {
   const {
+    ignoreEmptyLines = false,
     innerIndent = 1,
   } = context.options[0] || {};
 
@@ -15,6 +16,9 @@ export default iterateJsdoc(({
   const indentLevel = indent.length + innerIndent;
   const sourceLines = sourceCode.getText(jsdocNode).split('\n')
     .slice(1)
+    .filter((line) => {
+      return !ignoreEmptyLines || line.trim();
+    })
     .map((line, number) => {
       return {
         line: line.split('*')[0],
@@ -67,6 +71,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          ignoreEmptyLines: {
+            description: 'Whether to ignore empty and whitespace-only lines (e.g., to allow a formatter to handle)',
+            type: 'boolean',
+          },
           innerIndent: {
             default: 1,
             description: `Set to 0 if you wish to avoid the normal requirement for an inner indentation of
