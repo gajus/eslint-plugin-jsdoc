@@ -853,6 +853,21 @@ interface Foo {
   arrow: (name2: string) => void
 }
 // Message: Expected @param names to be "name1". Got "wrongNameA".
+
+/**
+ * @param b
+ * @param a */
+function quux (a, b) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "a, b". Got "b, a".
+
+/**
+ * @param b
+ * @param a Some text
+ *   continued here */
+function quux (a, b) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "a, b". Got "b, a".
 ````
 
 
