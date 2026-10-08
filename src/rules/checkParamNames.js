@@ -46,14 +46,17 @@ const hasContent = (tokens) => {
  * Copies tokens, omitting any closing delimiter (and the whitespace
  * preceding it).
  * @param {import('comment-parser').Tokens} tokens
+ * @param {string} newLineEnd
  * @returns {import('comment-parser').Tokens}
  */
-const withoutClosing = (tokens) => {
+const withoutClosing = (tokens, newLineEnd) => {
   const copy = {
     ...tokens,
     end: '',
   };
   if (tokens.end) {
+    copy.lineEnd = newLineEnd;
+
     const lastKey = contentKeys.find((key) => {
       return copy[key];
     });
@@ -116,7 +119,7 @@ const makeParamOrderFix = (
       utils.addTag(
         changedTag.tag,
         extraTagCount + initialOffset + index,
-        withoutClosing(firstLine.tokens),
+        withoutClosing(firstLine.tokens, utils.newLineEnd),
       );
 
       for (const {
@@ -126,7 +129,7 @@ const makeParamOrderFix = (
         if (!tokens.end || hasContent(tokens)) {
           utils.addLine(
             extraTagCount + initialOffset + index + 1,
-            withoutClosing(tokens),
+            withoutClosing(tokens, utils.newLineEnd),
           );
           extraTagCount++;
         }

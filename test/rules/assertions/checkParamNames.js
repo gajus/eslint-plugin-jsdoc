@@ -1658,6 +1658,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (a, b) {}
       `,
     },
+    {
+      code: '/**\r\n * @param b\r\n * @param a */\r\nfunction quux (a, b) {}',
+      errors: [
+        {
+          line: 2,
+          message: 'Expected @param names to be "a, b". Got "b, a".',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: '/**\r\n * @param a\r\n * @param b\r\n */\r\nfunction quux (a, b) {}',
+    },
   ],
   valid: [
     {
