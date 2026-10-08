@@ -1189,13 +1189,14 @@ const getUtils = (
   };
 
   /**
-   * Gets the index at which a new tag belongs: after the last line of the
-   * last tag (including its continuation lines), or at the end of a
-   * description if there are no tags, and in any case before the closing
-   * delimiter, which is moved to a line of its own if need be.
+   * Prepares the block for, and gets, the index at which a new tag belongs:
+   * after the last line of the last tag (including its continuation lines),
+   * or at the end of a description if there are no tags, and in any case
+   * before the closing delimiter, which is moved to a line of its own
+   * (mutating `jsdoc.source`) if need be.
    * @returns {Integer}
    */
-  const getTagInsertionIndex = () => {
+  const prepareTagInsertionIndex = () => {
     // From last to first, as printed on a line
     const contentKeys = /** @type {const} */ ([
       'description',
@@ -1276,7 +1277,7 @@ const getUtils = (
       utils.makeMultiline();
     }
 
-    const insertionIndex = number ?? getTagInsertionIndex();
+    const insertionIndex = number ?? prepareTagInsertionIndex();
 
     jsdoc.source.splice(insertionIndex, 0, {
       number: insertionIndex,
