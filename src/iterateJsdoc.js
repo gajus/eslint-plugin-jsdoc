@@ -521,6 +521,7 @@ import esquery from 'esquery';
  *   addLines: AddLines,
  *   makeMultiline: MakeMultiline,
  *   moveClosingDelimiterToOwnLine: () => boolean,
+ *   newLineEnd: string,
  *   flattenRoots: import('./jsdocUtils.js').FlattenRoots,
  *   getFunctionParameterNames: GetFunctionParameterNames,
  *   hasParams: HasParams,
@@ -1189,6 +1190,10 @@ const getUtils = (
     //         correct information will be available)
   };
 
+  // `comment-parser` keeps the `\r` of a CRLF line break in `lineEnd`
+  const newLineEnd = sourceCode.text.includes('\r\n') ? '\r' : '';
+  utils.newLineEnd = newLineEnd;
+
   // From last to first, as printed on a line
   const contentKeys = /** @type {const} */ ([
     'description',
@@ -1251,7 +1256,7 @@ const getUtils = (
       tokens: lineTokens,
     } of lines) {
       lineTokens.end = '';
-      lineTokens.lineEnd = '';
+      lineTokens.lineEnd = newLineEnd;
 
       // Strip the whitespace which preceded the closing delimiter
       const lastKey = /** @type {NonNullable<typeof contentKeys[number]>} */ (
@@ -1321,6 +1326,7 @@ const getUtils = (
       source: '',
       tokens: seedTokens({
         delimiter: '*',
+        lineEnd: newLineEnd,
         postDelimiter: ' ',
         start: indent + ' ',
         tag: `@${targetTagName}`,
@@ -1492,6 +1498,7 @@ const getUtils = (
     }
 
     utils.emptyTokens(tokens);
+    tokens.lineEnd = newLineEnd;
 
     utils.addLine(1, {
       delimiter: '*',
@@ -1499,6 +1506,7 @@ const getUtils = (
       // If a description were present, it may have whitespace attached
       //   due to being at the end of the single line
       description: description.trimEnd(),
+      lineEnd: newLineEnd,
       name,
       postDelimiter,
       postName,

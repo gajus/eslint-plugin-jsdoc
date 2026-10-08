@@ -2123,6 +2123,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: '/**\r\n * @param a\r\n */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+      errors: [
+        {
+          line: 1,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: '/**\r\n * @param a\r\n * @returns\r\n */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+    },
+    {
+      code: '/**\r\n * @param a */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+      errors: [
+        {
+          line: 1,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: '/**\r\n * @param a\r\n * @returns\r\n */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+    },
+    {
+      code: '/** @param a */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+      errors: [
+        {
+          line: 1,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: '/**\r\n * @param a\r\n * @returns\r\n */\r\nfunction quux (a) {\r\n  return a;\r\n}',
+    },
   ],
   valid: [
     {
