@@ -254,6 +254,18 @@ export function getDistance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 // Message: Missing JSDoc @example declaration.
+
+/**
+ * @param foo The thing
+ *   continues here
+ */
+function quux (foo) {}
+// Message: Missing JSDoc @example declaration.
+
+/**
+ * @param foo */
+function quux (foo) {}
+// Message: Missing JSDoc @example declaration.
 ````
 
 

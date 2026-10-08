@@ -1188,20 +1188,98 @@ const getUtils = (
     //         correct information will be available)
   };
 
-  /** @type {AddTag} */
-  utils.addTag = (
-    targetTagName,
-    number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? jsdoc.source.findIndex(({
+  /**
+   * Gets the index at which a new tag belongs: after the last line of the
+   * last tag (including its continuation lines), or at the end of a
+   * description if there are no tags, and in any case before the closing
+   * delimiter, which is moved to a line of its own if need be.
+   * @returns {Integer}
+   */
+  const getTagInsertionIndex = () => {
+    // From last to first, as printed on a line
+    const contentKeys = /** @type {const} */ ([
+      'description',
+      'postName',
+      'name',
+      'postType',
+      'type',
+      'postTag',
+      'tag',
+    ]);
+
+    /**
+     * @param {import('comment-parser').Tokens} lineTokens
+     * @returns {boolean}
+     */
+    const hasContent = (lineTokens) => {
+      return contentKeys.some((key) => {
+        return lineTokens[key];
+      });
+    };
+
+    const closingIndex = jsdoc.source.length - 1;
+    const {
+      tokens: closingTokens,
+    } = jsdoc.source[closingIndex];
+
+    if (closingTokens.end && hasContent(closingTokens)) {
+      const {
+        end,
+        lineEnd,
+      } = closingTokens;
+
+      closingTokens.end = '';
+      closingTokens.lineEnd = '';
+
+      // Strip the whitespace which preceded the closing delimiter
+      const lastKey = /** @type {NonNullable<typeof contentKeys[number]>} */ (
+        contentKeys.find((key) => {
+          return closingTokens[key];
+        })
+      );
+      closingTokens[lastKey] = closingTokens[lastKey].trimEnd();
+
+      utils.addLine(closingIndex + 1, {
+        end,
+        lineEnd,
+        start: indent + ' ',
+      });
+
+      return closingIndex + 1;
+    }
+
+    if (!jsdoc.source.some(({
       tokens: {
         tag,
       },
     }) => {
       return tag;
-    }) - 1) + 1,
+    })) {
+      return closingIndex;
+    }
+
+    // Blank lines before the closing delimiter do not belong to the tag
+    return jsdoc.source.findLastIndex(({
+      tokens: lineTokens,
+    }, idx) => {
+      return idx < closingIndex && hasContent(lineTokens);
+    }) + 1;
+  };
+
+  /** @type {AddTag} */
+  utils.addTag = (
+    targetTagName,
+    number,
     tokens = {},
   ) => {
-    jsdoc.source.splice(number, 0, {
-      number,
+    if (number === undefined && jsdoc.source.length === 1) {
+      utils.makeMultiline();
+    }
+
+    const insertionIndex = number ?? getTagInsertionIndex();
+
+    jsdoc.source.splice(insertionIndex, 0, {
+      number: insertionIndex,
       source: '',
       tokens: seedTokens({
         delimiter: '*',
@@ -1211,7 +1289,7 @@ const getUtils = (
         ...tokens,
       }),
     });
-    for (const src of jsdoc.source.slice(number + 1)) {
+    for (const src of jsdoc.source.slice(insertionIndex + 1)) {
       src.number++;
     }
   };
