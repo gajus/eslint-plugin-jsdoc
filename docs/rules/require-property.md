@@ -70,6 +70,20 @@ function foo( abc ) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
 // Message: Cannot prohibit `@property` in the `tagNamePreference` setting while using the `require-property` rule.
+
+/** @typedef {object} SomeName */
+// Message: Missing JSDoc @property.
+
+/**
+ * @typedef {object} SomeName
+ * Some description
+ *   continued
+ */
+// Message: Missing JSDoc @property.
+
+/**
+ * @typedef {object} SomeName */
+// Message: Missing JSDoc @property.
 ````
 
 

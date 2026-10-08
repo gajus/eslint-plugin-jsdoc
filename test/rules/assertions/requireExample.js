@@ -440,6 +440,49 @@ function quux () {
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @param foo The thing
+         *   continues here
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @param foo The thing
+         *   continues here
+         * @example
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param foo */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @param foo
+         * @example
+         */
+        function quux (foo) {}
+      `,
+    },
   ],
   valid: [
     {
