@@ -520,6 +520,7 @@ import esquery from 'esquery';
  *   addLine: AddLine,
  *   addLines: AddLines,
  *   makeMultiline: MakeMultiline,
+ *   moveClosingDelimiterToOwnLine: () => boolean,
  *   flattenRoots: import('./jsdocUtils.js').FlattenRoots,
  *   getFunctionParameterNames: GetFunctionParameterNames,
  *   hasParams: HasParams,
@@ -1188,6 +1189,88 @@ const getUtils = (
     //         correct information will be available)
   };
 
+  // From last to first, as printed on a line
+  const contentKeys = /** @type {const} */ ([
+    'description',
+    'postName',
+    'name',
+    'postType',
+    'type',
+    'postTag',
+    'tag',
+  ]);
+
+  /**
+   * @param {import('comment-parser').Tokens} lineTokens
+   * @returns {boolean}
+   */
+  const hasContent = (lineTokens) => {
+    return contentKeys.some((key) => {
+      return lineTokens[key];
+    });
+  };
+
+  /**
+   * Moves a closing delimiter which follows content on the same line to a
+   * line of its own.
+   * @returns {boolean} Whether a change was made
+   */
+  utils.moveClosingDelimiterToOwnLine = () => {
+    const closingIndex = jsdoc.source.length - 1;
+    const {
+      tokens: closingTokens,
+    } = jsdoc.source[closingIndex];
+
+    if (!closingTokens.end || !hasContent(closingTokens)) {
+      return false;
+    }
+
+    const {
+      end,
+      lineEnd,
+    } = closingTokens;
+
+    // Tags may hold their own copies of the line (see `rewireSpecs`)
+    const {
+      number: closingNumber,
+    } = jsdoc.source[closingIndex];
+    const lines = [
+      jsdoc.source[closingIndex],
+      ...jsdoc.tags.flatMap(({
+        source,
+      }) => {
+        return source.filter(({
+          number,
+        }) => {
+          return number === closingNumber;
+        });
+      }),
+    ];
+
+    for (const {
+      tokens: lineTokens,
+    } of lines) {
+      lineTokens.end = '';
+      lineTokens.lineEnd = '';
+
+      // Strip the whitespace which preceded the closing delimiter
+      const lastKey = /** @type {NonNullable<typeof contentKeys[number]>} */ (
+        contentKeys.find((key) => {
+          return lineTokens[key];
+        })
+      );
+      lineTokens[lastKey] = lineTokens[lastKey].trimEnd();
+    }
+
+    utils.addLine(closingIndex + 1, {
+      end,
+      lineEnd,
+      start: indent + ' ',
+    });
+
+    return true;
+  };
+
   /**
    * Prepares the block for, and gets, the index at which a new tag belongs:
    * after the last line of the last tag (including its continuation lines),
@@ -1197,55 +1280,9 @@ const getUtils = (
    * @returns {Integer}
    */
   const prepareTagInsertionIndex = () => {
-    // From last to first, as printed on a line
-    const contentKeys = /** @type {const} */ ([
-      'description',
-      'postName',
-      'name',
-      'postType',
-      'type',
-      'postTag',
-      'tag',
-    ]);
-
-    /**
-     * @param {import('comment-parser').Tokens} lineTokens
-     * @returns {boolean}
-     */
-    const hasContent = (lineTokens) => {
-      return contentKeys.some((key) => {
-        return lineTokens[key];
-      });
-    };
-
     const closingIndex = jsdoc.source.length - 1;
-    const {
-      tokens: closingTokens,
-    } = jsdoc.source[closingIndex];
 
-    if (closingTokens.end && hasContent(closingTokens)) {
-      const {
-        end,
-        lineEnd,
-      } = closingTokens;
-
-      closingTokens.end = '';
-      closingTokens.lineEnd = '';
-
-      // Strip the whitespace which preceded the closing delimiter
-      const lastKey = /** @type {NonNullable<typeof contentKeys[number]>} */ (
-        contentKeys.find((key) => {
-          return closingTokens[key];
-        })
-      );
-      closingTokens[lastKey] = closingTokens[lastKey].trimEnd();
-
-      utils.addLine(closingIndex + 1, {
-        end,
-        lineEnd,
-        start: indent + ' ',
-      });
-
+    if (utils.moveClosingDelimiterToOwnLine()) {
       return closingIndex + 1;
     }
 

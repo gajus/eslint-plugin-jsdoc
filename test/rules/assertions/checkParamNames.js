@@ -1604,6 +1604,60 @@ export default /** @type {import('../index.js').TestCases} */ ({
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /**
+         * @param b
+         * @param a */
+        function quux (a, b) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "a, b". Got "b, a".',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+        /**
+         * @param a
+         * @param b
+         */
+        function quux (a, b) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param b
+         * @param a Some text
+         *   continued here */
+        function quux (a, b) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "a, b". Got "b, a".',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+        /**
+         * @param a Some text
+         *   continued here
+         * @param b
+         */
+        function quux (a, b) {}
+      `,
+    },
   ],
   valid: [
     {

@@ -22,6 +22,49 @@ const getSimpleParameterName = (parameter) => {
   return parameter.name;
 };
 
+const contentKeys = /** @type {const} */ ([
+  'description',
+  'postName',
+  'name',
+  'postType',
+  'type',
+  'postTag',
+  'tag',
+]);
+
+/**
+ * @param {import('comment-parser').Tokens} tokens
+ * @returns {boolean}
+ */
+const hasContent = (tokens) => {
+  return contentKeys.some((key) => {
+    return tokens[key];
+  });
+};
+
+/**
+ * Copies tokens, omitting any closing delimiter (and the whitespace
+ * preceding it).
+ * @param {import('comment-parser').Tokens} tokens
+ * @returns {import('comment-parser').Tokens}
+ */
+const withoutClosing = (tokens) => {
+  const copy = {
+    ...tokens,
+    end: '',
+  };
+  if (tokens.end) {
+    const lastKey = contentKeys.find((key) => {
+      return copy[key];
+    });
+    if (lastKey) {
+      copy[lastKey] = copy[lastKey].trimEnd();
+    }
+  }
+
+  return copy;
+};
+
 /**
  * @param {import('../iterateJsdoc.js').Integer} firstChangedTagIndex
  * @param {import('comment-parser').Spec[]} orderedTags
@@ -33,6 +76,9 @@ const makeParamOrderFix = (
   firstChangedTagIndex, orderedTags, jsdoc, utils,
 ) => {
   return () => {
+    // Otherwise, the closing delimiter would be copied along with the last tag
+    utils.moveClosingDelimiterToOwnLine();
+
     const itemsToMoveRange = [
       ...Array.from({
         length: jsdoc.tags.length - firstChangedTagIndex,
@@ -62,25 +108,25 @@ const makeParamOrderFix = (
     for (const index of itemsToMoveRange) {
       const changedTag = changedTags[index];
 
+      const [
+        firstLine,
+        ...otherLines
+      ] = changedTag.source;
+
       utils.addTag(
         changedTag.tag,
         extraTagCount + initialOffset + index,
-        {
-          ...changedTag.source[0].tokens,
-          end: '',
-        },
+        withoutClosing(firstLine.tokens),
       );
 
       for (const {
         tokens,
-      } of changedTag.source.slice(1)) {
-        if (!tokens.end) {
+      } of otherLines) {
+        // A closing delimiter alone on its line is not part of the tag
+        if (!tokens.end || hasContent(tokens)) {
           utils.addLine(
             extraTagCount + initialOffset + index + 1,
-            {
-              ...tokens,
-              end: '',
-            },
+            withoutClosing(tokens),
           );
           extraTagCount++;
         }
