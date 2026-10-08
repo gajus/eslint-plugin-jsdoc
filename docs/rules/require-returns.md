@@ -810,6 +810,24 @@ function quux (foo) {
 }
 // "jsdoc/require-returns": ["error"|"warn", {"enableFixer":true}]
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ * Calculates the answer
+ *
+ */
+function quux () {
+  return 1;
+}
+// "jsdoc/require-returns": ["error"|"warn", {"enableFixer":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/** @param foo */
+function quux (foo) {
+  return foo;
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// "jsdoc/require-returns": ["error"|"warn", {"enableFixer":true}]
+// Message: Missing JSDoc @return declaration.
 ````
 
 
