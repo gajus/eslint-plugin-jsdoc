@@ -84,6 +84,13 @@ function foo( abc ) {
 /**
  * @typedef {object} SomeName */
 // Message: Missing JSDoc @property.
+
+/**
+ * @typedef {object} SomeName
+ * @example
+ * foo();
+ */
+// Message: Missing JSDoc @property.
 ````
 
 

@@ -171,6 +171,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef {object} SomeName
+         * @example
+         * foo();
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @property.',
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} SomeName
+         * @example
+         * foo();
+         * @property
+         */
+      `,
+    },
   ],
   valid: [
     {
