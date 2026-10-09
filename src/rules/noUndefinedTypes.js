@@ -359,6 +359,12 @@ export default iterateJsdoc(({
         ];
       }
 
+      if (declaration.type === 'TSImportEqualsDeclaration') {
+        return [
+          `${prefix}.${declaration.id.name}`,
+        ];
+      }
+
       if (declaration.type === 'TSEnumDeclaration') {
         return [
           `${prefix}.${declaration.id.name}`,

@@ -1320,6 +1320,15 @@ export namespace Api {
 /** See {@link Api.fn} and {@link Api.declared}. */
 export function f(): void {}
 
+export namespace Api {
+  export import Alias = Elsewhere.Thing;
+  console.log('init');
+}
+/**
+ * @param {Api.Alias} a The alias.
+ */
+export function f(a: Api.Alias): void {}
+
 declare module "my-module" {
   export interface ModuleType {}
 }

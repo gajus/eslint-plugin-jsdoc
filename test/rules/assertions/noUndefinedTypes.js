@@ -2306,6 +2306,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        export namespace Api {
+          export import Alias = Elsewhere.Thing;
+          console.log('init');
+        }
+        /**
+         * @param {Api.Alias} a The alias.
+         */
+        export function f(a: Api.Alias): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
         declare module "my-module" {
           export interface ModuleType {}
         }
