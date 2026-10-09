@@ -387,7 +387,7 @@ export default iterateJsdoc(({
       }
 
       if (declaration.type === 'FunctionDeclaration' || declaration.type === 'TSDeclareFunction') {
-        /* c8 ignore next 3 -- Guard for anonymous default-exported functions. */
+        /* c8 ignore next 3 -- Guard for anonymous default-exported functions which can't exist in a namespace. */
         if (!declaration.id) {
           return [];
         }
