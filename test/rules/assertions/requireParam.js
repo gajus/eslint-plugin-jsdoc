@@ -2805,6 +2805,20 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, resourceId = () => '' }) => {};
       `,
     },
+    {
+      code: '/**\r\n * Does it.\r\n */\r\nfunction quux (foo, bar) {}',
+      errors: [
+        {
+          line: 1,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+        {
+          line: 1,
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      output: '/**\r\n * Does it.\r\n * @param foo\r\n * @param bar\r\n */\r\nfunction quux (foo, bar) {}',
+    },
   ],
   valid: [
     {

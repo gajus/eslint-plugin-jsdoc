@@ -715,10 +715,12 @@ export default {
             } = contxt;
             return ctxt === node.type;
           })) || {};
+        // Use the line break of the source for the generated block
+        const lineBreak = sourceCode.text.includes('\r\n') ? '\r\n' : '\n';
         const insertion = (inlineCommentBlock ?
           `/** ${fixerMessage}` :
-          `/**\n${indent}*${fixerMessage}\n${indent}`) +
-            `*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
+          `/**${lineBreak}${indent}*${fixerMessage}${lineBreak}${indent}`) +
+            `*/${lineBreak.repeat(lines)}${indent.slice(0, -1)}`;
 
         return fixer.insertTextBefore(
           /** @type {import('eslint').Rule.Node} */

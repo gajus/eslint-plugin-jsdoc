@@ -996,6 +996,67 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: '/**\r\n * Some description.\r\n * @param {string} a x\r\n * @returns {string} y\r\n */\r\nfunction quux (a) {}',
+      errors: [
+        {
+          line: 3,
+          message: 'Expected 1 line between tags but found 0',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: '/**\r\n * Some description.\r\n * @param {string} a x\r\n *\r\n * @returns {string} y\r\n */\r\nfunction quux (a) {}',
+    },
+    {
+      code: '/**\r\n * Some description\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+      errors: [
+        {
+          line: 2,
+          message: 'Expected 1 lines after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      output: '/**\r\n * Some description\r\n *\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+    },
+    {
+      code: '/**\r\n * Some description\r\n *\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+      errors: [
+        {
+          line: 2,
+          message: 'Expected only 0 lines after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 0,
+        },
+      ],
+      output: '/**\r\n * Some description\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+    },
+    {
+      code: '/**\r\n *\r\n * Some description\r\n *\r\n * Abc\r\n *\r\n *\r\n *\r\n * Def\r\n *\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+      errors: [
+        {
+          line: 5,
+          message: 'Expected a maximum of 2 lines within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 2,
+        },
+      ],
+      output: '/**\r\n *\r\n * Some description\r\n *\r\n * Abc\r\n *\r\n *\r\n * Def\r\n *\r\n * @param {string} a\r\n */\r\nfunction quux (a) {}',
+    },
   ],
   valid: [
     {

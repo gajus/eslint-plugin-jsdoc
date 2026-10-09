@@ -441,7 +441,7 @@ export default iterateJsdoc(({
           delimiter: '*',
           description: '',
           end: '',
-          lineEnd: '',
+          lineEnd: utils.newLineEnd,
           name: functionParameterName,
           newAdd: true,
           postDelimiter: ' ',

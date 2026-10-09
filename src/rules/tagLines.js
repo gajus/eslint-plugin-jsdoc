@@ -52,6 +52,7 @@ const checkMaxBlockLines = ({
               tokens: seedTokens({
                 ...info,
                 description: desc,
+                lineEnd: utils.newLineEnd,
                 postDelimiter: newPostDelims[idx],
               }),
             };
@@ -327,6 +328,7 @@ export default iterateJsdoc(({
                 tokens: seedTokens({
                   ...info,
                   description: desc,
+                  lineEnd: utils.newLineEnd,
                   postDelimiter: postDelims[idx],
                 }),
               };
@@ -356,6 +358,7 @@ export default iterateJsdoc(({
                 tokens: seedTokens({
                   ...info,
                   description: desc,
+                  lineEnd: utils.newLineEnd,
                   postDelimiter: desc.trim() ? postDelims[idx] : '',
                 }),
               };

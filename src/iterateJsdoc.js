@@ -1418,6 +1418,7 @@ const getUtils = (
           source: '',
           tokens: seedTokens({
             delimiter: '*',
+            lineEnd: newLineEnd,
             start: indent + ' ',
           }),
         };
