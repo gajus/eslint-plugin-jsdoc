@@ -1166,6 +1166,10 @@ const foo = autolog(
 )
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkAllFunctionExpressions":true,"contexts":["FunctionExpression"],"require":{"FunctionExpression":false}}]
 // Message: Missing JSDoc comment.
+
+function quux (foo) {\r
+}
+// Message: Missing JSDoc comment.
 ````
 
 

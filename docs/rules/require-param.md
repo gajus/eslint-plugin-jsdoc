@@ -1313,6 +1313,12 @@ function quux (foo, bar, baz) {
  */
 export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, resourceId = () => '' }) => {};
 // Message: Missing JSDoc @param "options.resourceId" declaration.
+
+/**\r
+ * Does it.\r
+ */\r
+function quux (foo, bar) {}
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 

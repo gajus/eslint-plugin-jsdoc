@@ -447,6 +447,48 @@ export interface SubOptionTypeMap {
 }
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"startLinesWithNoTags":0}]
 // Message: Expected only 0 lines after block description
+
+/**\r
+ * Some description.\r
+ * @param {string} a x\r
+ * @returns {string} y\r
+ */\r
+function quux (a) {}
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+// Message: Expected 1 line between tags but found 0
+
+/**\r
+ * Some description\r
+ * @param {string} a\r
+ */\r
+function quux (a) {}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
+// Message: Expected 1 lines after block description
+
+/**\r
+ * Some description\r
+ *\r
+ * @param {string} a\r
+ */\r
+function quux (a) {}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":0}]
+// Message: Expected only 0 lines after block description
+
+/**\r
+ *\r
+ * Some description\r
+ *\r
+ * Abc\r
+ *\r
+ *\r
+ *\r
+ * Def\r
+ *\r
+ * @param {string} a\r
+ */\r
+function quux (a) {}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2}]
+// Message: Expected a maximum of 2 lines within block description
 ````
 
 

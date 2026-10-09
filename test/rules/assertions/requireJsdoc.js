@@ -4457,6 +4457,16 @@ function quux (foo) {
         )
       `,
     },
+    {
+      code: 'function quux (foo) {\r\n}',
+      errors: [
+        {
+          line: 1,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      output: '/**\r\n *\r\n */\r\nfunction quux (foo) {\r\n}',
+    },
   ],
   valid: [
     {
