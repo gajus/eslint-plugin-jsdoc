@@ -252,6 +252,19 @@ function quux () {}
 // two
 function quux () {}
 // Message: Line comments should be JSDoc-style.
+
+// Matches every compiled file, e.g. dist/**/*.js
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// see the pattern a*/b used by parsers
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// first line
+// closes */ here
+function quux () {}
+// Message: Line comments should be JSDoc-style.
 ````
 
 

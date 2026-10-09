@@ -637,6 +637,46 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux () {}
       `,
     },
+    {
+      code: `
+        // Matches every compiled file, e.g. dist/**/*.js
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        // see the pattern a*/b used by parsers
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        // first line
+        // closes */ here
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: null,
+    },
   ],
   valid: [
     {

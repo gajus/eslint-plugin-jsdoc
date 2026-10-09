@@ -64,7 +64,7 @@ export default {
      * @param {string} messageId
      * @param {import('estree').Comment|Token} comment
      * @param {import('eslint').Rule.Node} node
-     * @param {import('eslint').Rule.ReportFixer} fixer
+     * @param {import('eslint').Rule.ReportFixer|null} fixer
      */
     const report = (messageId, comment, node, fixer) => {
       const loc = {
@@ -167,9 +167,21 @@ export default {
      * @param {Token} [locComment] Comment to anchor the report location to,
      *   e.g., the first comment of a stacked group of line comments, so the
      *   report does not read as though only the last line were at fault.
+     * @param {Token[]} [commentGroup] The comments which the fixer would
+     *   convert. Defaults to just `comment`.
      */
-    const reportings = (comment, node, addComment, ctxts, locComment) => {
-      const fixer = getFixer(node, comment, addComment, ctxts);
+    const reportings = (comment, node, addComment, ctxts, locComment, commentGroup = [
+      /** @type {Token} */ (comment),
+    ]) => {
+      // A `*/` inside a comment's text would end the generated JSDoc block
+      // early, so leave such comments for the user to convert
+      const fixer = commentGroup.some(({
+        value,
+      }) => {
+        return value.includes('*/');
+      }) ?
+        null :
+        getFixer(node, comment, addComment, ctxts);
 
       if (comment.type === 'Block') {
         if (lineOrBlockStyle === 'line') {
@@ -310,7 +322,7 @@ export default {
         );
       };
 
-      reportings(comment, node, addComment, contexts, commentGroup[0]);
+      reportings(comment, node, addComment, contexts, commentGroup[0], commentGroup);
     };
 
     /**
