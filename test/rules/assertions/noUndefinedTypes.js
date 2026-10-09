@@ -748,6 +748,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        export namespace Api {
+          export enum Status { Ok, Fail }
+          export const { destructured } = { destructured: 1 };
+          export import Alias = Elsewhere.Thing;
+        }
+        /**
+         * @param {Api.Status} s The status.
+         * @param {Api.Missing} m Not declared in the namespace.
+         */
+        export function f(s: Api.Status, m: unknown): void {}
+      `,
+      errors: [
+        {
+          line: 9,
+          message: 'The type \'Api.Missing\' is undefined.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
         /** xyz {@link property} */
         export default function () {}
       `,
@@ -2199,6 +2222,87 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+    },
+    {
+      code: `
+        export namespace Api {
+          export enum Status { Ok, Fail }
+        }
+        /**
+         * @param {Api.Status} s The status.
+         */
+        export function f(s: Api.Status): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        export namespace Api {
+          export enum Status { Ok, Fail, 'Not-Ident' = 2 }
+        }
+        /** See {@link Api.Status.Ok}. */
+        export function f(): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        declare namespace Shapes {
+          enum Kind { Circle, Square }
+        }
+        /**
+         * @param {Shapes.Kind} k The kind.
+         */
+        export function f(k: Shapes.Kind): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        export namespace Outer {
+          export namespace Inner {
+            export enum Mode { A, B }
+          }
+        }
+        /**
+         * @param {Outer.Inner.Mode} m The mode.
+         */
+        export function f(m: Outer.Inner.Mode): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        export namespace Cfg {
+          export const version = '1', build = 2;
+        }
+        /** See {@link Cfg.version} and {@link Cfg.build}. */
+        export function f(): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        export namespace Api {
+          export function fn(): void {}
+          export declare function declared(): void;
+        }
+        /** See {@link Api.fn} and {@link Api.declared}. */
+        export function f(): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
     },
     {
       code: `

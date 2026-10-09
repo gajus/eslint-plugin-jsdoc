@@ -359,7 +359,45 @@ export default iterateJsdoc(({
         ];
       }
 
-      // Fallback for unhandled declaration types (e.g., TSEnumDeclaration, FunctionDeclaration, etc.).
+      if (declaration.type === 'TSEnumDeclaration') {
+        return [
+          `${prefix}.${declaration.id.name}`,
+          ...declaration.body.members.map((member) => {
+            // Only handle Identifier member names, not string literals.
+            if (member.id.type !== 'Identifier') {
+              return '';
+            }
+
+            return `${prefix}.${declaration.id.name}.${member.id.name}`;
+          }).filter(Boolean),
+        ];
+      }
+
+      if (declaration.type === 'VariableDeclaration') {
+        return declaration.declarations.flatMap((declarator) => {
+          // Destructuring patterns are not handled.
+          if (declarator.id.type !== 'Identifier') {
+            return [];
+          }
+
+          return [
+            `${prefix}.${declarator.id.name}`,
+          ];
+        });
+      }
+
+      if (declaration.type === 'FunctionDeclaration' || declaration.type === 'TSDeclareFunction') {
+        /* c8 ignore next 3 -- Guard for anonymous default-exported functions. */
+        if (!declaration.id) {
+          return [];
+        }
+
+        return [
+          `${prefix}.${declaration.id.name}`,
+        ];
+      }
+
+      // Fallback for unhandled declaration types.
       return [];
     });
   };

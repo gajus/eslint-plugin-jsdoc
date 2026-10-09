@@ -428,6 +428,18 @@ const b = 's';
 // "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyNamespace"]}]
 // Message: The type 'MyNamespace.OtherType' is undefined.
 
+export namespace Api {
+  export enum Status { Ok, Fail }
+  export const { destructured } = { destructured: 1 };
+  export import Alias = Elsewhere.Thing;
+}
+/**
+ * @param {Api.Status} s The status.
+ * @param {Api.Missing} m Not declared in the namespace.
+ */
+export function f(s: Api.Status, m: unknown): void {}
+// Message: The type 'Api.Missing' is undefined.
+
 /** xyz {@link property} */
 export default function () {}
 // Message: The type 'property' is undefined.
@@ -1262,6 +1274,51 @@ declare namespace NamespaceWithEnum {
 /** @type {NamespaceWithEnum.I} */
 const x = {};
 // "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["NamespaceWithEnum"]}]
+
+export namespace Api {
+  export enum Status { Ok, Fail }
+}
+/**
+ * @param {Api.Status} s The status.
+ */
+export function f(s: Api.Status): void {}
+
+export namespace Api {
+  export enum Status { Ok, Fail, 'Not-Ident' = 2 }
+}
+/** See {@link Api.Status.Ok}. */
+export function f(): void {}
+
+declare namespace Shapes {
+  enum Kind { Circle, Square }
+}
+/**
+ * @param {Shapes.Kind} k The kind.
+ */
+export function f(k: Shapes.Kind): void {}
+
+export namespace Outer {
+  export namespace Inner {
+    export enum Mode { A, B }
+  }
+}
+/**
+ * @param {Outer.Inner.Mode} m The mode.
+ */
+export function f(m: Outer.Inner.Mode): void {}
+
+export namespace Cfg {
+  export const version = '1', build = 2;
+}
+/** See {@link Cfg.version} and {@link Cfg.build}. */
+export function f(): void {}
+
+export namespace Api {
+  export function fn(): void {}
+  export declare function declared(): void;
+}
+/** See {@link Api.fn} and {@link Api.declared}. */
+export function f(): void {}
 
 declare module "my-module" {
   export interface ModuleType {}
