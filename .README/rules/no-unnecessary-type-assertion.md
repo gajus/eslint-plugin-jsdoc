@@ -54,6 +54,35 @@ the pre-TypeScript-4.5 stand-in for a `const` assertion. Enable the
 tuple element is a literal and (under `enableFixer`) rewrite them to the
 equivalent, more concise `/** @type {const} */`.
 
+An assertion that is broader than the inferred type is also reported, since the
+inferred type is assignable to it. Removing such an assertion can change the
+declared, exported or returned type, which may in turn introduce new errors
+elsewhere:
+
+```js
+export function f(/** @type {string} */ s) {
+  // `x` is declared `unknown`; unwrapped it is `string` and `x = 5` fails
+  let x = /** @type {unknown} */ (s);
+  x = 5;
+  return x;
+}
+
+// Exported as `"x" | "y"`; unwrapped it is exported as `"x"`
+export const f1 = /** @type {"x"|"y"} */ ("x");
+
+export function r(/** @type {string} */ s) {
+  // Returns `unknown`; unwrapped it returns `string`
+  return /** @type {unknown} */ (s);
+}
+```
+
+By default the fixer removes these too. Set the `fixTypeChangingCasts` option
+to `false` to still report such an assertion but leave it in place. It is then
+only removed (under `enableFixer`) where the type stays the same, such as
+`/** @type {number} */ (3 + 5)` or a plain widening like `string` on `'hello'`.
+`fixTypeChangingCasts` has no effect when `enableFixer` is `false`, as nothing
+is fixed in that case.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -86,6 +115,7 @@ export default [
         // You can change these defaults
         checkLiteralConstAssertions: false,
         enableFixer: true,
+        fixTypeChangingCasts: true,
         preferConstToLiteralTuples: false,
         treatAnyAsRedundant: false,
         typesToIgnore: [],
@@ -104,7 +134,7 @@ export default [
 |Context|`VariableDeclaration`; inline `/** @type */` casts|
 |Tags|`type`|
 |Recommended|false|
-|Options|`checkLiteralConstAssertions`, `enableFixer`, `preferConstToLiteralTuples`, `treatAnyAsRedundant`, `typesToIgnore`|
+|Options|`checkLiteralConstAssertions`, `enableFixer`, `fixTypeChangingCasts`, `preferConstToLiteralTuples`, `treatAnyAsRedundant`, `typesToIgnore`|
 
 ## Failing examples
 
