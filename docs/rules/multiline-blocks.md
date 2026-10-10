@@ -345,6 +345,19 @@ The following patterns are considered problems:
  * @someTag {someType} Description too short */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
 // Message: Description is too short to be multi-line.
+
+/** Does it.\r
+ * More.\r
+ */\r
+export function f() {}
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noZeroLineText":true}]
+// Message: Should have no text on the "0th" line (after the `/**`).
+
+/**\r
+ * Does it. @returns {string} x */\r
+export function f() { return ""; }
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
+// Message: Should have no text on the final line (before the `*/`).
 ````
 
 

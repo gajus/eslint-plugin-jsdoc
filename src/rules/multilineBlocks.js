@@ -229,6 +229,7 @@ export default iterateJsdoc(({
           ...tokens,
         };
         utils.emptyTokens(tokens);
+        tokens.lineEnd = utils.newLineEnd;
         const {
           tokens: {
             delimiter,
@@ -294,6 +295,7 @@ export default iterateJsdoc(({
           ...line,
           delimiter,
           end: '',
+          lineEnd: utils.newLineEnd,
         });
       };
 
