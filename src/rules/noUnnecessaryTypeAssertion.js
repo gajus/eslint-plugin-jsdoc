@@ -95,6 +95,7 @@ export default iterateJsdoc(({
     // https://typescript-eslint.io/rules/no-unnecessary-type-assertion/
     checkLiteralConstAssertions = false,
     enableFixer = true,
+    fixTypeChangingCasts = true,
     preferConstToLiteralTuples = false,
     treatAnyAsRedundant = false,
     typesToIgnore = [],
@@ -355,6 +356,32 @@ export default iterateJsdoc(({
   };
 
   /**
+   * Whether the fixer may remove a redundant assertion. With
+   * `fixTypeChangingCasts` (the default) every redundant assertion may be
+   * removed. Without it, a broader assertion (e.g. `unknown` on a `string`, or
+   * `'x' | 'y'` on `'x'`) is only reported, since dropping it would change the
+   * declared or returned type; it is removed only when the asserted type is
+   * also assignable back to the inferred one. A plain widening of a literal
+   * (`string` on `'hello'`) is the type TypeScript gives a mutable binding
+   * anyway, so it is kept removable.
+   * @param {any} rawInferredType `ts.Type`
+   * @param {any} rawAssertedType `ts.Type`
+   * @returns {boolean}
+   */
+  const mayRemove = (rawInferredType, rawAssertedType) => {
+    if (
+      fixTypeChangingCasts || assertedTypeStr === 'const' ||
+      checker.isTypeAssignableTo(rawAssertedType, rawInferredType)
+    ) {
+      return true;
+    }
+
+    const inferredBaseType = checker.getBaseTypeOfLiteralType(rawInferredType);
+    return checker.isTypeAssignableTo(inferredBaseType, rawAssertedType) &&
+      checker.isTypeAssignableTo(rawAssertedType, inferredBaseType);
+  };
+
+  /**
    * A non-`const` tuple type annotation on an array literal (asserting `['foo']`
    * onto `['foo']`) turns the literal's inferred `T[]` into a tuple; since the
    * literal only takes that tuple type *from* the assertion, the assertion is
@@ -506,9 +533,15 @@ export default iterateJsdoc(({
     }
 
     if (isRedundantAssertion(declInferredType, declAssertedType)) {
-      utils.reportJSDoc(message, types[0], fixer, true, {
-        type: assertedTypeStr,
-      });
+      utils.reportJSDoc(
+        message,
+        types[0],
+        mayRemove(declInferredType, declAssertedType) ? fixer : null,
+        true,
+        {
+          type: assertedTypeStr,
+        },
+      );
     }
 
     return;
@@ -593,7 +626,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const canUnwrap = enableFixer && (
+  const canUnwrap = enableFixer && mayRemove(castInferredType, castAssertedType) && (
     unwrappableParentTypes.has(parent.type) ||
     (parent.type === 'ConditionalExpression' && parent.test !== node) ||
     ((parent.type === 'CallExpression' || parent.type === 'NewExpression') &&
@@ -649,6 +682,10 @@ export default iterateJsdoc(({
           },
           enableFixer: {
             description: 'Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.',
+            type: 'boolean',
+          },
+          fixTypeChangingCasts: {
+            description: 'Whether the fixer may also remove a redundant assertion that is broader than the inferred type, which changes the declared, exported or returned type (e.g. `/** @type {unknown} */` on a `string`). When `false`, such an assertion is still reported but not fixed. Only matters when `enableFixer` is `true`. Defaults to `true`.',
             type: 'boolean',
           },
           preferConstToLiteralTuples: {

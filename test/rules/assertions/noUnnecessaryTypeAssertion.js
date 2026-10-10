@@ -585,6 +585,268 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        export function w8b(/** @type {string} */ s) {
+          let x = /** @type {unknown} */ (s);
+          x = 5;
+          return x;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        export function w8b(/** @type {string} */ s) {
+          let x = s;
+          x = 5;
+          return x;
+        }
+      `,
+    },
+    {
+      code: `
+        export const f1 = /** @type {"x"|"y"} */ ("x");
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring ""x"|"y"" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        export const f1 = "x";
+      `,
+    },
+    {
+      code: `
+        export function r2(/** @type {string} */ s) {
+          return /** @type {unknown} */ (s);
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        export function r2(/** @type {string} */ s) {
+          return s;
+        }
+      `,
+    },
+    {
+      code: `
+        export function w8b(/** @type {string} */ s) {
+          let x = /** @type {unknown} */ (s);
+          x = 5;
+          return x;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        export const f1 = /** @type {"x"|"y"} */ ("x");
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring ""x"|"y"" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        export function r2(/** @type {string} */ s) {
+          return /** @type {unknown} */ (s);
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /**
+         * @type {string | number}
+         */
+        const wide = 'hello';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string | number" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        export const ok1 = /** @type {number} */ (3 + 5);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "number" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: `
+        export const ok1 = 3 + 5;
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+        const widened = 'hello';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: `
+        const widened = 'hello';
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {const}
+         */
+        const five = 5;
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "const" is redundant as TypeScript infers it automatically for literals.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          checkLiteralConstAssertions: true,
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: `
+        const five = 5;
+      `,
+    },
+    {
+      code: `
+        export function w8b(/** @type {string} */ s) {
+          let x = /** @type {unknown} */ (s);
+          x = 5;
+          return x;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /**
+         * @type {string | number}
+         */
+        const wide = 'hello';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string | number" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+          fixTypeChangingCasts: false,
+        },
+      ],
+      output: null,
+    },
   ],
   valid: [
     {

@@ -1349,6 +1349,10 @@ export interface Rules {
            */
           enableFixer?: boolean;
           /**
+           * Whether the fixer may also remove a redundant assertion that is broader than the inferred type, which changes the declared, exported or returned type (e.g. `/** @type {unknown} * /` on a `string`). When `false`, such an assertion is still reported but not fixed. Only matters when `enableFixer` is `true`. Defaults to `true`.
+           */
+          fixTypeChangingCasts?: boolean;
+          /**
            * Whether to report a non-`const` literal-tuple assertion on an array literal (e.g. `/** @type {['foo']} * / (['foo'])`) and fix it to the equivalent, more concise `/** @type {const} * /` assertion. Defaults to `false`.
            */
           preferConstToLiteralTuples?: boolean;
