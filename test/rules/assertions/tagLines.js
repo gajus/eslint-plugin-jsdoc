@@ -825,6 +825,127 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * Some description.
+         *
+         *
+         *
+         * More.
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected a maximum of 1 line within block description',
+        },
+      ],
+      options: [
+        'never',
+        {
+          maxBlockLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some description.
+         *
+         * More.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description.
+         *
+         *
+         *
+         * More.
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected a maximum of 1 line within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some description.
+         *
+         * More.
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description.
+         * Abc
+         *
+         *
+         *
+         * More.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected a maximum of 1 line within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some description.
+         * Abc
+         *
+         * More.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description.
+         *
+         * More.
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected a maximum of 0 lines within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 0,
+        },
+      ],
+      output: `
+        /**
+         * Some description.
+         * More.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          *
          * Some description
          *
