@@ -741,6 +741,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /** @someTag {someType} Description too short */
       `,
     },
+    {
+      code: '/** Does it.\r\n * More.\r\n */\r\nexport function f() {}\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      options: [
+        {
+          noZeroLineText: true,
+        },
+      ],
+      output: '/**\r\n * Does it.\r\n * More.\r\n */\r\nexport function f() {}\r\n',
+    },
+    {
+      code: '/**\r\n * Does it. @returns {string} x */\r\nexport function f() { return ""; }\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Should have no text on the final line (before the `*/`).',
+        },
+      ],
+      options: [
+        {
+          noFinalLineText: true,
+        },
+      ],
+      output: '/**\r\n * Does it. @returns {string} x\r\n */\r\nexport function f() { return ""; }\r\n',
+    },
   ],
   valid: [
     {
