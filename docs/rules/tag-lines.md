@@ -389,6 +389,46 @@ The following patterns are considered problems:
 // Message: Expected a maximum of 0 lines within block description
 
 /**
+ * Some description.
+ *
+ *
+ *
+ * More.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"maxBlockLines":1}]
+// Message: Expected a maximum of 1 line within block description
+
+/**
+ * Some description.
+ *
+ *
+ *
+ * More.
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":1}]
+// Message: Expected a maximum of 1 line within block description
+
+/**
+ * Some description.
+ * Abc
+ *
+ *
+ *
+ * More.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":1}]
+// Message: Expected a maximum of 1 line within block description
+
+/**
+ * Some description.
+ *
+ * More.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":0}]
+// Message: Expected a maximum of 0 lines within block description
+
+/**
  *
  * Some description
  *
