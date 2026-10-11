@@ -14,6 +14,10 @@ tag is attached).
 Unless your `@default` is on a function, you will need to set `contexts`
 to an appropriate context, including, if you wish, "any".
 
+`@default` (and `@defaultvalue`) on a getter or setter is not reported, as
+an accessor has no initializer which the tag could repeat; there it
+documents the default value of the property.
+
 ## Fixer
 
 Strips the default value.

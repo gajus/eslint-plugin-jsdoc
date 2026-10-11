@@ -258,6 +258,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+          class Filter {
+            /**
+             * @param {number} [value=1]
+             */
+            set level (value = 1) {
+              this._level = value;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Defaults are not permitted on @param.',
+        },
+      ],
+      output: `
+          class Filter {
+            /**
+             * @param {number} [value]
+             */
+            set level (value = 1) {
+              this._level = value;
+            }
+          }
+      `,
+    },
   ],
   valid: [
     {
@@ -336,6 +364,60 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           contexts: [
             'any',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+          class Filter {
+            /**
+             * The blend mode of the filter.
+             * @default "normal"
+             */
+            get blendMode () {
+              return this._blendMode;
+            }
+
+            /**
+             * Whether to repeat edge pixels.
+             * @default false
+             */
+            set repeatEdgePixels (value) {
+              this._repeat = value;
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          const view = {
+            /**
+             * The zoom level.
+             * @defaultvalue 1
+             */
+            get zoom () {
+              return this._zoom;
+            },
+          };
+      `,
+    },
+    {
+      code: `
+          class Filter {
+            /**
+             * The blend mode of the filter.
+             * @default "normal"
+             */
+            get blendMode () {
+              return this._blendMode;
+            }
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
           ],
         },
       ],
