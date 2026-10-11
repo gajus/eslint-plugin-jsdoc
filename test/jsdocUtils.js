@@ -225,4 +225,64 @@ describe('jsdocUtils', () => {
       ]);
     });
   });
+  describe('getJSDocCommentBlocks()', () => {
+    /**
+     * @param {string[]} commentValues
+     * @returns {{calls: () => number, sourceCode: import('eslint').SourceCode}}
+     */
+    const makeSourceCode = (commentValues) => {
+      let calls = 0;
+      const sourceCode = /** @type {import('eslint').SourceCode} */ (
+        /** @type {unknown} */ ({
+          getAllComments () {
+            calls++;
+
+            return commentValues.map((value) => {
+              return {
+                type: 'Block',
+                value,
+              };
+            });
+          },
+        })
+      );
+
+      return {
+        calls () {
+          return calls;
+        },
+        sourceCode,
+      };
+    };
+
+    it('parses the comments of a `SourceCode` only once', () => {
+      const {
+        calls,
+        sourceCode,
+      } = makeSourceCode([
+        '*\n * @typedef {string} Foo\n ',
+        '*\n * @param {Foo} foo\n ',
+      ]);
+      const first = jsdocUtils.getJSDocCommentBlocks(sourceCode);
+      const second = jsdocUtils.getJSDocCommentBlocks(sourceCode);
+      expect(first).to.have.lengthOf(2);
+      expect(second).to.equal(first);
+      expect(calls()).to.equal(1);
+    });
+
+    it('does not share parsed blocks between `SourceCode` objects', () => {
+      const {
+        sourceCode: sourceCodeA,
+      } = makeSourceCode([
+        '*\n * @typedef {string} Foo\n ',
+      ]);
+      const {
+        sourceCode: sourceCodeB,
+      } = makeSourceCode([
+        '*\n * @typedef {string} Bar\n ',
+      ]);
+      expect(jsdocUtils.getJSDocCommentBlocks(sourceCodeA)[0].tags[0].name).to.equal('Foo');
+      expect(jsdocUtils.getJSDocCommentBlocks(sourceCodeB)[0].tags[0].name).to.equal('Bar');
+    });
+  });
 });
