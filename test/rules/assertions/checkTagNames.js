@@ -1070,6 +1070,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        export class Foo {
+          /**
+           * Internal.
+           * @private
+           */
+          private bar = 1;
+        }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '\'@private\' is redundant when using a type system.',
+        },
+      ],
+      filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        export class Foo {
+          /**
+           * Internal.
+           */
+          private bar = 1;
+        }
+      `,
+    },
   ],
   valid: [
     {
@@ -1532,6 +1566,65 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /**
          * @ember/debug etc. etc.
          */
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @public */
+        export const docs = {};
+      `,
+      filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Creates a router.
+         *
+         * @public
+         */
+        export function createRouter () {}
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        export interface Options {
+          /**
+           * @private
+           */
+          name: string;
+        }
+      `,
+      filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @protected */
       `,
       options: [
         {

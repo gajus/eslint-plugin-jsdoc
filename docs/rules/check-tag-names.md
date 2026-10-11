@@ -291,14 +291,21 @@ callback
 class
 enum
 implements
-private
 property
-protected
-public
 readonly
 this
 type
 typedef
+```
+
+These tags are unnecessary on class members (where TypeScript has access
+modifiers), but are allowed elsewhere (e.g., the `@public` release tag of
+TSDoc/API Extractor on an exported function):
+
+```
+private
+protected
+public
 ```
 
 These tags are unnecessary except when inside a TypeScript `declare` context:
@@ -833,6 +840,16 @@ function quux () {
  * @param {AnotherType} anotherName And yet {@another}
  */
 // Message: Invalid JSDoc inline tag name "inline"
+
+export class Foo {
+  /**
+   * Internal.
+   * @private
+   */
+  private bar = 1;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@private' is redundant when using a type system.
 ````
 
 
@@ -1236,6 +1253,29 @@ interface WebTwain {
 /**
  * @ember/debug etc. etc.
  */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @public */
+export const docs = {};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * Creates a router.
+ *
+ * @public
+ */
+export function createRouter () {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+export interface Options {
+  /**
+   * @private
+   */
+  name: string;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @protected */
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 ````
 
