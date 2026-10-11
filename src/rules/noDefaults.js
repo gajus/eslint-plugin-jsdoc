@@ -1,7 +1,20 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
+/**
+ * @param {import('eslint').Rule.Node|null} node
+ * @returns {boolean}
+ */
+const isAccessor = (node) => {
+  const methodNode = node?.type === 'FunctionExpression' ? node.parent : node;
+
+  return [
+    'get', 'set',
+  ].includes(/** @type {{kind?: string}} */ (methodNode)?.kind ?? '');
+};
+
 export default iterateJsdoc(({
   context,
+  node,
   utils,
 }) => {
   const {
@@ -24,6 +37,12 @@ export default iterateJsdoc(({
         });
       });
     }
+  }
+
+  // A getter or setter has no initializer which a `@default` could repeat;
+  //   its `@default` documents the default value of the property
+  if (isAccessor(node)) {
+    return;
   }
 
   const defaultTags = utils.getPresentTags([

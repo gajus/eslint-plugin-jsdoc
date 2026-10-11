@@ -23,6 +23,10 @@ tag is attached).
 Unless your `@default` is on a function, you will need to set `contexts`
 to an appropriate context, including, if you wish, "any".
 
+`@default` (and `@defaultvalue`) on a getter or setter is not reported, as
+an accessor has no initializer which the tag could repeat; there it
+documents the default value of the property.
+
 <a name="user-content-no-defaults-fixer"></a>
 <a name="no-defaults-fixer"></a>
 ## Fixer
@@ -157,6 +161,16 @@ const a = {};
 // Settings: {"jsdoc":{"tagNamePreference":{"default":"defaultvalue"}}}
 // "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Default values are not permitted on @defaultvalue.
+
+class Filter {
+  /**
+   * @param {number} [value=1]
+   */
+  set level (value = 1) {
+    this._level = value;
+  }
+}
+// Message: Defaults are not permitted on @param.
 ````
 
 
@@ -210,5 +224,44 @@ function quux (foo) {
  */
 const a = {};
 // "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
+
+class Filter {
+  /**
+   * The blend mode of the filter.
+   * @default "normal"
+   */
+  get blendMode () {
+    return this._blendMode;
+  }
+
+  /**
+   * Whether to repeat edge pixels.
+   * @default false
+   */
+  set repeatEdgePixels (value) {
+    this._repeat = value;
+  }
+}
+
+const view = {
+  /**
+   * The zoom level.
+   * @defaultvalue 1
+   */
+  get zoom () {
+    return this._zoom;
+  },
+};
+
+class Filter {
+  /**
+   * The blend mode of the filter.
+   * @default "normal"
+   */
+  get blendMode () {
+    return this._blendMode;
+  }
+}
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["MethodDefinition"]}]
 ````
 
