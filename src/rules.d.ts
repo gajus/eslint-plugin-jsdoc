@@ -334,14 +334,21 @@ export interface Rules {
            * class
            * enum
            * implements
-           * private
            * property
-           * protected
-           * public
            * readonly
            * this
            * type
            * typedef
+           * ```
+           *
+           * These tags are unnecessary on class members (where TypeScript has access
+           * modifiers), but are allowed elsewhere (e.g., the `@public` release tag of
+           * TSDoc/API Extractor on an exported function):
+           *
+           * ```
+           * private
+           * protected
+           * public
            * ```
            *
            * These tags are unnecessary except when inside a TypeScript `declare` context:

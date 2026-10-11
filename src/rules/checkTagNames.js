@@ -29,6 +29,20 @@ const typedTagsNeedingName = new Set([
   'template',
 ]);
 
+const accessTags = new Set([
+  'private',
+  'protected',
+  'public',
+]);
+
+/**
+ * @param {import('eslint').Rule.Node|null} node
+ * @returns {boolean}
+ */
+const isClassMember = (node) => {
+  return node?.parent?.type === 'ClassBody';
+};
+
 const typedTagsUnnecessaryOutsideDeclare = new Set([
   'abstract',
   'access',
@@ -201,7 +215,13 @@ export default iterateJsdoc(({
    * @returns {boolean}
    */
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
-    if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
+    if (
+      typedTagsAlwaysUnnecessary.has(jsdocTag.tag) &&
+      // TypeScript only has syntax for these on class members; elsewhere they
+      //   are not redundant (e.g., TSDoc/API Extractor release tag `@public`,
+      //   TypeDoc's `@private`/`@protected` visibility, Knip's `@public`)
+      (!accessTags.has(jsdocTag.tag) || isClassMember(node))
+    ) {
       reportWithTagRemovalFixer(
         `'@${jsdocTag.tag}' is redundant when using a type system.`,
         jsdocTag,
@@ -361,14 +381,21 @@ callback
 class
 enum
 implements
-private
 property
-protected
-public
 readonly
 this
 type
 typedef
+\`\`\`
+
+These tags are unnecessary on class members (where TypeScript has access
+modifiers), but are allowed elsewhere (e.g., the \`@public\` release tag of
+TSDoc/API Extractor on an exported function):
+
+\`\`\`
+private
+protected
+public
 \`\`\`
 
 These tags are unnecessary except when inside a TypeScript \`declare\` context:
