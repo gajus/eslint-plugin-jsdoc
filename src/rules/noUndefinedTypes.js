@@ -59,6 +59,172 @@ const typescriptGlobals = [
   'Lowercase',
   'Capitalize',
   'Uncapitalize',
+
+  // Type-only globals of TypeScript's standard library, grouped by the
+  //   `typescript/lib` file which first declares them
+
+  // lib.es5.d.ts
+  'ArrayBufferConstructor',
+  'ArrayBufferLike',
+  'ArrayBufferTypes',
+  'ArrayBufferView',
+  'ArrayConstructor',
+  'ArrayLike',
+  'BooleanConstructor',
+  'CallableFunction',
+  'ConcatArray',
+  'DataViewConstructor',
+  'DateConstructor',
+  'ErrorConstructor',
+  'EvalErrorConstructor',
+  'Float32ArrayConstructor',
+  'Float64ArrayConstructor',
+  'FunctionConstructor',
+  'IArguments',
+  'ImportAssertions',
+  'ImportAttributes',
+  'ImportCallOptions',
+  'ImportMeta',
+  'Int16ArrayConstructor',
+  'Int32ArrayConstructor',
+  'Int8ArrayConstructor',
+  'NewableFunction',
+  'NoInfer',
+  'NumberConstructor',
+  'ObjectConstructor',
+  'PromiseConstructorLike',
+  'PromiseLike',
+  'PropertyDescriptor',
+  'PropertyDescriptorMap',
+  'PropertyKey',
+  'RangeErrorConstructor',
+  'ReadonlyArray',
+  'ReferenceErrorConstructor',
+  'RegExpConstructor',
+  'RegExpExecArray',
+  'RegExpMatchArray',
+  'StringConstructor',
+  'SyntaxErrorConstructor',
+  'TemplateStringsArray',
+  'TypeErrorConstructor',
+  'TypedPropertyDescriptor',
+  'URIErrorConstructor',
+  'Uint16ArrayConstructor',
+  'Uint32ArrayConstructor',
+  'Uint8ArrayConstructor',
+  'Uint8ClampedArrayConstructor',
+  'WeakKey',
+  'WeakKeyTypes',
+
+  // lib.es2015.collection.d.ts
+  'MapConstructor',
+  'ReadonlyMap',
+  'ReadonlySet',
+  'SetConstructor',
+  'WeakMapConstructor',
+  'WeakSetConstructor',
+
+  // lib.es2015.generator.d.ts
+  'Generator',
+  'GeneratorFunction',
+  'GeneratorFunctionConstructor',
+
+  // lib.es2015.iterable.d.ts
+  'ArrayIterator',
+  'BuiltinIteratorReturn',
+  'IterableIterator',
+  'IteratorResult',
+  'IteratorReturnResult',
+  'IteratorYieldResult',
+  'MapIterator',
+  'PromiseConstructor',
+  'SetIterator',
+  'StringIterator',
+  'SymbolConstructor',
+
+  // lib.es2015.proxy.d.ts
+  'ProxyConstructor',
+  'ProxyHandler',
+
+  // lib.es2017.sharedmemory.d.ts
+  'SharedArrayBufferConstructor',
+
+  // lib.es2018.asyncgenerator.d.ts
+  'AsyncGenerator',
+  'AsyncGeneratorFunction',
+  'AsyncGeneratorFunctionConstructor',
+
+  // lib.es2018.asynciterable.d.ts
+  'AsyncIterable',
+  'AsyncIterableIterator',
+  'AsyncIterator',
+  'AsyncIteratorObject',
+
+  // lib.es2019.array.d.ts
+  'FlatArray',
+
+  // lib.es2020.bigint.d.ts
+  'BigInt64ArrayConstructor',
+  'BigIntConstructor',
+  'BigIntToLocaleStringOptions',
+  'BigUint64ArrayConstructor',
+
+  // lib.es2020.promise.d.ts
+  'PromiseFulfilledResult',
+  'PromiseRejectedResult',
+  'PromiseSettledResult',
+
+  // lib.es2020.symbol.wellknown.d.ts
+  'RegExpStringIterator',
+
+  // lib.es2021.promise.d.ts
+  'AggregateErrorConstructor',
+
+  // lib.es2021.weakref.d.ts
+  'FinalizationRegistryConstructor',
+  'WeakRefConstructor',
+
+  // lib.es2022.error.d.ts
+  'ErrorOptions',
+
+  // lib.es2022.regexp.d.ts
+  'RegExpIndicesArray',
+
+  // lib.es2024.promise.d.ts
+  'PromiseWithResolvers',
+
+  // lib.es2025.collection.d.ts
+  'ReadonlySetLike',
+
+  // lib.es2025.iterator.d.ts
+  'IteratorObjectConstructor',
+
+  // lib.esnext.disposable.d.ts
+  'AsyncDisposable',
+  'AsyncDisposableStackConstructor',
+  'Disposable',
+  'DisposableStackConstructor',
+  'SuppressedErrorConstructor',
+
+  // lib.decorators.d.ts
+  'ClassAccessorDecoratorContext',
+  'ClassAccessorDecoratorResult',
+  'ClassAccessorDecoratorTarget',
+  'ClassDecoratorContext',
+  'ClassFieldDecoratorContext',
+  'ClassGetterDecoratorContext',
+  'ClassMemberDecoratorContext',
+  'ClassMethodDecoratorContext',
+  'ClassSetterDecoratorContext',
+  'DecoratorContext',
+  'DecoratorMetadata',
+  'DecoratorMetadataObject',
+
+  // lib.decorators.legacy.d.ts
+  'ClassDecorator',
+  'MethodDecorator',
+  'ParameterDecorator',
+  'PropertyDecorator',
 ];
 
 /**

@@ -784,6 +784,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         ecmaVersion: 2_022,
       },
     },
+    {
+      code: `
+        /** @type {ReadonlyArray<string>} */
+        export const d = [];
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The type \'ReadonlyArray\' is undefined.',
+        },
+      ],
+      languageOptions: {
+        sourceType: 'module',
+      },
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
 
   ],
   valid: [
@@ -2428,6 +2448,41 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       languageOptions: {
         ecmaVersion: 2_022,
+      },
+    },
+    {
+      code: `
+        /** @type {Readonly<Record<string, string>>} */
+        export const a = {};
+
+        /** @type {ReadonlySet<string>} */
+        export const b = new Set();
+
+        /** @type {ReadonlyMap<string, number>} */
+        export const c = new Map();
+
+        /** @type {ReadonlyArray<string>} */
+        export const d = [];
+
+        /** @type {PropertyKey} */
+        export const e = 'e';
+
+        /**
+         * @param {ArrayLike<number>} list
+         * @param {PromiseLike<void>} thenable
+         * @param {TemplateStringsArray} strings
+         * @returns {Generator<number, void, unknown>}
+         */
+        export function * f (list, thenable, strings) {}
+
+        /**
+         * @param {AsyncIterable<string>} source
+         * @returns {AsyncGenerator<string>}
+         */
+        export async function * g (source) {}
+      `,
+      languageOptions: {
+        sourceType: 'module',
       },
     },
   ],
