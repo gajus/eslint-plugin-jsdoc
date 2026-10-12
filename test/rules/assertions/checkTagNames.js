@@ -27,9 +27,7 @@ const buildTagBlock = (tags) => {
  * @returns {Integer}
  */
 const lineCount = (code) => {
-  /* eslint-disable jsdoc/no-undefined-types -- TS */
   return /** @type {RegExpMatchArray} */ (code.match(/\n/gv)).length;
-  /* eslint-enable jsdoc/no-undefined-types -- TS */
 };
 
 // We avoid testing all closure tags as too many

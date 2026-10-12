@@ -42,6 +42,14 @@ The following types are always considered defined.
 - `this`, `true`, `false`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
+In "typescript" `settings.jsdoc.mode`, the global types of TypeScript's
+standard library (`typescript/lib/lib.es*.d.ts` and
+`typescript/lib/lib.decorators*.d.ts`) are also considered defined, e.g., the
+[utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+and `ReadonlyArray`, `ReadonlyMap`, `ReadonlySet`, `PropertyKey`, `ArrayLike`,
+`PromiseLike`, `Generator`, `AsyncGenerator`, `AsyncIterable` or
+`TemplateStringsArray`.
+
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
@@ -443,6 +451,11 @@ export function f(s: Api.Status, m: unknown): void {}
 /** xyz {@link property} */
 export default function () {}
 // Message: The type 'property' is undefined.
+
+/** @type {ReadonlyArray<string>} */
+export const d = [];
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: The type 'ReadonlyArray' is undefined.
 ````
 
 
@@ -1388,5 +1401,34 @@ export class MyClass {
 export default class MyClass {
   property = true;
 }
+
+/** @type {Readonly<Record<string, string>>} */
+export const a = {};
+
+/** @type {ReadonlySet<string>} */
+export const b = new Set();
+
+/** @type {ReadonlyMap<string, number>} */
+export const c = new Map();
+
+/** @type {ReadonlyArray<string>} */
+export const d = [];
+
+/** @type {PropertyKey} */
+export const e = 'e';
+
+/**
+ * @param {ArrayLike<number>} list
+ * @param {PromiseLike<void>} thenable
+ * @param {TemplateStringsArray} strings
+ * @returns {Generator<number, void, unknown>}
+ */
+export function * f (list, thenable, strings) {}
+
+/**
+ * @param {AsyncIterable<string>} source
+ * @returns {AsyncGenerator<string>}
+ */
+export async function * g (source) {}
 ````
 
