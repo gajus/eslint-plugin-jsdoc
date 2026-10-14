@@ -1170,6 +1170,32 @@ const foo = autolog(
 function quux (foo) {\r
 }
 // Message: Missing JSDoc comment.
+
+/** The controller. */
+export default class extends Controller {
+  connect () {
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export default {
+  data () {
+  },
+  methods: {
+    go () {
+    },
+  },
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export const obj = {
+  method () {
+  },
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 
@@ -2203,5 +2229,13 @@ export class Foo {
     }
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"MethodDefinition":true}}]
+
+const obj = {
+  method () {
+  },
+};
+export default wrap(function () {
+});
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 ````
 
