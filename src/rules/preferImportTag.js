@@ -77,6 +77,17 @@ export default iterateJsdoc(({
    */
   const createImportInserter = (importText) => {
     return (fixer) => {
+      // A hashbang (`#!`) must stay on the first line
+      const hashbang = (/^#!.*(?:\r\n|\n)/v).exec(sourceCode.text);
+      if (hashbang) {
+        return fixer.insertTextAfterRange(
+          [
+            0, hashbang[0].length,
+          ],
+          `${importText}${hashbang[0].endsWith('\r\n') ? '\r\n' : '\n'}`,
+        );
+      }
+
       const programNode = sourceCode.ast;
       const commentNodes = sourceCode.getCommentsBefore(programNode);
 

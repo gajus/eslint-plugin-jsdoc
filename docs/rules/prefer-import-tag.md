@@ -331,6 +331,16 @@ let foo;
 
 /** @type { import('./lib/someFile.js').someImport } */
 // Message: Inline `import()` found; prefer `@import`
+
+#!/usr/bin/env node
+/** @type {import('eslint').Linter} */
+let linter;
+// Message: Inline `import()` found; prefer `@import`
+
+#!/usr/bin/env node\r
+/** @type {import('eslint').Linter} */\r
+let linter;
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 
