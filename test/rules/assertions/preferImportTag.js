@@ -969,6 +969,33 @@ let foo;
         /** @type {$k$$l$lib$l$someFile$k$js.someImport} */
       `,
     },
+    {
+      code: `#!/usr/bin/env node
+/** @type {import('eslint').Linter} */
+let linter;
+`,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `#!/usr/bin/env node
+/** @import * as eslint from 'eslint'; */
+/** @type {eslint.Linter} */
+let linter;
+`,
+    },
+    {
+      code: '#!/usr/bin/env node\r\n/** @type {import(\'eslint\').Linter} */\r\nlet linter;\r\n',
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: '#!/usr/bin/env node\r\n/** @import * as eslint from \'eslint\'; */\r\n/** @type {eslint.Linter} */\r\nlet linter;\r\n',
+    },
   ],
   valid: [
     {
