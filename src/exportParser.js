@@ -20,8 +20,7 @@ const debug = debugModule('requireExportJsdoc');
  *   },
  *   special?: true,
  *   globalVars?: CreatedNode,
- *   exported?: boolean,
- *   ANONYMOUS_DEFAULT?: import('eslint').Rule.Node
+ *   exported?: boolean
  * }} CreatedNode
  */
 
@@ -519,12 +518,19 @@ const mapVariables = function (node, globals, opt, isExport) {
       );
       if (symbol) {
         symbol.exported = true;
-        /* c8 ignore next 6 */
       } else {
-      // if (!node.id) {
-        globals.ANONYMOUS_DEFAULT = /** @type {import('eslint').Rule.Node} */ (
-          node.declaration
+        // Anonymous default export, e.g., `export default class {}` or
+        //   `export default {}`; `default` cannot be a variable name
+        const anonymousSymbol = getSymbol(
+          /** @type {import('eslint').Rule.Node} */
+          (node.declaration),
+          globals,
+          globals,
         );
+        if (anonymousSymbol) {
+          anonymousSymbol.exported = true;
+          globals.props.default = anonymousSymbol;
+        }
       }
 
       break;
@@ -804,7 +810,11 @@ const findExportedNode = function (block, node, cache) {
   for (const propval of Object.values(props)) {
     const pval = /** @type {CreatedNode} */ (propval);
     blockCache.push(pval);
-    if (pval.exported && (node === pval.value || findNode(node, pval.value))) {
+    if (pval.exported && (
+      node === pval.value || findNode(node, pval.value) ||
+      // Object literals, e.g., `export const obj = {method () {}}`
+      findNode(node, pval)
+    )) {
       return true;
     }
 

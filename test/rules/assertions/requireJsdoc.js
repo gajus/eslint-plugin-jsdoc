@@ -4467,6 +4467,125 @@ function quux (foo) {
       ],
       output: '/**\r\n *\r\n */\r\nfunction quux (foo) {\r\n}',
     },
+    {
+      code: `
+        /** The controller. */
+        export default class extends Controller {
+          connect () {
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        sourceType: 'module',
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+        /** The controller. */
+        export default class extends Controller {
+          /**
+           *
+           */
+          connect () {
+          }
+        }
+      `,
+    },
+    {
+      code: `
+        export default {
+          data () {
+          },
+          methods: {
+            go () {
+            },
+          },
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        sourceType: 'module',
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      output: `
+        export default {
+          /**
+           *
+           */
+          data () {
+          },
+          methods: {
+            /**
+             *
+             */
+            go () {
+            },
+          },
+        };
+      `,
+    },
+    {
+      code: `
+        export const obj = {
+          method () {
+          },
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        sourceType: 'module',
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      output: `
+        export const obj = {
+          /**
+           *
+           */
+          method () {
+          },
+        };
+      `,
+    },
   ],
   valid: [
     {
@@ -6873,6 +6992,27 @@ function quux (foo) {
           publicOnly: true,
           require: {
             MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        const obj = {
+          method () {
+          },
+        };
+        export default wrap(function () {
+        });
+      `,
+      languageOptions: {
+        sourceType: 'module',
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
           },
         },
       ],
