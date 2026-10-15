@@ -970,6 +970,68 @@ let foo;
       `,
     },
     {
+      code: `
+        /** @import * as $k$$l$lib$l$someFile$k$js from './lib/someFile.js'; */
+        /** @type { import('./lib/someFile.js').anotherImport } */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as $k$$l$lib$l$someFile$k$js from './lib/someFile.js'; */
+        /** @type {$k$$l$lib$l$someFile$k$js.anotherImport} */
+      `,
+    },
+    {
+      code: `
+        /** @import * as $ from 'jquery'; */
+        /** @type { import('jquery').Event } */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as $ from 'jquery'; */
+        /** @type {$.Event} */
+      `,
+    },
+    {
+      code: `
+        /** @import { $Ref } from './refs.js'; */
+        /** @type { import('./refs.js').$Ref } */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import { $Ref } from './refs.js'; */
+        /** @type {$Ref} */
+      `,
+    },
+    {
+      code: `
+        /** @type { import('./lib/someFile.js').default } */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import $k$$l$lib$l$someFile$k$js from './lib/someFile.js'; */
+        /** @type {$k$$l$lib$l$someFile$k$js} */
+      `,
+    },
+    {
       code: `#!/usr/bin/env node
 /** @type {import('eslint').Linter} */
 let linter;
