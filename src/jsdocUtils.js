@@ -1637,7 +1637,7 @@ const splitTopLevelCommas = (str) => {
 const parseClosureTemplateTag = (tag) => {
   return splitTopLevelCommas(tag.name)
     .map((type) => {
-      return type.trim().replace(/^\[?(?<name>.*?)=.*$/v, '$<name>');
+      return type.trim().replace(/^\[?\s*(?<name>.*?)\s*=.*$/v, '$<name>');
     });
 };
 
