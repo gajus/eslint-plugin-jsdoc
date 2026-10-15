@@ -220,6 +220,13 @@ export default class <NumType> {
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"template":false}}}
 // Message: Unexpected tag `@template`
+
+/**
+ * @template [T = string]
+ * @template [U = number]
+ * @typedef {[T]} Single
+ */
+// Message: @template U not in use
 ````
 
 
@@ -417,6 +424,12 @@ export function createMessageChannel(messageType) {
 
   return messageChannel;
 }
+
+/**
+ * @template [T = "json"]
+ * @template {string} [ U = string ] - A key
+ * @typedef {(this: T, key: U) => void} SimpleCallback
+ */
 
 /**
  * @template T

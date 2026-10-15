@@ -216,6 +216,14 @@ describe('jsdocUtils', () => {
         'T',
       ]);
     });
+    it('drops whitespace around the default value\'s `=`', () => {
+      // @ts-expect-error Testing
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: '[ T = string, U = number ]',
+      })).to.deep.equal([
+        'T', 'U',
+      ]);
+    });
     it('does not let an unbalanced closer push depth below zero', () => {
       // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({

@@ -1430,5 +1430,14 @@ export function * f (list, thenable, strings) {}
  * @returns {AsyncGenerator<string>}
  */
 export async function * g (source) {}
+
+/**
+ * @template [T = unknown]
+ * @param {T} [x]
+ * @returns {T|undefined}
+ */
+function get (x) {
+  return x;
+}
 ````
 

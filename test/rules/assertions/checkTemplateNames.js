@@ -484,6 +484,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @template [T = string]
+         * @template [U = number]
+         * @typedef {[T]} Single
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@template U not in use',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -785,6 +800,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
           return messageChannel;
         }
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template [T = "json"]
+         * @template {string} [ U = string ] - A key
+         * @typedef {(this: T, key: U) => void} SimpleCallback
+         */
       `,
     },
     {

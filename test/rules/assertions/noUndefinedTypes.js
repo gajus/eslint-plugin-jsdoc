@@ -2485,5 +2485,17 @@ export default /** @type {import('../index.js').TestCases} */ ({
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /**
+         * @template [T = unknown]
+         * @param {T} [x]
+         * @returns {T|undefined}
+         */
+        function get (x) {
+          return x;
+        }
+      `,
+    },
   ],
 });
