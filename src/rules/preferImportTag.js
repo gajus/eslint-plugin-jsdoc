@@ -204,11 +204,11 @@ export default iterateJsdoc(({
       }
 
       /**
-       * @param {string} name
+       * @param {string} matchingName An identifier (escape module specifiers
+       *   with `toValidIdentifier` before passing them)
        * @param {string[]} extrPathSegments
        */
-      const getFixer = (name, extrPathSegments) => {
-        const matchingName = toValidIdentifier(name);
+      const getFixer = (matchingName, extrPathSegments) => {
         return () => {
           /** @type {import('jsdoc-type-pratt-parser').NamePathResult|undefined} */
           let node = nodes.at(0);
@@ -434,7 +434,7 @@ export default iterateJsdoc(({
           'Inline `import()` found; prefer `@import`',
           tag,
           enableFixer ? (fixer) => {
-            getFixer(element.value, [])();
+            getFixer(toValidIdentifier(element.value), [])();
             return createImportInserter(
               `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */`,
             )(fixer);
@@ -449,9 +449,9 @@ export default iterateJsdoc(({
           'Inline `import()` found; prefer `@import`',
           tag,
           enableFixer ? (fixer) => {
-            getFixer(element.value, [])();
+            getFixer(toValidIdentifier(element.value), [])();
             return createImportInserter(
-              `/** @import ${element.value} from '${element.value}'; */`,
+              `/** @import ${toValidIdentifier(element.value)} from '${element.value}'; */`,
             )(fixer);
           } : null,
         );
@@ -463,12 +463,12 @@ export default iterateJsdoc(({
         tag,
         enableFixer ? (fixer) => {
           if (outputType === 'namespaced-import') {
-            getFixer(element.value, [
+            getFixer(toValidIdentifier(element.value), [
               ...pathSegments,
             ])();
           } else {
             getFixer(
-              /** @type {string} */ (pathSegments.at(-1)),
+              toValidIdentifier(/** @type {string} */ (pathSegments.at(-1))),
               pathSegments.slice(0, -1),
             )();
           }

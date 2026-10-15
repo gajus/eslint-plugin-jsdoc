@@ -332,6 +332,21 @@ let foo;
 /** @type { import('./lib/someFile.js').someImport } */
 // Message: Inline `import()` found; prefer `@import`
 
+/** @import * as $k$$l$lib$l$someFile$k$js from './lib/someFile.js'; */
+/** @type { import('./lib/someFile.js').anotherImport } */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @import * as $ from 'jquery'; */
+/** @type { import('jquery').Event } */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @import { $Ref } from './refs.js'; */
+/** @type { import('./refs.js').$Ref } */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type { import('./lib/someFile.js').default } */
+// Message: Inline `import()` found; prefer `@import`
+
 #!/usr/bin/env node
 /** @type {import('eslint').Linter} */
 let linter;
