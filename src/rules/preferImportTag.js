@@ -48,12 +48,14 @@ export default iterateJsdoc(({
       );
     });
 
+  // Only `@typedef` names are type aliases; names of `@param`,
+  //   `@property`, `@const`, etc. are not types
   const typedefs = comments
     .flatMap((doc) => {
       return doc.tags.filter(({
         tag,
       }) => {
-        return utils.isNameOrNamepathDefiningTag(tag);
+        return tag === 'typedef';
       });
     });
 

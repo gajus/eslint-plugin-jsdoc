@@ -1058,6 +1058,87 @@ let linter;
       ],
       output: '#!/usr/bin/env node\r\n/** @import * as eslint from \'eslint\'; */\r\n/** @type {eslint.Linter} */\r\nlet linter;\r\n',
     },
+    {
+      code: `
+        /**
+         * @param {import('eslint').Linter} linter
+         */
+        function quux (linter) {}
+
+        /** @type {import('eslint').Linter} */
+        let x;
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as eslint from 'eslint'; */
+        /**
+         * @param {import('eslint').Linter} linter
+         */
+        function quux (linter) {}
+
+        /** @type {eslint.Linter} */
+        let x;
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} Options
+         * @property {import('./config.js').Config} config
+         */
+
+        /**
+         * @returns {import('./config.js').Config}
+         */
+        function load () {}
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as $k$$l$config$k$js from './config.js'; */
+        /**
+         * @typedef {object} Options
+         * @property {import('./config.js').Config} config
+         */
+
+        /**
+         * @returns {$k$$l$config$k$js.Config}
+         */
+        function load () {}
+      `,
+    },
+    {
+      code: `
+        /** @const {import('eslint').Linter} LINTER */
+        const LINTER = getLinter();
+
+        /** @type {import('eslint').Linter} */
+        let x;
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as eslint from 'eslint'; */
+        /** @const {import('eslint').Linter} LINTER */
+        const LINTER = getLinter();
+
+        /** @type {eslint.Linter} */
+        let x;
+      `,
+    },
   ],
   valid: [
     {
