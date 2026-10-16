@@ -47,12 +47,20 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, (nde) => {
+    traverse(parsedType, (nde, parentNode) => {
       const {
         type,
         value,
       } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
       if (type === 'JsdocTypeName') {
+        usedNames.add(value);
+      // An unquoted index of an indexed access type, e.g., `K` in `T[K]`
+      } else if (
+        type === 'JsdocTypeProperty' &&
+        parentNode?.type === 'JsdocTypeNamePath' &&
+        parentNode.pathType === 'property-brackets' &&
+        !(/** @type {import('jsdoc-type-pratt-parser').PropertyResult} */ (nde).meta.quote)
+      ) {
         usedNames.add(value);
       }
     });

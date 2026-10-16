@@ -152,6 +152,13 @@ export function identity<Type>(arg: Type): Type {
 // Message: @template D not in use
 
 /**
+ * @template T
+ * @template K
+ * @typedef {T["K"]} ValueOfK
+ */
+// Message: @template K not in use
+
+/**
  * @template D
  * @template V
  */
@@ -278,6 +285,12 @@ export type Extras<D, U, V> = [D, U, V | undefined];
 /**
  * @typedef Foo
  * @prop {string} bar
+ */
+
+/**
+ * @template T
+ * @template {keyof T} K
+ * @typedef {T[K]} ValueOf
  */
 
 /**

@@ -300,6 +300,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * @template T
+         * @template K
+         * @typedef {T["K"]} ValueOfK
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@template K not in use',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
          * @template D
          * @template V
          */
@@ -572,6 +587,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /**
          * @typedef Foo
          * @prop {string} bar
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @template {keyof T} K
+         * @typedef {T[K]} ValueOf
          */
       `,
     },
