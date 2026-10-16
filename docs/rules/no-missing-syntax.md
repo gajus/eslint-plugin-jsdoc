@@ -152,9 +152,9 @@ function quux () {
 /**
  * @implements {Bar|Foo}
  */
-function quux () {
+const quux = function () {
 
-}
+};
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
 // Message: Syntax is required: FunctionDeclaration
 
@@ -278,5 +278,26 @@ function quux () {
 
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"any"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(2))","context":"FunctionDeclaration"}]}]
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration"}]}]
+
+/**
+ * @callback Foo
+ */
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["any"]}]
 ````
 

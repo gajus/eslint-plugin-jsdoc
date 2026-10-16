@@ -1891,7 +1891,7 @@ const getUtils = (
   utils.findContext = (contexts, comment) => {
     const foundContext = contexts.find((cntxt) => {
       return typeof cntxt === 'string' ?
-        esquery.matches(
+        cntxt === 'any' || esquery.matches(
           /** @type {Node} */ (node),
           esquery.parse(cntxt),
           undefined,
@@ -2667,7 +2667,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return iterateAllJsdocs(
             iterator,
             ruleConfig,
-            hasObjectAny ? /** @type {ContextObject[]} */ (contexts) : null,
+            hasObjectAny || ruleConfig.matchContext ?
+              /** @type {ContextObject[]} */ (contexts) :
+              null,
             ruleConfig.matchContext,
           ).create(context);
         }

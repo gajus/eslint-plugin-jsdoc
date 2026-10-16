@@ -750,6 +750,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @callback Foo
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Syntax is restricted: any',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+            'any',
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
