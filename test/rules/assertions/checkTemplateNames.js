@@ -7,6 +7,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * @template T
+         * @template {keyof T} K
+         * @param {string} x
+         * @returns {void}
+         */
+        function quux (x) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@template K not in use',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
          * @template D
          * @template V
          */
@@ -836,6 +853,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @implements {Iterable<T>}
          */
         export class MyIterable {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {Record<string, unknown>} T
+         * @template {keyof T} K
+         * @param {K} key
+         * @returns {void}
+         */
+        function quux (key) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @template [U=T[]]
+         * @param {U} x
+         * @returns {void}
+         */
+        function quux (x) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {B} A
+         * @template B
+         * @typedef {A} AssertExtends
+         */
       `,
     },
   ],
