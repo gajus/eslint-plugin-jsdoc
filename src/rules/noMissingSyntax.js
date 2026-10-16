@@ -65,7 +65,7 @@ export default iterateJsdoc(({
 
   setDefaults(state);
 
-  incrementSelector(state, contextStr, String(comment));
+  incrementSelector(state, contextStr, comment ?? '');
 }, {
   contextSelected: true,
   exit ({

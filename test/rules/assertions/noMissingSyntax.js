@@ -189,9 +189,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /**
        * @implements {Bar|Foo}
        */
-      function quux () {
+      const quux = function () {
 
-      }
+      };
       `,
       errors: [
         {
@@ -508,6 +508,56 @@ export default /** @type {import('../index.js').TestCases} */ ({
               comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
               context: 'FunctionDeclaration',
             },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @callback Foo
+       */
+      `,
+      options: [
+        {
+          contexts: [
+            'any',
           ],
         },
       ],

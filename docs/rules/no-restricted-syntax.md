@@ -272,6 +272,12 @@ function quux () {
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format=\"plain\"]))","context":"FunctionDeclaration"}]}]
 // Message: Syntax is restricted: FunctionDeclaration with JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format="plain"]))
+
+/**
+ * @callback Foo
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration","any"]}]
+// Message: Syntax is restricted: any
 ````
 
 
