@@ -2,6 +2,7 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
+  getClosureTemplateTagDefaults,
   getTags,
 } from '../jsdocUtils.js';
 import {
@@ -76,6 +77,16 @@ export default iterateJsdoc(({
   };
 
   const checkTemplateTags = () => {
+    // A template name may be used only within the constraint or default of
+    //   another template, e.g., `T` in `@template {keyof T} K` or
+    //   `@template [U=T[]]`
+    for (const tag of templateTags) {
+      checkForUsedTypes(tag.type);
+      for (const defaultType of getClosureTemplateTagDefaults(tag)) {
+        checkForUsedTypes(defaultType);
+      }
+    }
+
     for (const tag of templateTags) {
       const names = utils.parseClosureTemplateTag(tag);
       for (const nme of names) {

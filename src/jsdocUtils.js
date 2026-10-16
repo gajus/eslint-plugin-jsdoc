@@ -1642,6 +1642,20 @@ const parseClosureTemplateTag = (tag) => {
 };
 
 /**
+ * Gets the default types of GCC Generic/Template types, e.g., `T[]` for
+ *   `@template [U=T[]]`
+ * @param {import('comment-parser').Spec} tag
+ * @returns {string[]}
+ */
+const getClosureTemplateTagDefaults = (tag) => {
+  return splitTopLevelCommas(tag.name)
+    .map((type) => {
+      return type.trim().replace(/^\[?[^=]*(?:=(?<dflt>.*?)\]?)?$/v, '$<dflt>').trim();
+    })
+    .filter(Boolean);
+};
+
+/**
  * @typedef {true|string[]} DefaultContexts
  */
 
@@ -2200,6 +2214,7 @@ export {
   flattenRoots,
   forEachPreferredTag,
   getAllTags,
+  getClosureTemplateTagDefaults,
   getContextObject,
   getDocumentNamepathDefiningTags,
   getFunctionParameterNames,
