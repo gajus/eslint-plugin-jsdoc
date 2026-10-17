@@ -914,13 +914,24 @@ export default iterateJsdoc(({
             return;
           }
 
-          if (parent?.type === 'JsdocTypeFunction' &&
-            /** @type {import('jsdoc-type-pratt-parser').FunctionResult} */
-            (parent)?.typeParameters?.some((typeParam) => {
+          // Type parameters of a function type or signature (e.g.,
+          //   `<T>(x: T) => T` or `{<T>(x: T): T}`) are in scope anywhere
+          //   within that function type
+          /**
+           * @type {import('jsdoc-type-pratt-parser').NonRootResult & {
+           *   _parent?: import('jsdoc-type-pratt-parser').NonRootResult,
+           *   typeParameters?: import('jsdoc-type-pratt-parser').TypeParameterResult[]
+           * }|undefined}
+           */
+          let ancestor = parent;
+          while (ancestor) {
+            if (ancestor.typeParameters?.some((typeParam) => {
               return value === typeParam.name.value;
-            })
-          ) {
-            return;
+            })) {
+              return;
+            }
+
+            ancestor = ancestor._parent;
           }
 
           if (parent?.type === 'JsdocTypeInfer' && value === parent.element.value) {
