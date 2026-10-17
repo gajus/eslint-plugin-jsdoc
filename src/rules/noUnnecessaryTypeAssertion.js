@@ -482,6 +482,23 @@ export default iterateJsdoc(({
     'VariableDeclarator',
   ]);
 
+  /**
+   * The type TypeScript infers for an initializer. A mutable binding (`let` or
+   * `var`) widens a literal (`'a'` becomes `string`, `5` becomes `number`), so
+   * a `@type` that only matches the unwidened literal is still narrowing. A
+   * `const` binding keeps the literal type.
+   * @param {any} initializerTsNode `ts.Node`
+   * @param {boolean} mutableBinding `true` when the declaration is not `const`
+   * @returns {any} `ts.Type`
+   */
+  const inferredInitializerType = (initializerTsNode, mutableBinding) => {
+    const inferredType = checker.getTypeAtLocation(initializerTsNode);
+
+    return mutableBinding ?
+      checker.getBaseTypeOfLiteralType(inferredType) :
+      inferredType;
+  };
+
   // 3. `/** @type {T} */ const x = 5;`
   if (node?.type === 'VariableDeclaration') {
     // A leading `@type` tag only influences the first declarator (TypeScript
@@ -513,7 +530,13 @@ export default iterateJsdoc(({
       return;
     }
 
-    const declInferredType = checker.getTypeAtLocation(declInitTsNode);
+    // Widen `let`/`var` the same way as an inline cast. Otherwise
+    // `/** @type {'a' | 'b'} */ let mode = 'a'` looks redundant, and removing
+    // the tag widens `mode` to `string`.
+    const declInferredType = inferredInitializerType(
+      declInitTsNode,
+      node.kind !== 'const',
+    );
     const declAssertedType = checker.getTypeFromTypeNode(jsdocTypeNode);
 
     if (isTupleConversionIdiom(declAssertedType, decl.init)) {
@@ -600,10 +623,10 @@ export default iterateJsdoc(({
   // For a mutable binding (`let`/`var`) TypeScript widens the initializer, so a
   // narrowing cast such as `/** @type {5} */` is doing real work; widen the
   // uncast type to match before judging redundancy.
-  const mutableBinding = Boolean(declaration) && declaration.kind !== 'const';
-  const castInferredType = mutableBinding ?
-    checker.getBaseTypeOfLiteralType(checker.getTypeAtLocation(exprTsNode)) :
-    checker.getTypeAtLocation(exprTsNode);
+  const castInferredType = inferredInitializerType(
+    exprTsNode,
+    Boolean(declaration) && declaration.kind !== 'const',
+  );
   const castAssertedType = checker.getTypeFromTypeNode(typeTag.typeExpression.type);
 
   if (isTupleConversionIdiom(castAssertedType, node)) {
