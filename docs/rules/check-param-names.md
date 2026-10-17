@@ -1360,5 +1360,8 @@ const emit = defineEmits<{
    */
   submitField: [index: number];
 }>();
+
+/** @typedef {string} Foo */
+// Settings: {"jsdoc":{"contexts":["any"]}}
 ````
 

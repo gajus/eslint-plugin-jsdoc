@@ -7017,5 +7017,22 @@ function quux (foo) {
         },
       ],
     },
+    {
+      code: `
+        /** Doc */
+        function quux () {
+        }
+      `,
+      settings: {
+        jsdoc: {
+          contexts: [
+            {
+              comment: 'JsdocBlock',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      },
+    },
   ],
 });
