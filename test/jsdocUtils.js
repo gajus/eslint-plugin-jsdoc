@@ -167,6 +167,22 @@ describe('jsdocUtils', () => {
       });
     });
   });
+  describe('getClosureTemplateTagDefaults()', () => {
+    it('returns no defaults for names without defaults', () => {
+      // @ts-expect-error Testing
+      expect(jsdocUtils.getClosureTemplateTagDefaults({
+        name: 'S, T',
+      })).to.deep.equal([]);
+    });
+    it('returns the default types', () => {
+      // @ts-expect-error Testing
+      expect(jsdocUtils.getClosureTemplateTagDefaults({
+        name: '[T=Record<string, unknown>, U=T[]]',
+      })).to.deep.equal([
+        'Record<string, unknown>', 'T[]',
+      ]);
+    });
+  });
   describe('parseClosureTemplateTag()', () => {
     it('splits multiple template names on top-level commas', () => {
       // @ts-expect-error Testing

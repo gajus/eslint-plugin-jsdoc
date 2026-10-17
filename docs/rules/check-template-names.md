@@ -42,6 +42,15 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * @template T
+ * @template {keyof T} K
+ * @param {string} x
+ * @returns {void}
+ */
+function quux (x) {}
+// Message: @template K not in use
+
+/**
  * @template D
  * @template V
  */
@@ -141,6 +150,13 @@ export function identity<Type>(arg: Type): Type {
   return arg;
 }
 // Message: @template D not in use
+
+/**
+ * @template T
+ * @template K
+ * @typedef {T["K"]} ValueOfK
+ */
+// Message: @template K not in use
 
 /**
  * @template D
@@ -269,6 +285,12 @@ export type Extras<D, U, V> = [D, U, V | undefined];
 /**
  * @typedef Foo
  * @prop {string} bar
+ */
+
+/**
+ * @template T
+ * @template {keyof T} K
+ * @typedef {T[K]} ValueOf
  */
 
 /**
@@ -448,5 +470,27 @@ export class MySet extends Set {}
  * @implements {Iterable<T>}
  */
 export class MyIterable {}
+
+/**
+ * @template {Record<string, unknown>} T
+ * @template {keyof T} K
+ * @param {K} key
+ * @returns {void}
+ */
+function quux (key) {}
+
+/**
+ * @template T
+ * @template [U=T[]]
+ * @param {U} x
+ * @returns {void}
+ */
+function quux (x) {}
+
+/**
+ * @template {B} A
+ * @template B
+ * @typedef {A} AssertExtends
+ */
 ````
 
