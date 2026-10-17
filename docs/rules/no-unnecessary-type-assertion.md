@@ -413,6 +413,30 @@ export const first = /** @type {string} */ (text);
 export const second = /** @type {string} */ (text);
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false}]
 // Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
+/**
+ * @type {'a' | 'b'}
+ */
+const mode = 'a';
+// Message: The @type tag declaring "'a' | 'b'" is redundant as TypeScript infers it automatically.
+
+/**
+ * @type {string}
+ */
+let mode = 'a';
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
+/**
+ * @type {string}
+ */
+var mode = 'a';
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
+/**
+ * @type {{mode: string}}
+ */
+const {mode} = {mode: 'a'};
+// Message: The @type tag declaring "{mode: string}" is redundant as TypeScript infers it automatically.
 ````
 
 
@@ -658,5 +682,30 @@ const keyRange = {
   ...base,
   run: (arg) => arg,
 };
+
+/**
+ * @type {'a' | 'b'}
+ */
+let mode = 'a';
+
+/**
+ * @type {'a' | 'b'}
+ */
+var mode = 'a';
+
+/**
+ * @type {{mode: 'a' | 'b'}}
+ */
+let {mode} = {mode: 'a'};
+
+/**
+ * @type {{mode: 'a' | 'b'}}
+ */
+var {mode} = {mode: 'a'};
+
+/**
+ * @type {'a' | 'b'}
+ */
+let mode = 'a', other = 'c';
 ````
 
