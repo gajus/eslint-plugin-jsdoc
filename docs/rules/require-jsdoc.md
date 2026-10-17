@@ -2237,5 +2237,10 @@ const obj = {
 export default wrap(function () {
 });
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/** Doc */
+function quux () {
+}
+// Settings: {"jsdoc":{"contexts":[{"comment":"JsdocBlock","context":"FunctionDeclaration"}]}}
 ````
 

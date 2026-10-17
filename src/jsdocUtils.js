@@ -1707,7 +1707,7 @@ const getContextObject = (contexts, checkJsdoc, handler, convertAny) => {
         lastIndex: idx,
         selector: prop.context,
       };
-      if (prop.comment) {
+      if (prop.comment && handler) {
         property = /** @type {string} */ (prop.context);
         value = checkJsdoc.bind(
           null,
