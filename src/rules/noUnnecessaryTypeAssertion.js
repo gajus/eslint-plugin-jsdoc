@@ -77,11 +77,10 @@ export default iterateJsdoc(({
 
       // eslint-disable-next-line no-console -- Warning user
       console.warn('⚠️ typescript is not installed. `jsdoc/no-unnecessary-type-assertion` will not work. To disable this warning, you must disable the rule.');
+      return;
     } finally {
       tsAttempted = true;
     }
-
-    return;
   }
 
   const types = utils.getTags('type');
