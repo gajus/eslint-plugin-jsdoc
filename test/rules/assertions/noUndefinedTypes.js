@@ -804,7 +804,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
-
+    {
+      code: `
+        /**
+         * @param {(x: unknown) => y is string} a
+         * @param {(x: unknown) => asserts y} b
+         * @param {(x: unknown) => x is Missing} c
+         */
+        function quux (a, b, c) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'y\' is undefined.',
+        },
+        {
+          line: 4,
+          message: 'The type \'y\' is undefined.',
+        },
+        {
+          line: 5,
+          message: 'The type \'Missing\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -2495,6 +2518,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function get (x) {
           return x;
         }
+      `,
+    },
+    {
+      code: `
+        /** @typedef {(value: unknown) => value is string} IsString */
+
+        /**
+         * @param {(x: unknown) => x is string} a
+         * @param {(x: unknown) => asserts x is string} b
+         * @param {(x: unknown) => asserts x} c
+         * @param {{check(x: unknown): x is string}} d
+         * @param {{(x: unknown): x is string}} e
+         * @returns {void}
+         */
+        function quux (a, b, c, d, e) {}
       `,
     },
   ],
