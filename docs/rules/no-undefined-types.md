@@ -456,6 +456,14 @@ export default function () {}
 export const d = [];
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: The type 'ReadonlyArray' is undefined.
+
+/**
+ * @param {(x: unknown) => y is string} a
+ * @param {(x: unknown) => asserts y} b
+ * @param {(x: unknown) => x is Missing} c
+ */
+function quux (a, b, c) {}
+// Message: The type 'y' is undefined.
 ````
 
 
@@ -1439,5 +1447,17 @@ export async function * g (source) {}
 function get (x) {
   return x;
 }
+
+/** @typedef {(value: unknown) => value is string} IsString */
+
+/**
+ * @param {(x: unknown) => x is string} a
+ * @param {(x: unknown) => asserts x is string} b
+ * @param {(x: unknown) => asserts x} c
+ * @param {{check(x: unknown): x is string}} d
+ * @param {{(x: unknown): x is string}} e
+ * @returns {void}
+ */
+function quux (a, b, c, d, e) {}
 ````
 
