@@ -406,6 +406,13 @@ export function w8b(/** @type {string} */ s) {
 const wide = 'hello';
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false,"fixTypeChangingCasts":false}]
 // Message: The @type tag declaring "string | number" is redundant as TypeScript infers it automatically.
+
+const text = String(1);
+
+export const first = /** @type {string} */ (text);
+export const second = /** @type {string} */ (text);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false}]
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
 ````
 
 

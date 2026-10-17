@@ -847,6 +847,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: null,
     },
+    {
+      code: `
+        const text = String(1);
+
+        export const first = /** @type {string} */ (text);
+        export const second = /** @type {string} */ (text);
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+        {
+          line: 5,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: null,
+    },
   ],
   valid: [
     {
