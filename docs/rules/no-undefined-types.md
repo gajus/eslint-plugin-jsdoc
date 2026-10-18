@@ -458,6 +458,13 @@ export const d = [];
 // Message: The type 'ReadonlyArray' is undefined.
 
 /**
+ * @param {{a: <T>(x: T) => T, b: T}} obj
+ * @param {{m<U>(): U, n(): U}} obj2
+ */
+function quux (obj, obj2) {}
+// Message: The type 'T' is undefined.
+
+/**
  * @param {(x: unknown) => y is string} a
  * @param {(x: unknown) => asserts y} b
  * @param {(x: unknown) => x is Missing} c
@@ -1447,6 +1454,18 @@ export async function * g (source) {}
 function get (x) {
   return x;
 }
+
+/**
+ * @param {<T>(value: T, cb?: (value: T) => string) => void} a
+ * @param {<T, U>(x: T[], f: (t: T) => U) => Promise<U[]>} b
+ * @param {<K extends string>(k: K) => {[P in K]: number}} c
+ * @param {{<T>(x: T): T}} d
+ * @param {{map<U>(f: (x: number) => U): U[]}} e
+ * @param {{new <T>(x: T): T}} f
+ * @param {<T>() => <U>(x: U) => [T, U]} g
+ * @returns {void}
+ */
+function quux (a, b, c, d, e, f, g) {}
 
 /** @typedef {(value: unknown) => value is string} IsString */
 
