@@ -491,7 +491,9 @@ export default iterateJsdoc(({
   for (const tag of jsdoc.tags) {
     const mightHaveTypePosition = utils.tagMightHaveTypePosition(tag.tag);
     const hasTypePosition = mightHaveTypePosition === true && Boolean(tag.type);
-    if (hasTypePosition && (!exemptTypedefs || !utils.isNameOrNamepathDefiningTag(tag.tag))) {
+    // Only the `@typedef` itself is exempt; `@param`, `@property`, `@const`,
+    //   etc. are not type aliases and their `import()` types are reported
+    if (hasTypePosition && (!exemptTypedefs || tag.tag !== 'typedef')) {
       iterateInlineImports(tag);
     }
   }
