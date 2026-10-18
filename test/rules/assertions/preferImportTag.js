@@ -1070,6 +1070,10 @@ let linter;
       `,
       errors: [
         {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+        {
           line: 7,
           message: 'Inline `import()` found; prefer `@import`',
         },
@@ -1077,11 +1081,11 @@ let linter;
       output: `
         /** @import * as eslint from 'eslint'; */
         /**
-         * @param {import('eslint').Linter} linter
+         * @param {eslint.Linter} linter
          */
         function quux (linter) {}
 
-        /** @type {eslint.Linter} */
+        /** @type {import('eslint').Linter} */
         let x;
       `,
     },
@@ -1099,6 +1103,10 @@ let linter;
       `,
       errors: [
         {
+          line: 4,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+        {
           line: 8,
           message: 'Inline `import()` found; prefer `@import`',
         },
@@ -1107,11 +1115,11 @@ let linter;
         /** @import * as $k$$l$config$k$js from './config.js'; */
         /**
          * @typedef {object} Options
-         * @property {import('./config.js').Config} config
+         * @property {$k$$l$config$k$js.Config} config
          */
 
         /**
-         * @returns {$k$$l$config$k$js.Config}
+         * @returns {import('./config.js').Config}
          */
         function load () {}
       `,
@@ -1126,16 +1134,20 @@ let linter;
       `,
       errors: [
         {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+        {
           line: 5,
           message: 'Inline `import()` found; prefer `@import`',
         },
       ],
       output: `
         /** @import * as eslint from 'eslint'; */
-        /** @const {import('eslint').Linter} LINTER */
+        /** @const {eslint.Linter} LINTER */
         const LINTER = getLinter();
 
-        /** @type {eslint.Linter} */
+        /** @type {import('eslint').Linter} */
         let x;
       `,
     },
