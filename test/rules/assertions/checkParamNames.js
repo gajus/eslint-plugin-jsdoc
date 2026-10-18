@@ -2468,6 +2468,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       code: `
         /** @typedef {string} Foo */
       `,
+      ignoreReadme: true,
       settings: {
         jsdoc: {
           contexts: [

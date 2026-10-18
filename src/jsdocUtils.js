@@ -1707,7 +1707,15 @@ const getContextObject = (contexts, checkJsdoc, handler, convertAny) => {
         lastIndex: idx,
         selector: prop.context,
       };
-      if (prop.comment && handler) {
+      if (prop.comment && !handler) {
+        throw new Error(
+          'The `comment` property of a `contexts` entry (e.g., one from ' +
+          '`settings.jsdoc.contexts`) is not supported by this rule; give the ' +
+          'rule its own `contexts` option instead.',
+        );
+      }
+
+      if (prop.comment) {
         property = /** @type {string} */ (prop.context);
         value = checkJsdoc.bind(
           null,
