@@ -1017,16 +1017,6 @@ function test(): (id: number) => string;
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
- * A function with return type
- */
-let test = (): (id: number) => string =>
-{
-  return (id) => `${id}`;
-}
-// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-/**
  * @param baz
  * @param options
  */
@@ -2023,5 +2013,14 @@ export async function fetchMarketstackEOD(
 export function x(foo) {
   console.log(foo);
 }
+
+/**
+ * A function with return type
+ */
+let test = (): (id: number) => string =>
+{
+  return (id) => `${id}`;
+}
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 ````
 

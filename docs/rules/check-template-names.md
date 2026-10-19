@@ -492,5 +492,11 @@ function quux (x) {}
  * @template B
  * @typedef {A} AssertExtends
  */
+
+/**
+ * @template T
+ * @param {{bar: string, [Symbol.dispose](): T}} Single
+ */
+function quux () {}
 ````
 

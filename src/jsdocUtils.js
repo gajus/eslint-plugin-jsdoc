@@ -6,10 +6,16 @@ import {
 } from './tagNames.js';
 import WarnSettings from './WarnSettings.js';
 import {
+  generate,
+} from '@es-joy/escodegen';
+import {
   parseComment,
   stringify,
   tryParse,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 /**
  * @typedef {number} Integer
@@ -971,6 +977,9 @@ const mayBeUndefinedTypeTag = (tag, mode) => {
       mode === 'permissive' ? undefined : [
         mode,
       ],
+      {
+        computedPropertyParser: espree,
+      },
     );
   } catch {
     // Ignore
@@ -2042,7 +2051,7 @@ const strictNativeTypes = [
  * @param {string} typeBracketSpacing
  */
 const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing = '') => {
-  const typeLines = stringify(parsedType).split('\n');
+  const typeLines = stringify(parsedType, generate).split('\n');
   const firstTypeLine = typeLines.shift();
   const lastTypeLine = typeLines.pop();
 

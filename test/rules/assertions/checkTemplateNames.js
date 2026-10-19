@@ -910,5 +910,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @param {{bar: string, [Symbol.dispose](): T}} Single
+         */
+        function quux () {}
+      `,
+    },
   ],
 });
