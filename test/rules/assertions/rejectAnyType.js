@@ -56,6 +56,39 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param {{bar: string, [Symbol.dispose](): any}}
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Prefer a more specific type to `any`',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{bar: string, [Symbol.dispose](): any}}
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Prefer a more specific type to `any`',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
   ],
   valid: [
     {

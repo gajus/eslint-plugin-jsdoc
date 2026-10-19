@@ -12,6 +12,9 @@ import {
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 import {
+  parse as espree,
+} from 'espree';
+import {
   parseImportsExports,
 } from 'parse-imports-exports';
 
@@ -805,8 +808,12 @@ export default iterateJsdoc(({
         ];
         return {
           parsedType: mode === 'permissive' ?
-            tryParseType(/** @type {string} */ (potentialType)) :
-            parseType(/** @type {string} */ (potentialType), mode),
+            tryParseType(/** @type {string} */ (potentialType), undefined, {
+              computedPropertyParser: espree,
+            }) :
+            parseType(/** @type {string} */ (potentialType), mode, {
+              computedPropertyParser: espree,
+            }),
           tag,
         };
       } catch {

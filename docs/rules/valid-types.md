@@ -1014,5 +1014,22 @@ const MY_BITMASK_CONSTANT = {
  * @template [T=Record<string, unknown>]
  */
 function quux () {}
+
+/**
+ * @type {{bar: string, [Symbol.dispose](): void}}
+ */
+using foo = {
+    bar: "baz",
+    [Symbol.dispose]: () => console.log("dispose")
+};
+
+/**
+ * @type {{bar: string, [Symbol.dispose](): void}}
+ */
+using foo = {
+    bar: "baz",
+    [Symbol.dispose]: () => console.log("dispose")
+};
+// Settings: {"jsdoc":{"mode":"permissive"}}
 ````
 

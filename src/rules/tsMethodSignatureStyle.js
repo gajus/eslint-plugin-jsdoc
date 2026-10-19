@@ -6,6 +6,9 @@ import {
   parse as parseType,
   traverse,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 export default iterateJsdoc(({
   context,
@@ -26,7 +29,11 @@ export default iterateJsdoc(({
     let parsedType;
     try {
       parsedType = parseType(
-        /** @type {string} */ (potentialType), 'typescript',
+        /** @type {string} */ (potentialType),
+        'typescript',
+        {
+          computedPropertyParser: espree,
+        },
       );
     } catch {
       return;

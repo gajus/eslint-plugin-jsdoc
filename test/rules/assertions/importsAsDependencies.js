@@ -70,6 +70,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @type {null|{bar: string, [Symbol.dispose](): import('sth').SomeApi}}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'import points to package which is not found in dependencies',
+        },
+      ],
+    },
   ],
   valid: [
     {

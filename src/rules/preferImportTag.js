@@ -2,6 +2,9 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
+  generate,
+} from '@es-joy/escodegen';
+import {
   commentParserToESTree,
   estreeToString,
   // getJSDocComment,
@@ -13,6 +16,9 @@ import {
 import {
   Linter,
 } from 'eslint';
+import {
+  parse as espree,
+} from 'espree';
 import {
   parseImportsExports,
 } from 'parse-imports-exports';
@@ -44,7 +50,15 @@ export default iterateJsdoc(({
     })
     .map((commentNode) => {
       return commentParserToESTree(
-        parseComment(commentNode, ''), mode === 'permissive' ? 'typescript' : mode,
+        parseComment(commentNode, ''),
+        mode === 'permissive' ? 'typescript' : mode,
+        {
+          jsdocTypePrattParserArgs: {
+            // Pass it for parity, but probably not needed
+            //   with the typedefs and import statements below
+            computedPropertyParser: espree,
+          },
+        },
       );
     });
 
@@ -145,8 +159,12 @@ export default iterateJsdoc(({
     let parsedType;
     try {
       parsedType = mode === 'permissive' ?
-        tryParseType(/** @type {string} */ (potentialType)) :
-        parseType(/** @type {string} */ (potentialType), mode);
+        tryParseType(/** @type {string} */ (potentialType), undefined, {
+          computedPropertyParser: espree,
+        }) :
+        parseType(/** @type {string} */ (potentialType), mode, {
+          computedPropertyParser: espree,
+        });
     } catch {
       return;
     }
@@ -193,7 +211,7 @@ export default iterateJsdoc(({
 
         pathSegments.unshift(
           currentNode.right.type === 'JsdocTypeIndexedAccessIndex' ?
-            stringify(currentNode.right.right) :
+            stringify(currentNode.right.right, generate) :
             currentNode.right.value,
         );
         nodes.unshift(currentNode);
@@ -272,7 +290,7 @@ export default iterateJsdoc(({
 
           for (const src of tag.source) {
             if (src.tokens.type) {
-              src.tokens.type = `{${stringify(parsedType)}}`;
+              src.tokens.type = `{${stringify(parsedType, generate)}}`;
               break;
             }
           }
@@ -303,7 +321,7 @@ export default iterateJsdoc(({
 
             if (
               (typedefNode.right.type === 'JsdocTypeIndexedAccessIndex' &&
-                stringify(typedefNode.right.right) !== pathSegment) ||
+                stringify(typedefNode.right.right, generate) !== pathSegment) ||
               (typedefNode.right.type !== 'JsdocTypeIndexedAccessIndex' &&
                 typedefNode.right.value !== pathSegment)
             ) {
@@ -351,7 +369,9 @@ export default iterateJsdoc(({
       const findMatchingImport = () => {
         for (const imprt of imports) {
           const parsedImport = parseImportsExports(
-            estreeToString(imprt).replace(/^\s*@/v, '').trim(),
+            estreeToString(imprt, {
+              jtppStringificationRules: generate,
+            }).replace(/^\s*@/v, '').trim(),
           );
 
           const namedImportsModuleSpecifier = Object.keys(parsedImport.namedImports || {})[0];
