@@ -229,6 +229,17 @@ includeCode
 
 Auto-removes types that are redundant with the [`typed` option](#user-content-typed).
 
+For `@property` and `@prop` tags flagged by that option, the fixer can instead
+move each description onto the matching property. This happens when every
+such tag has the form `@prop NAME - description`, `NAME` is a property of the
+object type literal or object expression on the attached declaration (including
+an `export` of that declaration), and that property does not already have a
+JSDoc comment. Each description is inserted as a new JSDoc block directly
+above the property, the tags are removed from the parent block, and the parent
+block is removed if nothing remains. If a name does not match, the tag has no
+description, or the attached value is not a recognized object, the fixer
+removes the tag name and leaves the remaining text in the parent comment.
+
 <a name="user-content-check-tag-names-options"></a>
 <a name="check-tag-names-options"></a>
 ## Options
@@ -850,6 +861,130 @@ export class Foo {
 }
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@private' is redundant when using a type system.
+
+/**
+ * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @prop IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+ */
+declare const TemplateType: {
+    BASIC: 'basic',
+    IMAGE: 'image',
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @prop MISSING - not a property of this object.
+ */
+declare const TemplateType: {
+    BASIC: 'basic',
+    IMAGE: 'image',
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * Kinds of template.
+ * @property BASIC - icon, title
+ *   and up to two buttons.
+ * @property IMAGE - image
+ */
+export const TemplateType = {
+    1: 'one',
+    'IMAGE': 'image',
+    [extra]: true,
+    ...rest,
+    BASIC: 'basic',
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @property IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+ */
+const TemplateType = {
+    /** Already documented. */
+    BASIC: 'basic',
+    IMAGE: 'image',
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property a - desc
+ */
+const [a] = [];
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property - orphan
+ */
+export {};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property BASIC - one
+ * @property BASIC - two
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC */const obj = {BASIC: 1};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC - icon
+ * @param foo
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @param foo
+ * @property BASIC - icon */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**\r
+ * Kinds.\r
+ * @property BASIC - icon\r
+ *\r
+ * more\r
+ */\r
+const obj = {\r
+    BASIC: 1,\r
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
 ````
 
 
@@ -1276,6 +1411,15 @@ export interface Options {
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 
 /** @protected */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * @prop BASIC - kept because `prop` is explicitly allowed.
+ */
+const TemplateType = {
+    BASIC: 'basic',
+};
+// Settings: {"jsdoc":{"tagNamePreference":{"prop":"prop"}}}
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 ````
 
