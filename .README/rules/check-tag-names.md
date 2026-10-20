@@ -215,6 +215,17 @@ includeCode
 
 Auto-removes types that are redundant with the [`typed` option](#typed).
 
+For `@property` and `@prop` tags flagged by that option, the fixer can instead
+move each description onto the matching property. This happens when every
+such tag has the form `@prop NAME - description`, `NAME` is a property of the
+object type literal or object expression on the attached declaration (including
+an `export` of that declaration), and that property does not already have a
+JSDoc comment. Each description is inserted as a new JSDoc block directly
+above the property, the tags are removed from the parent block, and the parent
+block is removed if nothing remains. If a name does not match, the tag has no
+description, or the attached value is not a recognized object, the fixer
+removes the tag name and leaves the remaining text in the parent comment.
+
 ## Options
 
 {"gitdown": "options"}
