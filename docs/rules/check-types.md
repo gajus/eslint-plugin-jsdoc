@@ -872,6 +872,14 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":{"replacement":"Object<>","unifyParentAndChildTypeChecks":true},"Object.<>":"Object<>","object<>":"Object<>"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @type {{[Symbol.dispose](): String}}
+ */
+function quux() {
+
+}
+// Message: Invalid JSDoc @type type "String"; prefer: "string".
 ````
 
 
@@ -1217,5 +1225,12 @@ function quux () {}
  */
 function a () {}
 // Settings: {"jsdoc":{"preferredTypes":{"Object":{"replacement":"object","unifyParentAndChildTypeChecks":true}}}}
+
+/**
+ * @type {{bar: string, [Symbol.dispose](): void}}
+ */
+function quux() {
+
+}
 ````
 

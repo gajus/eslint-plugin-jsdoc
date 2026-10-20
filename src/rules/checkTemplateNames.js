@@ -2,14 +2,16 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
+  parse as parseType,
+  tryParse as tryParseType,
+} from '../jsdocTypeParsing.js';
+import {
   getClosureTemplateTagDefaults,
   getTags,
 } from '../jsdocUtils.js';
 import {
   getJSDocComment,
-  parse as parseType,
   traverse,
-  tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 
 export default iterateJsdoc(({

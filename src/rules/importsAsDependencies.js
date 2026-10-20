@@ -1,8 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse,
-  traverse,
   tryParse,
+} from '../jsdocTypeParsing.js';
+import {
+  traverse,
 } from '@es-joy/jsdoccomment';
 import * as resolve from '@es-joy/resolve.exports';
 import {

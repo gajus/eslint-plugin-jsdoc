@@ -523,6 +523,23 @@ function quux() {
 
 }
 // Message: Syntax error in type: Array<import>
+
+/**
+ * @type {{bar: string, [Symbol.dispose](}}
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: {bar: string, [Symbol.dispose](}
+
+/**
+ * @type {{[Symbol.dispose](): void}}
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Syntax error in type: {[Symbol.dispose](): void}
 ````
 
 
@@ -882,6 +899,27 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @type {{bar: string, [Symbol.dispose](): void}}
+ */
+function quux() {
+
+}
+
+/**
+ * @type {{[Symbol.iterator](): Iterator<number>}}
+ */
+function quux() {
+
+}
+
+/**
+ * @type {{[key: string]: number}}
+ */
+function quux() {
+
+}
 
 /**
  * @returns {Promise<{publicKey, privateKey}>} - The public and private key

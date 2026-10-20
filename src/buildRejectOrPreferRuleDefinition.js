@@ -1,10 +1,66 @@
 import iterateJsdoc from './iterateJsdoc.js';
 import {
   parse,
+  tryParse,
+} from './jsdocTypeParsing.js';
+import {
   stringify,
   traverse,
-  tryParse,
 } from '@es-joy/jsdoccomment';
+
+/**
+ * @typedef {import('jsdoc-type-pratt-parser').NonRootResult & {
+ *   parentNode?: import('jsdoc-type-pratt-parser').NonRootResult
+ * }} NodeWithParent
+ */
+
+/**
+ * Computed property and method keys are JavaScript expressions
+ * (`[Symbol.dispose]()`), not types. Names inside that expression must not
+ * be rewritten (for example `Symbol` to `symbol`).
+ * @param {NodeWithParent} node
+ * @returns {boolean}
+ */
+const isWithinComputedKey = (node) => {
+  /** @type {import('jsdoc-type-pratt-parser').NonRootResult|undefined} */
+  let current = node;
+
+  /** @type {NodeWithParent|undefined} */
+  let parent = node.parentNode;
+  while (parent) {
+    if (
+      (parent.type === 'JsdocTypeComputedProperty' ||
+        parent.type === 'JsdocTypeComputedMethod') &&
+      /**
+       * @type {import('jsdoc-type-pratt-parser').ComputedPropertyResult|
+       *   import('jsdoc-type-pratt-parser').ComputedMethodResult}
+       */ (parent).value === current
+    ) {
+      return true;
+    }
+
+    current = parent;
+    parent = /** @type {NodeWithParent} */ (parent).parentNode;
+  }
+
+  return false;
+};
+
+/**
+ * Records the parent link and reports whether this node is a type name that
+ * belongs to a computed key expression.
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
+ * @returns {boolean} `true` when the node should not be checked as a type
+ */
+const skipComputedKeyName = (node, parentNode) => {
+  /** @type {NodeWithParent} */ (node).parentNode = parentNode;
+  if (node.type !== 'JsdocTypeName' && node.type !== 'JsdocTypeAny') {
+    return true;
+  }
+
+  return isWithinComputedKey(/** @type {NodeWithParent} */ (node));
+};
 
 /**
  * Adjusts the parent type node `meta` for generic matches (or type node
@@ -391,6 +447,10 @@ export const buildRejectOrPreferRuleDefinition = ({
         } = jsdocTag;
 
         traverse(typeAst, (node, parentNode, property) => {
+          if (skipComputedKeyName(node, parentNode)) {
+            return;
+          }
+
           const {
             type,
             value,
@@ -398,11 +458,6 @@ export const buildRejectOrPreferRuleDefinition = ({
             /**
              * @type {import('jsdoc-type-pratt-parser').NameResult}
              */ (node);
-          if (![
-            'JsdocTypeAny', 'JsdocTypeName',
-          ].includes(type)) {
-            return;
-          }
 
           getInvalidTypes(type, value, tagName, nameInTag, idx, property, node, parentNode, invalidTypes);
         });

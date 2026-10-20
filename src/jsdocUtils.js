@@ -1,5 +1,8 @@
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode.js';
 import {
+  tryParse,
+} from './jsdocTypeParsing.js';
+import {
   closureTags,
   jsdocTags,
   typeScriptTags,
@@ -8,7 +11,6 @@ import WarnSettings from './WarnSettings.js';
 import {
   parseComment,
   stringify,
-  tryParse,
 } from '@es-joy/jsdoccomment';
 
 /**

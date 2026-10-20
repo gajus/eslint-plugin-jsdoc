@@ -1,11 +1,13 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  tryParse as tryParseType,
+} from '../jsdocTypeParsing.js';
+import {
   getDocumentNamepathDefiningTags,
   strictNativeTypes,
 } from '../jsdocUtils.js';
 import {
   traverse,
-  tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 
 /**

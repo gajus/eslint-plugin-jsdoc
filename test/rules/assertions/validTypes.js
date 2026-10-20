@@ -1177,6 +1177,43 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @type {{bar: string, [Symbol.dispose](}}
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: {bar: string, [Symbol.dispose](}',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @type {{[Symbol.dispose](): void}}
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: {[Symbol.dispose](): void}',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1861,6 +1898,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
           mode: 'typescript',
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @type {{bar: string, [Symbol.dispose](): void}}
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @type {{[Symbol.iterator](): Iterator<number>}}
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @type {{[key: string]: number}}
+           */
+          function quux() {
+
+          }
+      `,
     },
     {
       code: `

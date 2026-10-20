@@ -1,8 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse as parseType,
-  traverse,
   tryParse as tryParseType,
+} from '../jsdocTypeParsing.js';
+import {
+  traverse,
 } from '@es-joy/jsdoccomment';
 
 export default iterateJsdoc(({

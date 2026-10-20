@@ -1,9 +1,11 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  parse as parseType,
+} from '../jsdocTypeParsing.js';
+import {
   rewireByParsedType,
 } from '../jsdocUtils.js';
 import {
-  parse as parseType,
   traverse,
 } from '@es-joy/jsdoccomment';
 

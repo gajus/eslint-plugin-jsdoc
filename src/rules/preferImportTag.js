@@ -2,13 +2,16 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
+  jsdocTypePrattParserArgs,
+  parse as parseType,
+  tryParse as tryParseType,
+} from '../jsdocTypeParsing.js';
+import {
   commentParserToESTree,
   estreeToString,
   // getJSDocComment,
-  parse as parseType,
   stringify,
   traverse,
-  tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 import {
   Linter,
@@ -44,7 +47,9 @@ export default iterateJsdoc(({
     })
     .map((commentNode) => {
       return commentParserToESTree(
-        parseComment(commentNode, ''), mode === 'permissive' ? 'typescript' : mode,
+        parseComment(commentNode, ''), mode === 'permissive' ? 'typescript' : mode, {
+          jsdocTypePrattParserArgs,
+        },
       );
     });
 

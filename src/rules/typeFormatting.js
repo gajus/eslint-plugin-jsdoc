@@ -1,12 +1,14 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  parse as parseType,
+  tryParse as tryParseType,
+} from '../jsdocTypeParsing.js';
+import {
   rewireByParsedType,
 } from '../jsdocUtils.js';
 import {
-  parse as parseType,
   stringify,
   traverse,
-  tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 
 const digitRegex = (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v);

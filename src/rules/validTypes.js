@@ -1,10 +1,12 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse,
+  tryParse,
+} from '../jsdocTypeParsing.js';
+import {
   parseName,
   parseNamePath,
   traverse,
-  tryParse,
 } from '@es-joy/jsdoccomment';
 
 const inlineTags = new Set([

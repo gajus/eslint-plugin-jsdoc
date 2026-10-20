@@ -2469,6 +2469,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+          /**
+           * @type {{[Symbol.dispose](): String}}
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @type type "String"; prefer: "string".',
+        },
+      ],
+      output: `
+          /**
+           * @type {{[Symbol.dispose](): string}}
+           */
+          function quux() {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
@@ -3194,6 +3218,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @type {{bar: string, [Symbol.dispose](): void}}
+           */
+          function quux() {
+
+          }
+      `,
     },
   ],
 });
