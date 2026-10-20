@@ -412,6 +412,7 @@ const getOptions = (context, settings) => {
     minLineCount = undefined,
     publicOnly,
     skipInterveningOverloadedDeclarations = true,
+    /* c8 ignore next -- Guard for ESLint versions that ignore meta.defaultOptions */
   } = context.options[0] || {};
 
   return {
@@ -876,6 +877,23 @@ export default {
     };
   },
   meta: {
+    // Matches the defaults applied in `getOptions`. `contexts` is omitted so
+    // `settings.contexts` still applies, and `require` / `publicOnly` stay
+    // unset so `getOption` keeps reading their schema defaults.
+    defaultOptions: [
+      {
+        checkAllFunctionExpressions: false,
+        enableFixer: true,
+
+        // Code defaults this to `true` (the schema `default` is stale).
+        exemptEmptyConstructors: true,
+        exemptEmptyFunctions: false,
+        exemptOverloadedImplementations: false,
+        fixerMessage: '',
+        skipInterveningOverloadedDeclarations: true,
+      },
+    ],
+
     docs: {
       description: 'Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports).',
       recommended: true,
