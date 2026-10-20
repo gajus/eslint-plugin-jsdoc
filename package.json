@@ -53,6 +53,7 @@
     "decamelize": "^7.0.0",
     "eslint": "10.13.0",
     "eslint-config-canonical": "^47.4.2",
+    "eslint-plugin-eslint-plugin": "^7.6.2",
     "gitdown": "^4.1.1",
     "glob": "^13.0.6",
     "globals": "^17.13.0",

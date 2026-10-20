@@ -56,6 +56,7 @@ export default {
       enableFixer = true,
       enforceJsdocLineStyle = 'multi',
       lineOrBlockStyle = 'both',
+      /* c8 ignore next -- Guard for ESLint versions that ignore meta.defaultOptions */
     } = context.options[0] ?? {};
 
     let reportingNonJsdoc = false;
@@ -394,6 +395,24 @@ export default {
     };
   },
   meta: {
+    // Matches the defaults in `create`. `contexts` is omitted so
+    // `settings.contexts` still applies when the option is unset.
+    defaultOptions: [
+      {
+        allowedPrefixes: [
+          '@ts-', '@license', '@license-end',
+          'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
+        ],
+        contextsAfter: [],
+        contextsBeforeAndAfter: [
+          'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition',
+        ],
+        enableFixer: true,
+        enforceJsdocLineStyle: 'multi',
+        lineOrBlockStyle: 'both',
+      },
+    ],
+
     docs: {
       description: 'Converts non-JSDoc comments preceding or following nodes into JSDoc ones',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/convert-to-jsdoc-comments.md#repos-sticky-header',
