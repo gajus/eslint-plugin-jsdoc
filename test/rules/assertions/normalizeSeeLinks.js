@@ -517,7 +517,7 @@ export default {
     {
       code: `
         /**
-         * @see [See {{one} and {two}}](https://example.com)
+         * @see [See { {one} and {two}}](https://example.com)
          */
       `,
       errors: [
@@ -529,7 +529,7 @@ export default {
       name: 'escapes each closing brace in a nested pipe label',
       output: `
         /**
-         * @see {@link https://example.com|See {{one\\} and {two\\}\\}}
+         * @see {@link https://example.com|See { {one\\} and {two\\}\\}}
          */
       `,
     },
@@ -1345,7 +1345,7 @@ export default {
     {
       code: `
         /**
-         * @see {@link https://example.com|See {{one\\} and {two\\}\\}}
+         * @see {@link https://example.com|See { {one\\} and {two\\}\\}}
          */
       `,
       name: 'accepts a fixed pipe label with repeated escaped braces',
