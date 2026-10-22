@@ -51,8 +51,11 @@ export default iterateJsdoc(({
             break;
           }
 
+          // Optional and readonly function properties have no method
+          //   signature equivalent that keeps their meaning here
           if (parentNode?.type === 'JsdocTypeObjectField' &&
-            typeof parentNode.key === 'string'
+            typeof parentNode.key === 'string' &&
+            !parentNode.optional && !parentNode.readonly
           ) {
             utils.reportJSDoc(
               'Found function property; prefer method signature.',
@@ -100,7 +103,11 @@ export default iterateJsdoc(({
             // @ts-expect-error Our own added API
             parentNode.parentNode.parentNode.type === 'JsdocTypeObjectField' &&
             // @ts-expect-error Our own added API
-            typeof parentNode.parentNode.parentNode.key === 'string'
+            typeof parentNode.parentNode.parentNode.key === 'string' &&
+            // @ts-expect-error Our own added API
+            !parentNode.parentNode.parentNode.optional &&
+            // @ts-expect-error Our own added API
+            !parentNode.parentNode.parentNode.readonly
           ) {
             // @ts-expect-error Our own added API
             const intersection = parentNode.parentNode;

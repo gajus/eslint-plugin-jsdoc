@@ -143,6 +143,15 @@ The following patterns are not considered problems:
 
 /**
  * @param {{
+ *   optionalFunc?: (arg: string) => number,
+ *   readonly readonlyFunc: (arg: string) => number,
+ *   optionalOverloads?: ((arg: string) => number) & ((arg: number) => string)
+ * }} someName
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+
+/**
+ * @param {{
  *   func: ((arg: number) => void) &
  *     ((arg: string) => void) &
  *     ((arg: boolean) => void)

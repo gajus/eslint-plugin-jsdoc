@@ -277,6 +277,20 @@ export default {
       code: `
         /**
          * @param {{
+         *   optionalFunc?: (arg: string) => number,
+         *   readonly readonlyFunc: (arg: string) => number,
+         *   optionalOverloads?: ((arg: string) => number) & ((arg: number) => string)
+         * }} someName
+         */
+      `,
+      options: [
+        'method',
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{
          *   func: ((arg: number) => void) &
          *     ((arg: string) => void) &
          *     ((arg: boolean) => void)
