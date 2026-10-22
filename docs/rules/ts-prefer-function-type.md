@@ -56,6 +56,31 @@ The following patterns are considered problems:
  * })} someName
  */
 // Message: Call signature found; function type preferred.
+
+/**
+ * @param {{(): void}[]} someName
+ */
+// Message: Call signature found; function type preferred.
+
+/**
+ * @param {{(x: number): string} | null} someName
+ */
+// Message: Call signature found; function type preferred.
+
+/**
+ * @param {{a: {(): void}}} someName
+ */
+// Message: Call signature found; function type preferred.
+
+/**
+ * @param {(cb: {(err: Error): void}) => void} someName
+ */
+// Message: Call signature found; function type preferred.
+
+/**
+ * @returns {() => {(): void}}
+ */
+// Message: Call signature found; function type preferred.
 ````
 
 
