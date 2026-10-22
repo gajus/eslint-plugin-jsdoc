@@ -51,11 +51,11 @@ export default iterateJsdoc(({
             break;
           }
 
-          // Optional and readonly function properties have no method
-          //   signature equivalent that keeps their meaning here
+          // A `readonly` function property has no method signature
+          //   equivalent (`readonly` is not allowed on methods)
           if (parentNode?.type === 'JsdocTypeObjectField' &&
             typeof parentNode.key === 'string' &&
-            !parentNode.optional && !parentNode.readonly
+            !parentNode.readonly
           ) {
             utils.reportJSDoc(
               'Found function property; prefer method signature.',
@@ -83,6 +83,7 @@ export default iterateJsdoc(({
                       quote: objectField.meta.quote,
                     },
                   name: /** @type {string} */ (objectField.key),
+                  optional: objectField.optional,
                   parameters: nde.parameters,
                   returnType: /** @type {import('jsdoc-type-pratt-parser').RootResult} */ (
                     nde.returnType
@@ -104,8 +105,6 @@ export default iterateJsdoc(({
             parentNode.parentNode.parentNode.type === 'JsdocTypeObjectField' &&
             // @ts-expect-error Our own added API
             typeof parentNode.parentNode.parentNode.key === 'string' &&
-            // @ts-expect-error Our own added API
-            !parentNode.parentNode.parentNode.optional &&
             // @ts-expect-error Our own added API
             !parentNode.parentNode.parentNode.readonly
           ) {
@@ -130,6 +129,7 @@ export default iterateJsdoc(({
                     quote: objectField.meta.quote,
                   },
                 name: /** @type {string} */ (objectField.key),
+                optional: objectField.optional,
                 parameters: func.parameters,
                 returnType: /** @type {import('jsdoc-type-pratt-parser').RootResult} */ (
                   func.returnType
@@ -233,7 +233,7 @@ export default iterateJsdoc(({
                 object.elements[idx] = /** @type {import('jsdoc-type-pratt-parser').ObjectFieldResult} */ ({
                   key: nde.name,
                   meta: nde.meta,
-                  optional: false,
+                  optional: nde.optional === true,
                   readonly: false,
                   right: funcs[0],
                   type: 'JsdocTypeObjectField',
@@ -246,7 +246,7 @@ export default iterateJsdoc(({
                 object.elements[idx] = {
                   key: nde.name,
                   meta: nde.meta,
-                  optional: false,
+                  optional: nde.optional === true,
                   readonly: false,
                   right: {
                     elements: funcs.map((func) => {
