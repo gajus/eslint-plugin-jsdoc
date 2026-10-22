@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@es-joy/escodegen": "^4.2.0",
-    "@es-joy/jsdoccomment": "~0.100.0",
+    "@es-joy/jsdoccomment": "~1.0.0",
     "@es-joy/resolve.exports": "1.2.0",
     "@typescript-eslint/utils": "^8.72.0",
     "are-docs-informative": "^0.1.1",
@@ -57,7 +57,7 @@
     "glob": "^13.0.6",
     "globals": "^17.13.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^9.3.0",
+    "jsdoc-type-pratt-parser": "^9.4.0",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^16.0.0",
     "lint-staged": "^17.6.0",
