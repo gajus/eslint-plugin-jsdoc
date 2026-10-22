@@ -379,6 +379,21 @@ const getOption = (context, baseObject, option, key) => {
   )[key].default;
 };
 
+// Shared by `getOptions` and `meta.defaultOptions` so the two cannot drift.
+// `contexts` is omitted so `settings.contexts` still applies, and `require` /
+// `publicOnly` stay unset so `getOption` keeps reading their schema defaults.
+const defaultOptions = {
+  checkAllFunctionExpressions: false,
+  enableFixer: true,
+
+  // Code defaults this to `true` (the schema `default` is stale).
+  exemptEmptyConstructors: true,
+  exemptEmptyFunctions: false,
+  exemptOverloadedImplementations: false,
+  fixerMessage: '',
+  skipInterveningOverloadedDeclarations: true,
+};
+
 /**
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('../iterateJsdoc.js').Settings} settings
@@ -402,16 +417,16 @@ const getOption = (context, baseObject, option, key) => {
  */
 const getOptions = (context, settings) => {
   const {
-    checkAllFunctionExpressions = false,
+    checkAllFunctionExpressions = defaultOptions.checkAllFunctionExpressions,
     contexts = settings.contexts || [],
-    enableFixer = true,
-    exemptEmptyConstructors = true,
-    exemptEmptyFunctions = false,
-    exemptOverloadedImplementations = false,
-    fixerMessage = '',
+    enableFixer = defaultOptions.enableFixer,
+    exemptEmptyConstructors = defaultOptions.exemptEmptyConstructors,
+    exemptEmptyFunctions = defaultOptions.exemptEmptyFunctions,
+    exemptOverloadedImplementations = defaultOptions.exemptOverloadedImplementations,
+    fixerMessage = defaultOptions.fixerMessage,
     minLineCount = undefined,
     publicOnly,
-    skipInterveningOverloadedDeclarations = true,
+    skipInterveningOverloadedDeclarations = defaultOptions.skipInterveningOverloadedDeclarations,
     /* c8 ignore next -- Guard for ESLint versions that ignore meta.defaultOptions */
   } = context.options[0] || {};
 
@@ -877,21 +892,8 @@ export default {
     };
   },
   meta: {
-    // Matches the defaults applied in `getOptions`. `contexts` is omitted so
-    // `settings.contexts` still applies, and `require` / `publicOnly` stay
-    // unset so `getOption` keeps reading their schema defaults.
     defaultOptions: [
-      {
-        checkAllFunctionExpressions: false,
-        enableFixer: true,
-
-        // Code defaults this to `true` (the schema `default` is stale).
-        exemptEmptyConstructors: true,
-        exemptEmptyFunctions: false,
-        exemptOverloadedImplementations: false,
-        fixerMessage: '',
-        skipInterveningOverloadedDeclarations: true,
-      },
+      defaultOptions,
     ],
 
     docs: {

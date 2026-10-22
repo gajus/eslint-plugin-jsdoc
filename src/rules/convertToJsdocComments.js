@@ -13,6 +13,24 @@ import {
   getReducedASTNode,
 } from '@es-joy/jsdoccomment';
 
+const defaultAllowedPrefixes = [
+  '@ts-', '@license', '@license-end',
+  'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
+];
+
+// Shared by `create` and `meta.defaultOptions` so the two cannot drift.
+// `contexts` is omitted so `settings.contexts` still applies when unset.
+const defaultOptions = {
+  allowedPrefixes: defaultAllowedPrefixes,
+  contextsAfter: /** @type {string[]} */ ([]),
+  contextsBeforeAndAfter: [
+    'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition',
+  ],
+  enableFixer: true,
+  enforceJsdocLineStyle: 'multi',
+  lineOrBlockStyle: 'both',
+};
+
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
@@ -44,18 +62,13 @@ export default {
     }
 
     const {
-      allowedPrefixes = [
-        '@ts-', '@license', '@license-end',
-        'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
-      ],
+      allowedPrefixes = defaultOptions.allowedPrefixes,
       contexts = settings.contexts || [],
-      contextsAfter = /** @type {string[]} */ ([]),
-      contextsBeforeAndAfter = [
-        'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition',
-      ],
-      enableFixer = true,
-      enforceJsdocLineStyle = 'multi',
-      lineOrBlockStyle = 'both',
+      contextsAfter = defaultOptions.contextsAfter,
+      contextsBeforeAndAfter = defaultOptions.contextsBeforeAndAfter,
+      enableFixer = defaultOptions.enableFixer,
+      enforceJsdocLineStyle = defaultOptions.enforceJsdocLineStyle,
+      lineOrBlockStyle = defaultOptions.lineOrBlockStyle,
       /* c8 ignore next -- Guard for ESLint versions that ignore meta.defaultOptions */
     } = context.options[0] ?? {};
 
@@ -395,22 +408,8 @@ export default {
     };
   },
   meta: {
-    // Matches the defaults in `create`. `contexts` is omitted so
-    // `settings.contexts` still applies when the option is unset.
     defaultOptions: [
-      {
-        allowedPrefixes: [
-          '@ts-', '@license', '@license-end',
-          'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
-        ],
-        contextsAfter: [],
-        contextsBeforeAndAfter: [
-          'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition',
-        ],
-        enableFixer: true,
-        enforceJsdocLineStyle: 'multi',
-        lineOrBlockStyle: 'both',
-      },
+      defaultOptions,
     ],
 
     docs: {
