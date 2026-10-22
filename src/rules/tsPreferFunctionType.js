@@ -10,6 +10,18 @@ import {
   parse as espree,
 } from 'espree';
 
+/**
+ * Parents within which a function type needs no parentheses.
+ */
+const noParenthesesParents = new Set([
+  'JsdocTypeFunction',
+  'JsdocTypeGeneric',
+  'JsdocTypeKeyValue',
+  'JsdocTypeObjectField',
+  'JsdocTypeParenthesis',
+  'JsdocTypeTuple',
+]);
+
 export default iterateJsdoc(({
   context,
   indent,
@@ -40,9 +52,13 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, (nde, parentNode) => {
-      // @ts-expect-error Adding our own property for use below
+    traverse(parsedType, (nde, parentNode, property, index) => {
+      // @ts-expect-error Adding our own properties for use below
       nde.parentNode = parentNode;
+      // @ts-expect-error Adding our own properties for use below
+      nde.parentProperty = property;
+      // @ts-expect-error Adding our own properties for use below
+      nde.parentIndex = index;
     });
 
     traverse(parsedType, (nde, parentNode, property, index) => {
@@ -69,19 +85,40 @@ export default iterateJsdoc(({
                   typeParameters: nde.typeParameters,
                 });
 
-                if (property && 'parentNode' in object && object.parentNode) {
-                  if (typeof object.parentNode === 'object' &&
-                      'elements' in object.parentNode &&
-                      Array.isArray(object.parentNode.elements)
-                  ) {
-                    const idx = object.parentNode.elements.indexOf(object);
-                    object.parentNode.elements[idx] = func;
-                  /* c8 ignore next 6 -- Guard */
+                const {
+                  parentIndex,
+                  parentNode: objectParent,
+                  parentProperty,
+                } = /**
+                     * @type {{
+                     *   parentIndex?: number,
+                     *   parentNode?: import('jsdoc-type-pratt-parser').NonRootResult,
+                     *   parentProperty?: string
+                     * }}
+                     */ (object);
+
+                if (objectParent && parentProperty) {
+                  // A function type must be parenthesized wherever it would
+                  //   otherwise bind differently, e.g., in a union or as the
+                  //   element of an array type
+                  const replacement = noParenthesesParents.has(objectParent.type) &&
+                    !(
+                      objectParent.type === 'JsdocTypeGeneric' &&
+                      objectParent.meta.brackets === 'square'
+                    ) ?
+                    func :
+                    /** @type {import('jsdoc-type-pratt-parser').ParenthesisResult} */ ({
+                      element: func,
+                      type: 'JsdocTypeParenthesis',
+                    });
+
+                  const parentRecord = /** @type {Record<string, unknown>} */ (
+                    /** @type {unknown} */ (objectParent)
+                  );
+                  if (typeof parentIndex === 'number') {
+                    /** @type {unknown[]} */ (parentRecord[parentProperty])[parentIndex] = replacement;
                   } else {
-                    throw new Error(
-                      // @ts-expect-error Ok
-                      `Rule currently unable to handle type ${object.parentNode.type}`,
-                    );
+                    parentRecord[parentProperty] = replacement;
                   }
                 } else {
                   parsedType = func;
