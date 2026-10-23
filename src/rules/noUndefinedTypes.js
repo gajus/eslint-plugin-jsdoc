@@ -946,6 +946,27 @@ export default iterateJsdoc(({
             return;
           }
 
+          // The parameter named by the type predicate or assertion of a
+          //   function type or signature (e.g., `(x: unknown) => x is string`)
+          if (
+            (
+              (parent?.type === 'JsdocTypePredicate' || parent?.type === 'JsdocTypeAsserts') &&
+              parent.left === nde
+            ) || parent?.type === 'JsdocTypeAssertsPlain'
+          ) {
+            const functionType =
+              /** @type {import('jsdoc-type-pratt-parser').FunctionResult|undefined} */ (
+                /** @type {{_parent?: import('jsdoc-type-pratt-parser').NonRootResult}} */ (
+                  parent
+                )._parent
+              );
+            if (functionType?.parameters?.some((param) => {
+              return param.type === 'JsdocTypeKeyValue' && param.key === value;
+            })) {
+              return;
+            }
+          }
+
           if (!disableReporting) {
             report(`The type '${val}' is undefined.`, null, tag);
           }
