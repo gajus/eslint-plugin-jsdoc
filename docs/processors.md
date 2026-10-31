@@ -178,6 +178,30 @@ Whether to check `@default` tags. Defaults to `false`.
 
 Whether to check `@example` tags. Defaults to `true`.
 
+<a name="user-content-processors-options-fixexamples"></a>
+<a name="processors-options-fixexamples"></a>
+#### <code>fixExamples</code>
+
+Whether to keep verified fixes and suggestions for `@example` tags. Defaults to
+`false`, leaving the examples report-only. The `checkDefaults`, `checkParams`, and
+`checkProperties` checks remain report-only with either setting.
+
+With `fixExamples: true`, an edit is kept only when re-reading the edited tag
+returns exactly the fixed example and leaves the other examples unchanged. Each
+fix replaces its entire tag, so only one fix per tag can apply in a pass. ESLint
+limits the number of fix passes per run; examples with many fixes may need another
+run.
+
+The processor declines changes when parser comment lists disagree, when the
+edited host cannot be parsed, or when the relevant JSX parsing checks cannot
+succeed. It cannot inspect ESLint's effective host parser configuration; use
+matching `parser` and `sourceType` settings for the processor and host.
+
+Blank-line insertions into examples without `*` gutters and before code sharing
+the closing `*/` line are declined. So are edits that add example lines starting
+with `*`, which host JSDoc rules can interpret as gutters. Declined fixes and
+suggestions are removed, but their messages remain reported.
+
 <a name="user-content-processors-options-checkparams"></a>
 <a name="processors-options-checkparams"></a>
 #### <code>checkParams</code>
