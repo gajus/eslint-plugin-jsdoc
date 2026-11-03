@@ -511,10 +511,19 @@ export default iterateJsdoc(({
     }
   };
 
+  let fixed = false;
+
   /**
    * @returns {void}
    */
   const fixer = () => {
+    // Every report shares this fixer and `jsdoc`, so only add the tags once;
+    //   each report then gets the same, complete fix
+    if (fixed) {
+      return;
+    }
+
+    fixed = true;
     for (const missingTag of missingTags) {
       fix(missingTag);
     }
