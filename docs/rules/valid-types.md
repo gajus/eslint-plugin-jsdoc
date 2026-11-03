@@ -1031,5 +1031,10 @@ using foo = {
     [Symbol.dispose]: () => console.log("dispose")
 };
 // Settings: {"jsdoc":{"mode":"permissive"}}
+
+/**
+ * @typedef {object} MyObject
+ * @property {boolean} is-hyphenated
+ */
 ````
 

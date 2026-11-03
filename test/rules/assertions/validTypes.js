@@ -2114,5 +2114,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @typedef {object} MyObject
+         * @property {boolean} is-hyphenated
+         */
+      `,
+    },
   ],
 });
