@@ -103,6 +103,7 @@ const tryParsePathIgnoreError = (path, mode) => {
       mode === 'permissive' ? 'jsdoc' : mode,
       {
         includeSpecial: true,
+        jsdocContext: true,
       },
     );
 
