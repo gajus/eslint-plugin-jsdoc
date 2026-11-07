@@ -36,6 +36,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
        /**
+        * Has no type to check.
+        */
+       function quux() {
+
+       }
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            HerType: 1_000,
+          },
+        },
+      },
+    },
+    {
+      code: `
+       /**
         * @param {HerType} baz - Foo.
         */
        function quux(foo, bar, baz) {
