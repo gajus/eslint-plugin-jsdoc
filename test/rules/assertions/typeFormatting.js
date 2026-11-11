@@ -1254,6 +1254,57 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean,}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'semicolon',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean,}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'semicolon',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean}} cfg
+         */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
   ],
   valid: [
     {

@@ -190,7 +190,7 @@ The following patterns are considered problems:
 // Message: Expected @see link to use the pipe form.
 
 /**
- * @see [See {{one} and {two}}](https://example.com)
+ * @see [See { {one} and {two}}](https://example.com)
  */
 // Message: Expected @see link to use the pipe form.
 
@@ -431,7 +431,7 @@ The following patterns are not considered problems:
  */
 
 /**
- * @see {@link https://example.com|See {{one\} and {two\}\}}
+ * @see {@link https://example.com|See { {one\} and {two\}\}}
  */
 
 /**

@@ -1734,43 +1734,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
-        /**
-         * A function with return type
-         */
-        let test = (): (id: number) => string =>
-        {
-          return (id) => \`\${id}\`;
-        }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @param "id" declaration.',
-        },
-      ],
-      languageOptions: {
-        parser: typescriptEslintParser,
-      },
-      options: [
-        {
-          contexts: [
-            'TSFunctionType',
-          ],
-        },
-      ],
-      output: `
-        /**
-         * A function with return type
-         * @param id
-         */
-        let test = (): (id: number) => string =>
-        {
-          return (id) => \`\${id}\`;
-        }
-      `,
-    },
-    {
-      code: `
           /**
            * @param baz
            * @param options
@@ -3998,6 +3961,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
           console.log(foo);
         }
       `,
+    },
+    {
+      code: `
+        /**
+         * A function with return type
+         */
+        let test = (): (id: number) => string =>
+        {
+          return (id) => \`\${id}\`;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSFunctionType',
+          ],
+        },
+      ],
     },
   ],
 });

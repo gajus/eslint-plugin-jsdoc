@@ -259,6 +259,107 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{
+         *   optionalFunc?: (arg: string) => number
+         * }} someName
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+      ],
+      options: [
+        'method',
+      ],
+      output: `
+        /**
+         * @param {{optionalFunc?(arg: string): number}} someName
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {{
+         *   func?: ((arg: number) => void) &
+         *     ((arg: string) => void)
+         * }}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+      ],
+      options: [
+        'method',
+      ],
+      output: `
+        /**
+         * @type {{
+         *   func?(arg: number): void
+         *   func?(arg: string): void
+         * }}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   optionalMethod?(arg: string): number
+         * }} someName
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found method signature; prefer function property.',
+        },
+      ],
+      options: [
+        'property',
+      ],
+      output: `
+        /**
+         * @param {{optionalMethod?: (arg: string) => number}} someName
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   func?(arg: number): void
+         *   func?(arg: string): void
+         * }} someName
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found method signature; prefer function property.',
+        },
+      ],
+      options: [
+        'property',
+      ],
+      output: `
+        /**
+         * @param {{func?: ((arg: number) => void) & ((arg: string) => void)}} someName
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -271,6 +372,19 @@ export default {
       `,
       options: [
         'property',
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   readonly readonlyFunc: (arg: string) => number,
+         *   readonly readonlyOverloads: ((arg: string) => number) & ((arg: number) => string)
+         * }} someName
+         */
+      `,
+      options: [
+        'method',
       ],
     },
     {

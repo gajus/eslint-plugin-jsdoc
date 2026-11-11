@@ -538,6 +538,19 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
 // Message: Inconsistent comma-and-linebreak separator usage
+
+/**
+ * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean,}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
+// Message: Inconsistent semicolon separator usage
+
+/**
+ * @param {{a: string; b: {bar: string; [Symbol.dispose](): void}; c: boolean,}} cfg
+ */
+// Settings: {"jsdoc":{"mode":"permissive"}}
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
+// Message: Inconsistent semicolon separator usage
 ````
 
 

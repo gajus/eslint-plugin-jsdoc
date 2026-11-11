@@ -1,10 +1,16 @@
 import iterateJsdoc from './iterateJsdoc.js';
 import {
+  generate,
+} from '@es-joy/escodegen';
+import {
   parse,
   stringify,
   traverse,
   tryParse,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 /**
  * Adjusts the parent type node `meta` for generic matches (or type node
@@ -380,7 +386,13 @@ export const buildRejectOrPreferRuleDefinition = ({
         let typeAst;
 
         try {
-          typeAst = mode === 'permissive' ? tryParse(jsdocTag.type) : parse(jsdocTag.type, mode);
+          typeAst = mode === 'permissive' ?
+            tryParse(jsdocTag.type, undefined, {
+              computedPropertyParser: espree,
+            }) :
+            parse(jsdocTag.type, mode, {
+              computedPropertyParser: espree,
+            });
         } catch {
           continue;
         }
@@ -408,7 +420,7 @@ export const buildRejectOrPreferRuleDefinition = ({
         });
 
         if (invalidTypes.length) {
-          const fixedType = stringify(typeAst);
+          const fixedType = stringify(typeAst, generate);
 
           /**
            * @type {import('eslint').Rule.ReportFixer}

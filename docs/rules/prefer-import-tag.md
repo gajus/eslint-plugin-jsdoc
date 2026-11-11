@@ -356,6 +356,33 @@ let linter;
 /** @type {import('eslint').Linter} */\r
 let linter;
 // Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @param {import('eslint').Linter} linter
+ */
+function quux (linter) {}
+
+/** @type {import('eslint').Linter} */
+let x;
+// Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @typedef {object} Options
+ * @property {import('./config.js').Config} config
+ */
+
+/**
+ * @returns {import('./config.js').Config}
+ */
+function load () {}
+// Message: Inline `import()` found; prefer `@import`
+
+/** @const {import('eslint').Linter} LINTER */
+const LINTER = getLinter();
+
+/** @type {import('eslint').Linter} */
+let x;
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 

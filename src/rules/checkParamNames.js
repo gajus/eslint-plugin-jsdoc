@@ -648,7 +648,7 @@ export default iterateJsdoc(({
   //   checks if they are not functions but say variables), the user may
   //   instead wish to narrow contexts in those settings, so this check
   //   is still useful
-  if (!allowedNodes.includes(nde.type) ||
+  if (!nde || !allowedNodes.includes(nde.type) ||
     nde.type === 'TSPropertySignature' &&
       (/** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
         nde

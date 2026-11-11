@@ -7,6 +7,9 @@ import {
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 /**
  * @type {Partial<Record<import('../jsdocUtils.js').ParserMode, import('jsdoc-type-pratt-parser').ParseMode[]>>}
@@ -152,7 +155,9 @@ export default iterateJsdoc(({
     const returnType = returnTag.type.trim();
     let parsedType;
     try {
-      parsedType = tryParseType(returnType, parseTypeModes[parseMode]);
+      parsedType = tryParseType(returnType, parseTypeModes[parseMode], {
+        computedPropertyParser: espree,
+      });
     } catch {
       return false;
     }

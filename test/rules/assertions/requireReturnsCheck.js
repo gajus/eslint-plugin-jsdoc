@@ -1817,5 +1817,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+      /**
+       * Maybe return undefined.
+       * @returns {{bar: string, [Symbol.dispose](): void}|void} true, or undefined.
+       */
+      function maybeTrue() {
+        if (Math.random() > 0.5) {
+          return true;
+        }
+      }
+      `,
+    },
   ],
 });

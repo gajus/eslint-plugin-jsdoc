@@ -7,6 +7,7 @@ import {
 // import {
 //   recommended as canonicalJsdoc,
 // } from 'eslint-config-canonical/jsdoc';
+import eslintPlugin from 'eslint-plugin-eslint-plugin';
 import globals from 'globals';
 
 const common = {
@@ -81,6 +82,12 @@ export default [
       'unicorn/prefer-array-some': 0,
       'unicorn/prevent-abbreviations': 0,
     },
+  },
+  {
+    files: [
+      'src/rules/**/*.js',
+    ],
+    ...eslintPlugin.configs.recommended,
   },
   {
     ...common,

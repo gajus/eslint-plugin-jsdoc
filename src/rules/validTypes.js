@@ -6,6 +6,9 @@ import {
   traverse,
   tryParse,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 const inlineTags = new Set([
   // Typdoc
@@ -100,6 +103,7 @@ const tryParsePathIgnoreError = (path, mode) => {
       mode === 'permissive' ? 'jsdoc' : mode,
       {
         includeSpecial: true,
+        jsdocContext: true,
       },
     );
 
@@ -219,10 +223,12 @@ export default iterateJsdoc(({
         if (mode === 'permissive') {
           parsedTypes = tryParse(type, undefined, {
             classContext: true,
+            computedPropertyParser: espree,
           });
         } else {
           parsedTypes = parse(type, mode, {
             classContext: true,
+            computedPropertyParser: espree,
           });
         }
       } catch {
@@ -293,6 +299,7 @@ export default iterateJsdoc(({
       let parsedTypes;
 
       try {
+        // We don't need the second arg. for `closure` mode
         parsedTypes = tryParse(tag.type);
       } catch {
         // Ignore

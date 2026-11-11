@@ -1,4 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  stringify as stringifyComment,
+} from 'comment-parser';
 import escapeStringRegexp from 'escape-string-regexp';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
@@ -41,6 +44,133 @@ const accessTags = new Set([
  */
 const isClassMember = (node) => {
   return node?.parent?.type === 'ClassBody';
+};
+
+/**
+ * @param {import('@typescript-eslint/types').TSESTree.Node} member
+ * @returns {string|undefined}
+ */
+const getObjectMemberName = (member) => {
+  if (member.type !== 'Property' && member.type !== 'TSPropertySignature') {
+    return undefined;
+  }
+
+  const typedMember = /** @type {import('@typescript-eslint/types').TSESTree.Property|import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
+    member
+  );
+  if (typedMember.computed && typedMember.key.type !== 'Literal') {
+    return undefined;
+  }
+
+  const {
+    key,
+  } = typedMember;
+  if (key.type === 'Identifier') {
+    return key.name;
+  }
+
+  if (key.type === 'Literal' && typeof key.value === 'string') {
+    return key.value;
+  }
+
+  return undefined;
+};
+
+/**
+ * @param {import('@typescript-eslint/types').TSESTree.Node[]} members
+ * @returns {Map<string, import('eslint').Rule.Node>}
+ */
+const indexObjectMembers = (members) => {
+  /** @type {Map<string, import('eslint').Rule.Node>} */
+  const properties = new Map();
+  for (const member of members) {
+    const name = getObjectMemberName(member);
+    if (!name || properties.has(name)) {
+      continue;
+    }
+
+    properties.set(name, /** @type {import('eslint').Rule.Node} */ (member));
+  }
+
+  return properties;
+};
+
+/**
+ * Object expression or type literal whose properties can receive moved docs.
+ * Export wrappers are unwrapped so `export const X = { ... }` is recognized.
+ * @param {import('eslint').Rule.Node} node
+ * @returns {Map<string, import('eslint').Rule.Node>|null}
+ */
+const getAttachedObjectProperties = (node) => {
+  if (node.type === 'ExportNamedDeclaration') {
+    const exported = /** @type {import('@typescript-eslint/types').TSESTree.ExportNamedDeclaration} */ (
+      node
+    ).declaration;
+    if (!exported) {
+      return null;
+    }
+
+    return getAttachedObjectProperties(/** @type {import('eslint').Rule.Node} */ (
+      exported
+    ));
+  }
+
+  if (node.type !== 'VariableDeclaration') {
+    return null;
+  }
+
+  const variableDeclaration = /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
+    node
+  );
+  const declarator = variableDeclaration.declarations[0];
+
+  /* c8 ignore next 3 -- `VariableDeclaration` always has a declarator. */
+  if (!declarator) {
+    return null;
+  }
+
+  if (declarator.init?.type === 'ObjectExpression') {
+    return indexObjectMembers(declarator.init.properties);
+  }
+
+  const typeAnnotation = declarator.id.type === 'Identifier' ?
+    declarator.id.typeAnnotation?.typeAnnotation :
+    undefined;
+  if (typeAnnotation?.type === 'TSTypeLiteral') {
+    return indexObjectMembers(typeAnnotation.members);
+  }
+
+  return null;
+};
+
+/**
+ * Description text to move for `@prop NAME - description`, or `null` when
+ * the tag is not that shape. A leading hyphen is the JSDoc separator.
+ * @param {import('comment-parser').Spec} tag
+ * @returns {string|null}
+ */
+const getPropertyTagDescription = (tag) => {
+  if (!tag.name) {
+    return null;
+  }
+
+  /** @type {string[]} */
+  const lines = [];
+  for (const src of tag.source) {
+    if (src.tokens.end && !src.tokens.tag && !src.tokens.description) {
+      break;
+    }
+
+    if (src.tokens.tag) {
+      lines.push(src.tokens.description.replace(/^\s*-\s*/v, ''));
+      continue;
+    }
+
+    lines.push(src.tokens.description);
+  }
+
+  const description = lines.join('\n').trim();
+  return description || null;
 };
 
 const typedTagsUnnecessaryOutsideDeclare = new Set([
@@ -255,9 +385,252 @@ export default iterateJsdoc(({
     return false;
   };
 
+  /**
+   * @param {import('eslint').Rule.Node} propNode
+   * @returns {boolean}
+   */
+  const propertyHasJsdoc = (propNode) => {
+    return sourceCode.getCommentsBefore(propNode).some((comment) => {
+      return comment.type === 'Block' && comment.value.startsWith('*');
+    });
+  };
+
+  /**
+   * @param {string} tagName
+   * @returns {boolean}
+   */
+  const isRelocatablePropertyTag = (tagName) => {
+    return tagName === 'property' ||
+      tagName === 'prop' && !Object.hasOwn(tagNamePreference, 'prop');
+  };
+
+  /**
+   * @param {string} commentText
+   * @returns {boolean}
+   */
+  const commentHasText = (commentText) => {
+    return commentText.split(/\r?\n/v).some((line) => {
+      return (/\S/v).test(line.replaceAll('*', '').replaceAll('/', ''));
+    });
+  };
+
+  /**
+   * @param {import('eslint').Rule.RuleFixer} fixer
+   * @returns {import('eslint').Rule.Fix}
+   */
+  const removeJsdocFix = (fixer) => {
+    const text = sourceCode.text;
+    const lastLineBreakPos = text.slice(0, jsdocNode.range[0]).search(/\n[ \t]*$/v);
+    if (lastLineBreakPos > -1) {
+      return fixer.removeRange([
+        lastLineBreakPos, jsdocNode.range[1],
+      ]);
+    }
+
+    return fixer.removeRange(
+      (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
+        [
+          jsdocNode.range[0], jsdocNode.range[1] + 1,
+        ] :
+        jsdocNode.range,
+    );
+  };
+
+  /**
+   * Same end state as the per-tag redundant-property fixer, but applied to
+   * every `@prop`/`@property` in this block at once. Doing them together
+   * avoids a later pass relocating whichever names still remain.
+   * @param {import('comment-parser').Spec[]} tags
+   * @returns {string}
+   */
+  const stripPropertyTags = (tags) => {
+    /** @type {Set<number>} */
+    const clearTagLine = new Set();
+    /** @type {Set<number>} */
+    const dropLines = new Set();
+    for (const tag of tags) {
+      if (tag.description.trim()) {
+        clearTagLine.add(tag.source[0].number);
+        continue;
+      }
+
+      for (const src of tag.source) {
+        if (src.tokens.end && !src.tokens.tag) {
+          break;
+        }
+
+        dropLines.add(src.number);
+      }
+    }
+
+    const cloned = structuredClone(jsdoc);
+    cloned.source = cloned.source.flatMap((line) => {
+      if (dropLines.has(line.number)) {
+        return [];
+      }
+
+      if (!clearTagLine.has(line.number)) {
+        return [
+          line,
+        ];
+      }
+
+      return [
+        {
+          ...line,
+          tokens: {
+            ...line.tokens,
+            postTag: '',
+            postType: '',
+            tag: '',
+            type: '',
+          },
+        },
+      ];
+    });
+
+    const stripped = stringifyComment(cloned);
+    return commentHasText(stripped) ? stripped : '';
+  };
+
+  /**
+   * Relocate every redundant `@prop`/`@property` description onto a matching
+   * property, or strip those tags in one step when the object is recognized
+   * but not every tag can be moved.
+   * @returns {import('eslint').Rule.ReportFixer|null}
+   */
+  const getPropertyRelocationFixer = () => {
+    if (!typed || !enableFixer || !node) {
+      return null;
+    }
+
+    const properties = getAttachedObjectProperties(node);
+    if (!properties) {
+      return null;
+    }
+
+    /** @type {import('comment-parser').Spec[]} */
+    const propertyTags = jsdoc.tags.filter((jsdocTag) => {
+      return isRelocatablePropertyTag(jsdocTag.tag);
+    });
+    if (!propertyTags.length) {
+      return null;
+    }
+
+    /**
+     * @type {{
+     *   description: string,
+     *   prop: import('eslint').Rule.Node,
+     *   tag: import('comment-parser').Spec
+     * }[]}
+     */
+    const moves = [];
+    /** @type {Set<string>} */
+    const seenNames = new Set();
+    let canRelocate = true;
+    for (const jsdocTag of propertyTags) {
+      const description = getPropertyTagDescription(jsdocTag);
+      const prop = description ? properties.get(jsdocTag.name) : undefined;
+      if (!description || !prop || propertyHasJsdoc(prop) || seenNames.has(jsdocTag.name)) {
+        canRelocate = false;
+        break;
+      }
+
+      seenNames.add(jsdocTag.name);
+      moves.push({
+        description,
+        prop,
+        tag: jsdocTag,
+      });
+    }
+
+    if (!canRelocate) {
+      const stripped = stripPropertyTags(propertyTags);
+      return (fixer) => {
+        return stripped ? fixer.replaceText(jsdocNode, stripped) : removeJsdocFix(fixer);
+      };
+    }
+
+    return (fixer) => {
+      /** @type {import('eslint').Rule.Fix[]} */
+      const fixes = [];
+      const lineBreak = sourceCode.text.includes('\r\n') ? '\r\n' : '\n';
+      const commentText = sourceCode.getText(jsdocNode);
+      const commentLines = commentText.split(/\r?\n/v);
+      /** @type {Set<number>} */
+      const removeOffsets = new Set();
+      for (const move of moves) {
+        const srcLines = move.tag.source;
+        removeOffsets.add(srcLines[0].number);
+        for (const line of srcLines.slice(1)) {
+          if (line.tokens.tag || line.tokens.end) {
+            break;
+          }
+
+          removeOffsets.add(line.number);
+        }
+      }
+
+      const kept = commentLines.filter((_, idx) => {
+        return !removeOffsets.has(idx);
+      });
+      if (commentHasText(kept.join('\n'))) {
+        let nextLines = kept;
+        const indent = /** @type {RegExpExecArray} */ (
+          (/^[ \t]*/v).exec(/** @type {string} */ (commentLines[0]))
+        )[0];
+        if (!nextLines.some((line) => {
+          return line.includes('/**');
+        })) {
+          nextLines = [
+            `${indent}/**`, ...nextLines,
+          ];
+        }
+
+        if (!nextLines.at(-1)?.includes('*/')) {
+          nextLines = [
+            ...nextLines, `${indent} */`,
+          ];
+        }
+
+        fixes.push(fixer.replaceText(jsdocNode, nextLines.join(lineBreak)));
+      } else {
+        fixes.push(removeJsdocFix(fixer));
+      }
+
+      for (const move of moves) {
+        const propLine = /** @type {string} */ (sourceCode.lines[
+          /** @type {import('eslint').AST.SourceLocation} */
+          (move.prop.loc).start.line - 1
+        ]);
+        const indent = /** @type {RegExpExecArray} */ (
+          (/^[ \t]*/v).exec(propLine)
+        )[0];
+        const descriptionLines = move.description.split('\n');
+        const insertion = `/**${lineBreak}${descriptionLines.map((line) => {
+          return `${indent} *${line ? ` ${line}` : ''}`;
+        }).join(lineBreak)}${lineBreak}${indent} */${lineBreak}${indent}`;
+        fixes.push(fixer.insertTextBefore(move.prop, insertion));
+      }
+
+      return fixes;
+    };
+  };
+
+  const propertyRelocationFixer = getPropertyRelocationFixer();
+
   for (let tagIndex = 0; tagIndex < jsdoc.tags.length; tagIndex += 1) {
     const jsdocTag = jsdoc.tags[tagIndex];
     const tagName = jsdocTag.tag;
+
+    if (propertyRelocationFixer && isRelocatablePropertyTag(tagName)) {
+      const message = tagName === 'property' ?
+        `'@${tagName}' is redundant when using a type system.` :
+        `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "property".`;
+      report(message, propertyRelocationFixer, jsdocTag);
+      continue;
+    }
+
     if (jsxTags && jsxTagNames.has(tagName)) {
       continue;
     }

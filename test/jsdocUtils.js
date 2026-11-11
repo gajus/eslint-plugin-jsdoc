@@ -99,6 +99,20 @@ describe('jsdocUtils', () => {
       });
     });
   });
+  describe('getContextObject()', () => {
+    context('Context with `comment` and no handler', () => {
+      it('should throw', () => {
+        expect(() => {
+          jsdocUtils.getContextObject([
+            {
+              comment: 'JsdocBlock',
+              context: 'FunctionDeclaration',
+            },
+          ], () => {});
+        }).to.throw('The `comment` property of a `contexts` entry');
+      });
+    });
+  });
   describe('mayBeUndefinedTypeTag()', () => {
     context('Missing tag', () => {
       it('should return `false` with a missing tag', () => {

@@ -123,6 +123,40 @@ The following patterns are considered problems:
  */
 // "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
 // Message: Found function property; prefer method signature.
+
+/**
+ * @param {{
+ *   optionalFunc?: (arg: string) => number
+ * }} someName
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+// Message: Found function property; prefer method signature.
+
+/**
+ * @type {{
+ *   func?: ((arg: number) => void) &
+ *     ((arg: string) => void)
+ * }}
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+// Message: Found function property; prefer method signature.
+
+/**
+ * @param {{
+ *   optionalMethod?(arg: string): number
+ * }} someName
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "property"]
+// Message: Found method signature; prefer function property.
+
+/**
+ * @param {{
+ *   func?(arg: number): void
+ *   func?(arg: string): void
+ * }} someName
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "property"]
+// Message: Found method signature; prefer function property.
 ````
 
 
@@ -140,6 +174,14 @@ The following patterns are not considered problems:
  * }}
  */
 // "jsdoc/ts-method-signature-style": ["error"|"warn", "property"]
+
+/**
+ * @param {{
+ *   readonly readonlyFunc: (arg: string) => number,
+ *   readonly readonlyOverloads: ((arg: string) => number) & ((arg: number) => string)
+ * }} someName
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
 
 /**
  * @param {{

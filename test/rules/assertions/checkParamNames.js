@@ -2464,5 +2464,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        /** @typedef {string} Foo */
+      `,
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          contexts: [
+            'any',
+          ],
+        },
+      },
+    },
   ],
 });

@@ -404,4 +404,8 @@ default contexts, including for function rules, so if, for example, you exclude
 `FunctionDeclaration` here, rules like `require-param` will not check
 function declarations.
 
+A context object's `comment` property is not supported by `require-jsdoc` or
+`convert-to-jsdoc-comments`; these rules throw if the setting contains one, so
+give them their own `contexts` option to override the setting.
+
 See the ["AST and Selectors"](./advanced.md#ast-and-selectors) section for more on this format.

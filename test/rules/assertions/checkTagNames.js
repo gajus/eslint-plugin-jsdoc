@@ -1104,6 +1104,409 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+         * @prop IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+         */
+        declare const TemplateType: {
+            BASIC: 'basic',
+            IMAGE: 'image',
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".',
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".',
+        },
+      ],
+      filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        declare const TemplateType: {
+            /**
+             * icon, title, message, expandedMessage, up to two buttons.
+             */
+            BASIC: 'basic',
+            /**
+             * icon, title, message, expandedMessage, image, up to two buttons.
+             */
+            IMAGE: 'image',
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+         * @prop MISSING - not a property of this object.
+         */
+        declare const TemplateType: {
+            BASIC: 'basic',
+            IMAGE: 'image',
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".',
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".',
+        },
+      ],
+      filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * BASIC - icon, title, message, expandedMessage, up to two buttons.
+         * MISSING - not a property of this object.
+         */
+        declare const TemplateType: {
+            BASIC: 'basic',
+            IMAGE: 'image',
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         * Kinds of template.
+         * @property BASIC - icon, title
+         *   and up to two buttons.
+         * @property IMAGE - image
+         */
+        export const TemplateType = {
+            1: 'one',
+            'IMAGE': 'image',
+            [extra]: true,
+            ...rest,
+            BASIC: 'basic',
+        };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+        {
+          line: 6,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * Kinds of template.
+         */
+        export const TemplateType = {
+            1: 'one',
+            /**
+             * image
+             */
+            'IMAGE': 'image',
+            [extra]: true,
+            ...rest,
+            /**
+             * icon, title
+             * and up to two buttons.
+             */
+            BASIC: 'basic',
+        };
+      `,
+    },
+    {
+      code: `
+        /**
+         * @property BASIC - icon, title, message, expandedMessage, up to two buttons.
+         * @property IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+         */
+        const TemplateType = {
+            /** Already documented. */
+            BASIC: 'basic',
+            IMAGE: 'image',
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+        {
+          line: 4,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * BASIC - icon, title, message, expandedMessage, up to two buttons.
+         * IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+         */
+        const TemplateType = {
+            /** Already documented. */
+            BASIC: 'basic',
+            IMAGE: 'image',
+        };
+      `,
+    },
+    {
+      code: `
+        /**
+         * @property a - desc
+         */
+        const [a] = [];
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * a - desc
+         */
+        const [a] = [];
+      `,
+    },
+    {
+      code: `
+        /**
+         * @property - orphan
+         */
+        export {};
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * - orphan
+         */
+        export {};
+      `,
+    },
+    {
+      code: `
+        /**
+         * @property BASIC - one
+         * @property BASIC - two
+         */
+        const obj = {
+            BASIC: 1,
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+        {
+          line: 4,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * BASIC - one
+         * BASIC - two
+         */
+        const obj = {
+            BASIC: 1,
+        };
+      `,
+    },
+    {
+      code: `/** @property BASIC */
+const obj = {
+    BASIC: 1,
+};
+`,
+      errors: [
+        {
+          line: 1,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `const obj = {
+    BASIC: 1,
+};
+`,
+    },
+    {
+      code: `/** @property BASIC */const obj = {BASIC: 1};
+`,
+      errors: [
+        {
+          line: 1,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `const obj = {BASIC: 1};
+`,
+    },
+    {
+      code: `/** @property BASIC - icon
+ * @param foo
+ */
+const obj = {
+    BASIC: 1,
+};
+`,
+      errors: [
+        {
+          line: 1,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `/**
+ * @param foo
+ */
+const obj = {
+    /**
+     * icon
+     */
+    BASIC: 1,
+};
+`,
+    },
+    {
+      code: `/**
+ * @param foo
+ * @property BASIC - icon */
+const obj = {
+    BASIC: 1,
+};
+`,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `/**
+ * @param foo
+ */
+const obj = {
+    /**
+     * icon
+     */
+    BASIC: 1,
+};
+`,
+    },
+    {
+      code: '/**\r\n * Kinds.\r\n * @property BASIC - icon\r\n *\r\n * more\r\n */\r\nconst obj = {\r\n    BASIC: 1,\r\n};\r\n',
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: '/**\r\n * Kinds.\r\n */\r\nconst obj = {\r\n    /**\r\n     * icon\r\n     *\r\n     * more\r\n     */\r\n    BASIC: 1,\r\n};\r\n',
+    },
+    {
+      code: `
+        /**
+         * @property
+         */
+        const obj = {
+            BASIC: 1,
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        const obj = {
+            BASIC: 1,
+        };
+      `,
+    },
   ],
   valid: [
     {
@@ -1631,6 +2034,28 @@ export default /** @type {import('../index.js').TestCases} */ ({
           typed: true,
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @prop BASIC - kept because \`prop\` is explicitly allowed.
+         */
+        const TemplateType = {
+            BASIC: 'basic',
+        };
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            prop: 'prop',
+          },
+        },
+      },
     },
   ],
 });

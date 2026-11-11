@@ -44,6 +44,19 @@ function quux () {}
  */
 function quux () {}
 // Message: Prefer a more specific type to `*`
+
+/**
+ * @param {{bar: string, [Symbol.dispose](): any}}
+ */
+function quux () {}
+// Message: Prefer a more specific type to `any`
+
+/**
+ * @param {{bar: string, [Symbol.dispose](): any}}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"permissive"}}
+// Message: Prefer a more specific type to `any`
 ````
 
 

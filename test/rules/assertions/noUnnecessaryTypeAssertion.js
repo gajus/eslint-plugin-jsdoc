@@ -873,6 +873,82 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: null,
     },
+    {
+      code: `
+        /**
+         * @type {'a' | 'b'}
+         */
+        const mode = 'a';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "\'a\' | \'b\'" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const mode = 'a';
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+        let mode = 'a';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        let mode = 'a';
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+        var mode = 'a';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        var mode = 'a';
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {{mode: string}}
+         */
+        const {mode} = {mode: 'a'};
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "{mode: string}" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const {mode} = {mode: 'a'};
+      `,
+    },
   ],
   valid: [
     {
@@ -1356,6 +1432,56 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ...base,
           run: (arg) => arg,
         };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {'a' | 'b'}
+         */
+        let mode = 'a';
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {'a' | 'b'}
+         */
+        var mode = 'a';
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {{mode: 'a' | 'b'}}
+         */
+        let {mode} = {mode: 'a'};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {{mode: 'a' | 'b'}}
+         */
+        var {mode} = {mode: 'a'};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {'a' | 'b'}
+         */
+        let mode = 'a', other = 'c';
       `,
       filename: 'dummy.js',
       languageOptions,

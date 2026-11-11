@@ -2087,5 +2087,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux () {}
       `,
     },
+    {
+      code: `
+        /**
+         * @type {{bar: string, [Symbol.dispose](): void}}
+         */
+        using foo = {
+            bar: "baz",
+            [Symbol.dispose]: () => console.log("dispose")
+        };
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {{bar: string, [Symbol.dispose](): void}}
+         */
+        using foo = {
+            bar: "baz",
+            [Symbol.dispose]: () => console.log("dispose")
+        };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} MyObject
+         * @property {boolean} is-hyphenated
+         */
+      `,
+    },
   ],
 });

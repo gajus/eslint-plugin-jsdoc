@@ -4,6 +4,9 @@ import {
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
+import {
+  parse as espree,
+} from 'espree';
 
 export default iterateJsdoc(({
   context,
@@ -128,8 +131,12 @@ export default iterateJsdoc(({
     let parsedType;
     try {
       parsedType = mode === 'permissive' ?
-        tryParseType(/** @type {string} */ (potentialTag.type)) :
-        parseType(/** @type {string} */ (potentialTag.type), mode);
+        tryParseType(/** @type {string} */ (potentialTag.type), undefined, {
+          computedPropertyParser: espree,
+        }) :
+        parseType(/** @type {string} */ (potentialTag.type), mode, {
+          computedPropertyParser: espree,
+        });
     } catch {
       return;
     }
