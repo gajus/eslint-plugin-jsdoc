@@ -2782,6 +2782,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: '/**\r\n * Does it.\r\n * @param foo\r\n * @param bar\r\n */\r\nfunction quux (foo, bar) {}',
     },
+    {
+      code: `
+        /** @since 1.0.0
+         * @returns {string}
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      output: `
+        /** @since 1.0.0
+         * @param foo
+         * @returns {string}
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /** @since 1.0.0
+         */
+        function quux (foo, bar) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      output: `
+        /** @since 1.0.0
+         * @param foo
+         * @param bar
+         */
+        function quux (foo, bar) {}
+      `,
+    },
   ],
   valid: [
     {
