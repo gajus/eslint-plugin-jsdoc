@@ -428,6 +428,9 @@ export default iterateJsdoc(({
   const firstLine = utils.getFirstLine();
 
   const fix = () => {
+    // The closing line starts with the block's indentation plus one space
+    const closingLineStart = jsdoc.source[jsdoc.source.length - 1].tokens.start;
+
     const itemsToMoveRange = [
       ...Array.from({
         length: jsdoc.tags.length -
@@ -449,12 +452,17 @@ export default iterateJsdoc(({
     // This offset includes not only the offset from where the first tag
     //   must begin, and the additional offset of where the first changed
     //   tag begins, but it must also account for prior descriptions
-    const initialOffset = /** @type {import('../iterateJsdoc.js').Integer} */ (
-      firstLine
-    ) + /** @type {import('../iterateJsdoc.js').Integer} */ (firstChangedTagIndex) +
+    const initialOffset = Math.max(
+      // A tag on the opening line (`/** @param x`) leaves that line behind,
+      //   so the tags must be added after it
+      1,
+      /** @type {import('../iterateJsdoc.js').Integer} */ (
+        firstLine
+      ) + /** @type {import('../iterateJsdoc.js').Integer} */ (firstChangedTagIndex) +
 
-      // May be the first tag, so don't try finding a prior one if so
-      unchangedPriorTagDescriptions;
+        // May be the first tag, so don't try finding a prior one if so
+        unchangedPriorTagDescriptions,
+    );
 
     // Use `firstChangedTagLine` for line number to begin reporting/splicing
     for (const idx of itemsToMoveRange) {
@@ -477,6 +485,13 @@ export default iterateJsdoc(({
         extraTagCount + initialOffset + idx,
         {
           ...changedTag.source[0].tokens,
+
+          // A tag on the opening line (`/** @param x`) carries the block's
+          //   opening delimiter, which must not be copied to the new line
+          ...changedTag.source[0].tokens.delimiter === '/**' ? {
+            delimiter: '*',
+            start: closingLineStart,
+          } : {},
 
           // `comment-parser` puts the `end` within the `tags` section, so
           //   avoid adding another to jsdoc.source
