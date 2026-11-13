@@ -7,6 +7,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * über die Eingabe.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * foo.
            */
           const q = class {
@@ -1681,6 +1697,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * Example text. 🙂
          */
         export const example = () => { };
+      `,
+    },
+    {
+      code: `
+        /**
+         * Überprüft die Eingabe.
+         */
+        function quux () {
+
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         * Élément suivant.
+         */
+        function quux () {
+
+        }
       `,
     },
   ],

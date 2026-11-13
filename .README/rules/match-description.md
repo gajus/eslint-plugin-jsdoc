@@ -4,11 +4,10 @@
 
 Enforces a regular expression pattern on descriptions.
 
-The default is this basic expression to match English sentences (Support
-for Unicode upper case may be added in a future version when it can be handled
-by our supported Node versions):
+The default is this basic expression to match sentences that start with an
+upper case letter (in any script), a backtick, a digit or an underscore:
 
-``^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$``
+``^\n?([\\p{Upper}`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$``
 
 Applies by default to the JSDoc block description and to the following tags:
 
