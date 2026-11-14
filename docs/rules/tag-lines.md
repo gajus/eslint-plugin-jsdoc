@@ -784,5 +784,20 @@ export interface SubOptionTypeMap {
   checkbox: boolean
 }
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"endLines":0,"startLines":0}]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+
+/**
+ * @type {number}
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
 ````
 
