@@ -102,11 +102,13 @@ const capitalize = (str) => {
  *   line: import('../iterateJsdoc.js').Integer
  * }} tag
  * @param {boolean} newlineBeforeCapsAssumesBadSentenceEnd
+ * @param {import('../iterateJsdoc.js').Integer} fromLine The line of the
+ *   comment where the description starts
  * @returns {boolean}
  */
 const validateDescription = (
   description, reportOrig, jsdocNode, abbreviationsRegex,
-  sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd,
+  sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd, fromLine,
 ) => {
   if (!description || (/^\n+$/v).test(description)) {
     return false;
@@ -124,10 +126,17 @@ const validateDescription = (
 
       if (!/[.:?!]$/v.test(paragraph)) {
         const line = paragraph.split('\n').findLast(Boolean);
-        text = text.replace(new RegExp(`${escapeStringRegexp(
+
+        // Only search from the line where this description starts, so that an
+        //   earlier line ending in the same text (e.g., in an `@example`) is
+        //   not changed; the line may also end with the closing `*/`
+        const lines = text.split('\n');
+        const before = lines.slice(0, fromLine).join('\n');
+        const after = lines.slice(fromLine).join('\n');
+        text = (fromLine ? before + '\n' : '') + after.replace(new RegExp(`${escapeStringRegexp(
           /** @type {string} */
           (line),
-        )}$`, 'mv'), `${line}.`);
+        )}(?=[ \\t]*(?:\\*\\/)?$)`, 'mv'), `${line}.`);
       }
 
       for (const sentence of sentences.filter((sentence_) => {
@@ -243,6 +252,14 @@ export default iterateJsdoc(({
     }).join('|') + '(?:$|\\s)', 'gv') :
     '';
 
+  /**
+   * @param {import('comment-parser').Spec} tag
+   * @returns {import('../iterateJsdoc.js').Integer}
+   */
+  const getTagLine = (tag) => {
+    return tag.source[0].number - jsdoc.source[0].number;
+  };
+
   let {
     description,
   } = utils.getDescription();
@@ -276,13 +293,13 @@ export default iterateJsdoc(({
 
   if (validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, {
     line: jsdoc.source[0].number + 1,
-  }, newlineBeforeCapsAssumesBadSentenceEnd)) {
+  }, newlineBeforeCapsAssumesBadSentenceEnd, 0)) {
     return;
   }
 
   utils.forEachPreferredTag('description', (matchingJsdocTag) => {
     const desc = `${matchingJsdocTag.name} ${utils.getTagDescription(matchingJsdocTag)}`.trim();
-    validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag, newlineBeforeCapsAssumesBadSentenceEnd);
+    validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag, newlineBeforeCapsAssumesBadSentenceEnd, getTagLine(matchingJsdocTag));
   }, true);
 
   const {
@@ -306,13 +323,13 @@ export default iterateJsdoc(({
       utils.getTagDescription(tag)
     ).replace(/^- /v, '').trimEnd();
 
-    return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
+    return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd, getTagLine(tag));
   });
 
   tagsWithoutNames.some((tag) => {
     const desc = `${tag.name} ${utils.getTagDescription(tag)}`.trim();
 
-    return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
+    return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd, getTagLine(tag));
   });
 }, {
   iterateAllJsdocs: true,

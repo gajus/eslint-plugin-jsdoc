@@ -963,6 +963,84 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * Adds numbers.
+         * @example
+         * const total = sum(a, b)
+         * @returns {number} sum(a, b)
+         */
+        function sum (a, b) {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Sentences should start with an uppercase character.',
+        },
+        {
+          line: 6,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+      output: `
+        /**
+         * Adds numbers.
+         * @example
+         * const total = sum(a, b)
+         * @returns {number} Sum(a, b).
+         */
+        function sum (a, b) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Formats the user name
+         * for display.
+         * @param {string} name user name
+         */
+        function quux (name) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Sentences should start with an uppercase character.',
+        },
+        {
+          line: 5,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+      output: `
+        /**
+         * Formats the user name
+         * for display.
+         * @param {string} name User name.
+         */
+        function quux (name) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param {string} a The value */
+        function quux (a) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param {string} a The value. */
+        function quux (a) {}
+      `,
+    },
   ],
   valid: [
     {
