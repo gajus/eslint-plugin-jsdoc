@@ -69,6 +69,34 @@ const checkMaxBlockLines = ({
   return false;
 };
 
+/**
+ * When "always" lines also apply to the final tag, the default `endLines`
+ *   of 0 would remove the lines that "always" adds there, and the fixes
+ *   would never settle; an `endLines` set by the user still applies.
+ * @param {{
+ *   alwaysNever: string,
+ *   applyToEndTag: boolean,
+ *   endLinesSet: boolean,
+ *   finalTag: string|undefined,
+ *   tags: Record<string, {lines?: string}>
+ * }} cfg
+ * @returns {boolean}
+ */
+const isFinalTagAlways = ({
+  alwaysNever,
+  applyToEndTag,
+  endLinesSet,
+  finalTag,
+  tags,
+}) => {
+  if (!applyToEndTag || endLinesSet || alwaysNever !== 'always' || finalTag === undefined) {
+    return false;
+  }
+
+  const lines = tags[finalTag]?.lines;
+  return lines !== 'never' && lines !== 'any';
+};
+
 export default iterateJsdoc(({
   context,
   jsdoc,
@@ -86,6 +114,14 @@ export default iterateJsdoc(({
       tags = {},
     } = {},
   ] = context.options;
+
+  const finalTagAlways = isFinalTagAlways({
+    alwaysNever,
+    applyToEndTag,
+    endLinesSet: typeof context.options[1]?.endLines === 'number',
+    finalTag: jsdoc.tags.at(-1)?.tag,
+    tags,
+  });
 
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
@@ -149,7 +185,7 @@ export default iterateJsdoc(({
     }
 
     if (
-      typeof endLines === 'number' &&
+      typeof endLines === 'number' && !finalTagAlways &&
       lastEmpty !== null && tagIdx === jsdoc.tags.length - 1
     ) {
       const lineDiff = endLines - emptyLinesCount;
