@@ -1681,5 +1681,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       *
+       */
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * @type {number}
+       *
+       */
+      `,
+      options: [
+        'always',
+      ],
+    },
   ],
 });
