@@ -2477,5 +2477,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        const key = 'id';
+        /**
+         * @param root0
+         * @param root0.b
+         */
+        function quux ({[key]: a, b}) {}
+      `,
+    },
   ],
 });

@@ -325,6 +325,13 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'Property') {
+      // A computed key held in a variable (`{[key]: a}`) is dynamic, so, as
+      //   with other dynamic keys below, there is no name to document (the
+      //   variable's name is not the property's name)
+      if (param.computed && param.key.type === 'Identifier') {
+        return undefined;
+      }
+
       switch (param.value.type) {
         case 'ArrayPattern': {
           return [
