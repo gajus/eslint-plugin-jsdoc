@@ -7,6 +7,101 @@ import {
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: '/// Section\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      output: '/**\n * / Section\n */\nfunction f () {}',
+    },
+    {
+      code: '//////// SECTION ////////\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      output: '/**\n * ////// SECTION ////////\n */\nfunction f () {}',
+    },
+    {
+      code: '/*/ section */\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'blockCommentsJsdocStyle',
+        },
+      ],
+      output: '/**\n * / section\n */\nfunction f () {}',
+    },
+    {
+      code: '// Heading\n/// Section\n// Details\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      output: '/**\n * Heading\n * / Section\n * Details\n */\nfunction f () {}',
+    },
+    {
+      code: 'function outer () {\n  /// Section\n  function f () {}\n}',
+      errors: [
+        {
+          line: 2,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      output: 'function outer () {\n  /**\n   * / Section\n   */\n  function f () {}\n}',
+    },
+    {
+      code: 'const value = 1; /// Section',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      output: '/**\n * / Section\n */\nconst value = 1; ',
+    },
+    {
+      code: '/// Section\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      options: [
+        {
+          enforceJsdocLineStyle: 'single',
+        },
+      ],
+      output: '/** / Section */\nfunction f () {}',
+    },
+    {
+      code: '/// Section\nfunction f () {}',
+      errors: [
+        {
+          line: 1,
+          messageId: 'lineCommentsJsdocStyle',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+              inlineCommentBlock: true,
+            },
+          ],
+        },
+      ],
+      output: '/** / Section */\nfunction f () {}',
+    },
+    {
       code: `
         // A single line comment
         function quux () {}
