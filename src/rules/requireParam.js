@@ -524,6 +524,11 @@ export default iterateJsdoc(({
     }
 
     fixed = true;
+
+    // With the closing delimiter on a line with content (`* Desc. */`), the
+    //   new tags would otherwise be added before that line
+    utils.moveClosingDelimiterToOwnLine();
+
     for (const missingTag of missingTags) {
       fix(missingTag);
     }

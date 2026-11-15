@@ -1309,6 +1309,21 @@ export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, 
  */\r
 function quux (foo, bar) {}
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * Adds numbers. */
+function quux (foo) {}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @param {number} foo */
+function quux (foo, bar) {}
+// Message: Missing JSDoc @param "bar" declaration.
+
+/** Adds
+ * numbers. */
+function quux (foo) {}
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 
