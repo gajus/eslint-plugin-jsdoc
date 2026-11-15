@@ -303,6 +303,79 @@ export default iterateJsdoc(({
       .filter(Boolean));
   }
 
+  /**
+   * @typedef {{
+   *   parsedType: import('jsdoc-type-pratt-parser').RootResult;
+   *   tag: import('comment-parser').Spec|import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+   *     line?: import('../iterateJsdoc.js').Integer
+   *   }
+   * }} TypeAndTagInfo
+   */
+
+  /**
+   * @param {string} propertyName
+   * @returns {(tag: (import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+   *     name?: string,
+   *     type?: string,
+   *     line?: import('../iterateJsdoc.js').Integer
+   *   })|import('comment-parser').Spec & {
+   *     namepathOrURL?: string
+   *   }
+   * ) => undefined|TypeAndTagInfo}
+   */
+  const tagToParsedType = (propertyName) => {
+    return (tag) => {
+      try {
+        const potentialType = tag[
+          /** @type {"type"|"name"|"namepathOrURL"} */ (propertyName)
+        ];
+        return {
+          parsedType: mode === 'permissive' ?
+            tryParseType(/** @type {string} */ (potentialType), undefined, {
+              computedPropertyParser: espree,
+            }) :
+            parseType(/** @type {string} */ (potentialType), mode, {
+              computedPropertyParser: espree,
+            }),
+          tag,
+        };
+      } catch {
+        return undefined;
+      }
+    };
+  };
+
+  const typeTags = utils.filterTags(({
+    tag,
+  }) => {
+    return tag !== 'import' && utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
+  }).map(tagToParsedType('type'));
+
+  const namepathReferencingTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNamepathReferencingTag(tag);
+  }).map(tagToParsedType('name'));
+
+  const namepathOrUrlReferencingTags = utils.filterAllTags(({
+    tag,
+  }) => {
+    return utils.isNamepathOrUrlReferencingTag(tag);
+  }).map(tagToParsedType('namepathOrURL'));
+
+  const tagsWithTypes = /** @type {TypeAndTagInfo[]} */ ([
+    ...typeTags,
+    ...namepathReferencingTags,
+    ...namepathOrUrlReferencingTags,
+    // Remove types which failed to parse
+  ].filter(Boolean));
+
+  // Skip collecting defined types when there is nothing to check
+  if (!tagsWithTypes.length) {
+    state.foundTypedefValues = foundTypedefValues;
+    return;
+  }
+
   const allComments = sourceCode.getAllComments();
   const comments = getJSDocCommentBlocks(sourceCode);
 
@@ -780,66 +853,6 @@ export default iterateJsdoc(({
         ],
     ));
 
-  /**
-   * @typedef {{
-   *   parsedType: import('jsdoc-type-pratt-parser').RootResult;
-   *   tag: import('comment-parser').Spec|import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
-   *     line?: import('../iterateJsdoc.js').Integer
-   *   }
-   * }} TypeAndTagInfo
-   */
-
-  /**
-   * @param {string} propertyName
-   * @returns {(tag: (import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
-   *     name?: string,
-   *     type?: string,
-   *     line?: import('../iterateJsdoc.js').Integer
-   *   })|import('comment-parser').Spec & {
-   *     namepathOrURL?: string
-   *   }
-   * ) => undefined|TypeAndTagInfo}
-   */
-  const tagToParsedType = (propertyName) => {
-    return (tag) => {
-      try {
-        const potentialType = tag[
-          /** @type {"type"|"name"|"namepathOrURL"} */ (propertyName)
-        ];
-        return {
-          parsedType: mode === 'permissive' ?
-            tryParseType(/** @type {string} */ (potentialType), undefined, {
-              computedPropertyParser: espree,
-            }) :
-            parseType(/** @type {string} */ (potentialType), mode, {
-              computedPropertyParser: espree,
-            }),
-          tag,
-        };
-      } catch {
-        return undefined;
-      }
-    };
-  };
-
-  const typeTags = utils.filterTags(({
-    tag,
-  }) => {
-    return tag !== 'import' && utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
-  }).map(tagToParsedType('type'));
-
-  const namepathReferencingTags = utils.filterTags(({
-    tag,
-  }) => {
-    return utils.isNamepathReferencingTag(tag);
-  }).map(tagToParsedType('name'));
-
-  const namepathOrUrlReferencingTags = utils.filterAllTags(({
-    tag,
-  }) => {
-    return utils.isNamepathOrUrlReferencingTag(tag);
-  }).map(tagToParsedType('namepathOrURL'));
-
   const definedNamesAndNamepaths = new Set(utils.filterTags(({
     tag,
   }) => {
@@ -849,13 +862,6 @@ export default iterateJsdoc(({
   }) => {
     return name;
   }));
-
-  const tagsWithTypes = /** @type {TypeAndTagInfo[]} */ ([
-    ...typeTags,
-    ...namepathReferencingTags,
-    ...namepathOrUrlReferencingTags,
-    // Remove types which failed to parse
-  ].filter(Boolean));
 
   for (const {
     parsedType,
