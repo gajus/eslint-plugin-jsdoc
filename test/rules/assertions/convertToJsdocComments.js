@@ -11,7 +11,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       output: '/**\n * / Section\n */\nfunction f () {}',
@@ -21,7 +21,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       output: '/**\n * ////// SECTION ////////\n */\nfunction f () {}',
@@ -31,7 +31,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'blockCommentsJsdocStyle',
+          message: 'Block comments should be JSDoc-style.',
         },
       ],
       output: '/**\n * / section\n */\nfunction f () {}',
@@ -41,7 +41,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       output: '/**\n * Heading\n * / Section\n * Details\n */\nfunction f () {}',
@@ -51,7 +51,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       output: 'function outer () {\n  /**\n   * / Section\n   */\n  function f () {}\n}',
@@ -61,7 +61,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       output: '/**\n * / Section\n */\nconst value = 1; ',
@@ -71,7 +71,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       options: [
@@ -86,7 +86,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          messageId: 'lineCommentsJsdocStyle',
+          message: 'Line comments should be JSDoc-style.',
         },
       ],
       options: [

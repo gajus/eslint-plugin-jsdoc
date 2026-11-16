@@ -116,6 +116,43 @@ Defaults to `both`.
 The following patterns are considered problems:
 
 ````ts
+/// Section
+function f () {}
+// Message: Line comments should be JSDoc-style.
+
+//////// SECTION ////////
+function f () {}
+// Message: Line comments should be JSDoc-style.
+
+/*/ section */
+function f () {}
+// Message: Block comments should be JSDoc-style.
+
+// Heading
+/// Section
+// Details
+function f () {}
+// Message: Line comments should be JSDoc-style.
+
+function outer () {
+  /// Section
+  function f () {}
+}
+// Message: Line comments should be JSDoc-style.
+
+const value = 1; /// Section
+// Message: Line comments should be JSDoc-style.
+
+/// Section
+function f () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Line comments should be JSDoc-style.
+
+/// Section
+function f () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","inlineCommentBlock":true}]}]
+// Message: Line comments should be JSDoc-style.
+
 // A single line comment
 function quux () {}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
