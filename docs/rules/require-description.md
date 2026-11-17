@@ -9,6 +9,7 @@
     * [`contexts`](#user-content-require-description-options-contexts)
     * [`descriptionStyle`](#user-content-require-description-options-descriptionstyle)
     * [`exemptedBy`](#user-content-require-description-options-exemptedby)
+    * [`publicOnly`](#user-content-require-description-options-publiconly)
 * [Context and settings](#user-content-require-description-context-and-settings)
 * [Failing examples](#user-content-require-description-failing-examples)
 * [Passing examples](#user-content-require-description-passing-examples)
@@ -89,6 +90,23 @@ array with `inheritdoc`. If you set this array, it will overwrite the
 default, so be sure to add back `inheritdoc` if you wish its presence
 to cause exemption of the rule.
 
+<a name="user-content-require-description-options-publiconly"></a>
+<a name="require-description-options-publiconly"></a>
+### <code>publicOnly</code>
+
+This option will insist that a missing description is only reported for
+functions / class declarations that are exported from the module.
+May be a boolean or object. If set to `true`, the defaults below will be
+used. If unset, reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (`false` unless
+otherwise noted):
+
+- `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+- `esm` - ESM exports are checked (Defaults to `true`)
+- `cjs` - CommonJS exports are checked (Defaults to `true`)
+- `window` - Window global exports are checked
+
 
 <a name="user-content-require-description-context-and-settings"></a>
 <a name="require-description-context-and-settings"></a>
@@ -100,7 +118,7 @@ to cause exemption of the rule.
 | Tags     | `description` or JSDoc block |
 | Aliases  | `desc` |
 | Recommended | false |
-| Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`|
+| Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`, `publicOnly`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 <a name="user-content-require-description-failing-examples"></a>
@@ -397,6 +415,35 @@ app.use(
 this.treeViewSelection = [];
 // "jsdoc/require-description": ["error"|"warn", {"contexts":["AssignmentExpression"]}]
 // Message: Missing JSDoc block description.
+
+/**
+ * @param foo Foo.
+ */
+export function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc block description.
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc block description.
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+  return foo;
+}
+export {quux};
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc block description.
 ````
 
 
@@ -633,5 +680,22 @@ class quux {
  *   description already.
  */
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"any"}],"descriptionStyle":"tag"}]
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
 ````
 

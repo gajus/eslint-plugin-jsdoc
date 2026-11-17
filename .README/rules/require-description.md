@@ -24,7 +24,7 @@ have a description.
 | Tags     | `description` or JSDoc block |
 | Aliases  | `desc` |
 | Recommended | false |
-| Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`|
+| Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`, `publicOnly`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

@@ -1522,6 +1522,28 @@ export interface Rules {
            * to cause exemption of the rule.
            */
           exemptedBy?: string[];
+          /**
+           * This option will insist that a missing description is only reported for
+           * functions / class declarations that are exported from the module.
+           * May be a boolean or object. If set to `true`, the defaults below will be
+           * used. If unset, reporting will not be limited to exports.
+           *
+           * This object supports the following optional boolean keys (`false` unless
+           * otherwise noted):
+           *
+           * - `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+           * - `esm` - ESM exports are checked (Defaults to `true`)
+           * - `cjs` - CommonJS exports are checked (Defaults to `true`)
+           * - `window` - Window global exports are checked
+           */
+          publicOnly?:
+            | boolean
+            | {
+                ancestorsOnly?: boolean;
+                cjs?: boolean;
+                esm?: boolean;
+                window?: boolean;
+              };
         }
       ];
 
@@ -2208,6 +2230,28 @@ export interface Rules {
            */
           defaultDestructuredRootDescription?: string;
           /**
+           * This option will insist that missing `@param` descriptions are only reported
+           * for functions that are exported from the module.
+           * May be a boolean or object. If set to `true`, the defaults below will be
+           * used. If unset, reporting will not be limited to exports.
+           *
+           * This object supports the following optional boolean keys (`false` unless
+           * otherwise noted):
+           *
+           * - `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+           * - `esm` - ESM exports are checked (Defaults to `true`)
+           * - `cjs` - CommonJS exports are checked (Defaults to `true`)
+           * - `window` - Window global exports are checked
+           */
+          publicOnly?:
+            | boolean
+            | {
+                ancestorsOnly?: boolean;
+                cjs?: boolean;
+                esm?: boolean;
+                window?: boolean;
+              };
+          /**
            * Whether to set a default destructured root description. For example, you may
            * wish to avoid manually having to set the description for a `@param`
            * corresponding to a destructured root object as it should always be the same
@@ -2506,6 +2550,28 @@ export interface Rules {
                 context?: string;
               }
           )[];
+          /**
+           * This option will insist that missing `@returns` descriptions are only reported
+           * for functions that are exported from the module.
+           * May be a boolean or object. If set to `true`, the defaults below will be
+           * used. If unset, reporting will not be limited to exports.
+           *
+           * This object supports the following optional boolean keys (`false` unless
+           * otherwise noted):
+           *
+           * - `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+           * - `esm` - ESM exports are checked (Defaults to `true`)
+           * - `cjs` - CommonJS exports are checked (Defaults to `true`)
+           * - `window` - Window global exports are checked
+           */
+          publicOnly?:
+            | boolean
+            | {
+                ancestorsOnly?: boolean;
+                cjs?: boolean;
+                esm?: boolean;
+                window?: boolean;
+              };
         }
       ];
 

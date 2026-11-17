@@ -18,7 +18,7 @@ or if it is `Promise<void>` or `Promise<undefined>`.
 |Tags|`returns`|
 |Aliases|`return`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`contexts`, `publicOnly`|
 
 ## Failing examples
 

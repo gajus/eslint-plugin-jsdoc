@@ -1,15 +1,23 @@
+import exportParser from '../exportParser.js';
 import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
   context,
+  node,
   report,
   settings,
+  sourceCode,
   utils,
 }) => {
   const {
     defaultDestructuredRootDescription = 'The root object',
+    publicOnly = false,
     setDefaultDestructuredRootDescription = false,
   } = context.options[0] || {};
+
+  if (exportParser.isSkippedAsNotPublic(publicOnly, node, sourceCode, settings)) {
+    return;
+  }
 
   const functionParameterNames = utils.getFunctionParameterNames();
 
@@ -92,6 +100,45 @@ section of our Advanced docs for more on the expected format.`,
             description: `The description string to set by default for destructured roots. Defaults to
 "The root object".`,
             type: 'string',
+          },
+          publicOnly: {
+            description: `This option will insist that missing \`@param\` descriptions are only reported
+for functions that are exported from the module.
+May be a boolean or object. If set to \`true\`, the defaults below will be
+used. If unset, reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (\`false\` unless
+otherwise noted):
+
+- \`ancestorsOnly\` - Optimization to only check node ancestors to check if node is exported
+- \`esm\` - ESM exports are checked (Defaults to \`true\`)
+- \`cjs\` - CommonJS exports are checked (Defaults to \`true\`)
+- \`window\` - Window global exports are checked`,
+            oneOf: [
+              {
+                default: false,
+                type: 'boolean',
+              },
+              {
+                additionalProperties: false,
+                default: {},
+                properties: {
+                  ancestorsOnly: {
+                    type: 'boolean',
+                  },
+                  cjs: {
+                    type: 'boolean',
+                  },
+                  esm: {
+                    type: 'boolean',
+                  },
+                  window: {
+                    type: 'boolean',
+                  },
+                },
+                type: 'object',
+              },
+            ],
           },
           setDefaultDestructuredRootDescription: {
             description: `Whether to set a default destructured root description. For example, you may

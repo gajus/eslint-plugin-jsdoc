@@ -765,14 +765,9 @@ export default {
       };
 
       if (publicOnly) {
-        /** @type {RequireJsdocOpts} */
-        const opt = {
-          ancestorsOnly: Boolean(publicOnly?.ancestorsOnly ?? false),
-          esm: Boolean(publicOnly?.esm ?? true),
-          initModuleExports: Boolean(publicOnly?.cjs ?? true),
-          initWindow: Boolean(publicOnly?.window ?? false),
-        };
-        const exported = exportParser.isUncommentedExport(node, sourceCode, opt, settings);
+        const exported = exportParser.isUncommentedExport(
+          node, sourceCode, exportParser.getPublicOnlyOptions(publicOnly), settings,
+        );
 
         if (exported) {
           report();
