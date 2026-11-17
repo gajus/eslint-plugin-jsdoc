@@ -25,6 +25,7 @@
     * [`interfaceExemptsParamsCheck`](#user-content-require-param-options-interfaceexemptsparamscheck)
     * [`unnamedRootBase`](#user-content-require-param-options-unnamedrootbase)
     * [`useDefaultObjectProperties`](#user-content-require-param-options-usedefaultobjectproperties)
+    * [`useObjectTypeForDestructuredRoots`](#user-content-require-param-options-useobjecttypefordestructuredroots)
 * [Context and settings](#user-content-require-param-context-and-settings)
 * [Failing examples](#user-content-require-param-failing-examples)
 * [Passing examples](#user-content-require-param-passing-examples)
@@ -515,6 +516,17 @@ function quux ({foo}, [bar], {baz}) {
 Set to `true` if you wish to expect documentation of properties on objects
 supplied as default values. Defaults to `false`.
 
+<a name="user-content-require-param-options-useobjecttypefordestructuredroots"></a>
+<a name="require-param-options-useobjecttypefordestructuredroots"></a>
+### <code>useObjectTypeForDestructuredRoots</code>
+
+Set to `true` to have the fixer document a destructured parameter which has no
+tags at all with a single root tag whose type lists the properties, e.g.,
+`@param {{bar: any}} root0` (`*` instead of `any` outside of `typescript` mode),
+instead of `@param root0` and `@param root0.bar`. Only applies to patterns
+without nested patterns or rest elements; others are fixed as before.
+Defaults to `false`.
+
 
 <a name="user-content-require-param-context-and-settings"></a>
 <a name="require-param-context-and-settings"></a>
@@ -526,7 +538,7 @@ supplied as default values. Defaults to `false`.
 | Tags     | `param` |
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
-| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `interfaceExemptsParamsCheck`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `interfaceExemptsParamsCheck`, `unnamedRootBase`, `useDefaultObjectProperties`, `useObjectTypeForDestructuredRoots`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <a name="user-content-require-param-failing-examples"></a>
@@ -1335,6 +1347,49 @@ function quux (foo, bar) {}
  * numbers. */
 function quux (foo) {}
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @returns {void}
+ */
+const quux = ({bar, baz = 1}) => {};
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * Desc.
+ */
+function quux ({bar}, baz) {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * Desc.
+ */
+function quux ({bar: {baz}}) {}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param root0
+ */
+function quux ({bar}) {}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0.bar" declaration.
+
+/**
+ * Desc.
+ */
+function quux ([bar]) {}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param baz Baz.
+ */
+function quux (baz, {bar}) {}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+// Message: Missing JSDoc @param "root0" declaration.
 ````
 
 
@@ -2048,5 +2103,11 @@ let test = (): (id: number) => string =>
   return (id) => `${id}`;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
+
+/**
+ * @param {{bar: any}} root0
+ */
+function quux ({bar}) {}
+// "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
 ````
 
