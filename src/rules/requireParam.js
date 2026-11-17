@@ -36,6 +36,7 @@ export default iterateJsdoc(({
   context,
   jsdoc,
   node,
+  sourceCode,
   utils,
 }) => {
   /* eslint-enable complexity -- Temporary */
@@ -109,6 +110,7 @@ export default iterateJsdoc(({
 
   /**
    * @type {{
+   *   destructuredText?: string,
    *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
    *   functionParameterName: string,
    *   inc: boolean|undefined,
@@ -117,6 +119,21 @@ export default iterateJsdoc(({
    * }[]}
    */
   const missingTags = [];
+
+  /**
+   * The source text of a destructured parameter, to name it in messages
+   * about its root, whose name (e.g., `root0`) is not in the code.
+   * @param {import('../iterateJsdoc.js').Integer} paramIdx
+   * @returns {string}
+   */
+  const getDestructuredText = (paramIdx) => {
+    const text = sourceCode.getText(
+      /** @type {import('estree').Function} */ (node).params[paramIdx],
+    ).replaceAll(/\s+/gv, ' ');
+
+    return text.length > 40 ? `${text.slice(0, 37)}...` : text;
+  };
+
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
 
   /**
@@ -314,6 +331,7 @@ export default iterateJsdoc(({
 
           if (emptyParamIdx > -1) {
             missingTags.push({
+              destructuredText: getDestructuredText(functionParameterIdx),
               functionParameterIdx: emptyParamIdx,
               functionParameterName: rootName,
               inc,
@@ -321,6 +339,7 @@ export default iterateJsdoc(({
             });
           } else {
             missingTags.push({
+              destructuredText: getDestructuredText(functionParameterIdx),
               functionParameterIdx: hasParamIndex(rootName) ?
                 getParamIndex(rootName) :
                 getParamIndex(paramName),
@@ -536,10 +555,13 @@ export default iterateJsdoc(({
   }
 
   for (const {
+    destructuredText,
     functionParameterName,
   } of missingTags) {
     utils.reportJSDoc(
-      `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`,
+      `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration${
+        destructuredText ? ` for the destructured parameter \`${destructuredText}\`` : ''
+      }.`,
       null,
       enableFixer ? fixer : null,
     );
