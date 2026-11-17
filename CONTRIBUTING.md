@@ -101,3 +101,7 @@ brings them into `master`) must follow the
 [AngularJS commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) with a special format such as `feat: describe new feature`
 for releases to occur and for the described items to be added
 to the release notes.
+
+Releases are made once a day (shortly after midnight UTC, or when started by
+hand from the "Build and release" workflow), so everything merged since the
+previous release goes out together.
