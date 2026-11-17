@@ -162,6 +162,28 @@ The general starting rulesets you can extend from in flat config are:
   - `jsdoc.configs['flat/recommended-tsdoc-error']`: The same, reporting with failing errors instead of mere warnings
 - `jsdoc.configs['flat/recommended-mixed']`: A combination of `flat/recommended-typescript-flavor` and `flat/recommended-typescript` with automatic assignment of subconfig based on file extension (`**/*.{js,jsx,cjs,mjs}` and `**/*.{ts,tsx,cts,mts}`, respectively)
 
+#### "All" Flat Configs
+
+These turn on every rule which can work without further configuration, on top of
+the matching recommended config, for projects that want to start strict and turn
+rules off:
+
+- `jsdoc.configs['flat/all']`: based on `flat/recommended`
+  - `jsdoc.configs['flat/all-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/all-typescript']`: based on `flat/recommended-typescript`
+  - `jsdoc.configs['flat/all-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/all-typescript-flavor']`: based on `flat/recommended-typescript-flavor`
+  - `jsdoc.configs['flat/all-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+
+Each keeps off the rules which its recommended config turns off for its kind of
+project (e.g., `no-types` where types belong in JSDoc), and, in all of them, the
+rules which do nothing useful until configured (`match-name`, `no-missing-syntax`,
+`no-restricted-syntax`, `require-tags`, `text-escaping`), which need type
+information (`no-unnecessary-type-assertion`) or which do not work in ESLint 8+
+(`check-examples`). As with ESLint's own "all" config, the set of rules will change
+as rules are added, and some rules (e.g., `require-file-overview`, `require-example`,
+`convert-to-jsdoc-comments`) are strict by design.
+
 #### Granular Flat Configs
 
 There also exist several more granular, standalone TypeScript rulesets you can extend from.

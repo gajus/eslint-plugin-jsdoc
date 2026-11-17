@@ -450,6 +450,76 @@ const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flatName) => {
 };
 
 /**
+ * Rules left off by the "all" configs: they report only that an option is
+ * missing until configured (`match-name`, `no-missing-syntax`,
+ * `no-restricted-syntax`, `require-tags`, `text-escaping`), need type
+ * information (`no-unnecessary-type-assertion`) or do not work in ESLint 8+
+ * (`check-examples`, replaced by the examples processor).
+ */
+const allRulesetExclusions = new Set([
+  'jsdoc/check-examples',
+  'jsdoc/match-name',
+  'jsdoc/no-missing-syntax',
+  'jsdoc/no-restricted-syntax',
+  'jsdoc/no-unnecessary-type-assertion',
+  'jsdoc/require-tags',
+  'jsdoc/text-escaping',
+]);
+
+/**
+ * Builds an "all" config from a recommended one by turning on its rules
+ * which are off, except for the exclusions and for `keepOff`, the rules the
+ * recommended config turns off because they do not fit its kind of project
+ * (e.g., `no-types` for JSDoc types).
+ * @param {(warnOrError: "warn"|"error", flatName: string) => import('eslint').Linter.Config} createRuleset
+ * @param {string[]} keepOff
+ * @returns {(warnOrError: "warn"|"error", flatName: string) => import('eslint').Linter.Config}
+ */
+const createAllRulesetFactory = (createRuleset, keepOff) => {
+  return (warnOrError, flatName) => {
+    const ruleset = createRuleset(warnOrError, flatName);
+    return {
+      ...ruleset,
+      rules: Object.fromEntries(
+        Object.entries(/** @type {import('eslint').Linter.RulesRecord} */ (ruleset.rules)).map(([
+          ruleName,
+          value,
+        ]) => {
+          return [
+            ruleName,
+            value === 'off' && !allRulesetExclusions.has(ruleName) && !keepOff.includes(ruleName) ?
+              warnOrError :
+              value,
+          ];
+        }),
+      ),
+    };
+  };
+};
+
+const tsOnlyRules = [
+  'jsdoc/ts-ban-ts-comment',
+  'jsdoc/ts-method-signature-style',
+  'jsdoc/ts-no-unnecessary-template-expression',
+  'jsdoc/ts-prefer-function-type',
+];
+
+const createAllRuleset = createAllRulesetFactory(createRecommendedRuleset, [
+  'jsdoc/no-types',
+  ...tsOnlyRules,
+]);
+const createAllTypeScriptRuleset = createAllRulesetFactory(createRecommendedTypeScriptRuleset, [
+  'jsdoc/no-undefined-types',
+  'jsdoc/require-param-type',
+  'jsdoc/require-property-type',
+  'jsdoc/require-returns-type',
+]);
+const createAllTypeScriptFlavorRuleset = createAllRulesetFactory(createRecommendedTypeScriptFlavorRuleset, [
+  'jsdoc/no-types',
+  'jsdoc/no-undefined-types',
+]);
+
+/**
  * @param {(string | unknown[])[]} ruleNames
  */
 const createStandaloneRulesetFactory = (ruleNames) => {
@@ -590,6 +660,13 @@ index.configs['flat/recommended-typescript-flavor'] = createRecommendedTypeScrip
 index.configs['flat/recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error', 'flat/recommended-typescript-flavor-error');
 index.configs['flat/recommended-tsdoc'] = createRecommendedTsDocRuleset('warn', 'flat/recommended-tsdoc');
 index.configs['flat/recommended-tsdoc-error'] = createRecommendedTsDocRuleset('error', 'flat/recommended-tsdoc-error');
+
+index.configs['flat/all'] = createAllRuleset('warn', 'flat/all');
+index.configs['flat/all-error'] = createAllRuleset('error', 'flat/all-error');
+index.configs['flat/all-typescript'] = createAllTypeScriptRuleset('warn', 'flat/all-typescript');
+index.configs['flat/all-typescript-error'] = createAllTypeScriptRuleset('error', 'flat/all-typescript-error');
+index.configs['flat/all-typescript-flavor'] = createAllTypeScriptFlavorRuleset('warn', 'flat/all-typescript-flavor');
+index.configs['flat/all-typescript-flavor-error'] = createAllTypeScriptFlavorRuleset('error', 'flat/all-typescript-flavor-error');
 
 index.configs['flat/contents-typescript'] = createContentsTypescriptRuleset('warn', 'flat/contents-typescript');
 index.configs['flat/contents-typescript-error'] = createContentsTypescriptRuleset('error', 'flat/contents-typescript-error');
