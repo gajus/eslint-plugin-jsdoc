@@ -1,0 +1,48 @@
+env:
+  PATTERN: '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?!?: .+|^Revert ".+"'
+jobs:
+  title:
+    runs-on: ubuntu-latest
+    name: Conventional title or commits
+    steps:
+      # The release type and notes come from the commit messages on `main`: with
+      #   "Squash and merge" from the title, with "Rebase and merge" from each
+      #   commit. At least one of the two must follow Conventional Commits.
+      - name: check the title and the commits
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          matches () {
+            printf '%s' "$1" | grep -Eq "$PATTERN"
+          }
+          bad_commits=$(gh api "repos/$REPO/pulls/$NUMBER/commits" --paginate \
+            --jq '.[] | select(.parents | length == 1) | .commit.message | split("\n")[0]' |
+            while IFS= read -r subject; do
+              matches "$subject" || printf '%s\n' "$subject"
+            done)
+          if matches "$TITLE"; then
+            if [ -n "$bad_commits" ]; then
+              echo "::warning::Merge with \"Squash and merge\": these commits do not follow Conventional Commits, so \"Rebase and merge\" would release them without notes:%0A${bad_commits//$'\n'/%0A}"
+            fi
+          elif [ -z "$bad_commits" ]; then
+            echo "::notice::Merge with \"Rebase and merge\": the title does not follow Conventional Commits, but every commit does."
+          else
+            echo "::error::Neither the title nor every commit follows Conventional Commits (e.g. \"fix(\`rule-name\`): ...\" or \"feat: ...\"), so this change would be released without notes. Please rename the pull request."
+            exit 1
+          fi
+    timeout-minutes: 2
+name: Pull request title
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+permissions:
+  pull-requests: read
