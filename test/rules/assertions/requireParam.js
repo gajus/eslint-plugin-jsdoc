@@ -2961,7 +2961,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @param "root0" declaration.',
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar, baz = 1}`.',
         },
       ],
       options: [
@@ -2987,7 +2987,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @param "root0" declaration.',
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar}`.',
         },
         {
           line: 2,
@@ -3023,7 +3023,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @param "root0" declaration.',
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar: {baz}}`.',
         },
         {
           line: 2,
@@ -3085,7 +3085,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @param "root0" declaration.',
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `[bar]`.',
         },
         {
           line: 2,
@@ -3116,7 +3116,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @param "root0" declaration.',
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar}`.',
         },
       ],
       options: [

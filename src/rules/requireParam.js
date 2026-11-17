@@ -259,6 +259,7 @@ export default iterateJsdoc(({
    * and one tag per property. Only for flat object patterns with identifier
    * keys and without rest elements.
    * @param {{
+   *   destructuredText: string,
    *   hasPropertyRest: boolean|undefined,
    *   hasRestElement: boolean|undefined,
    *   inc: boolean|undefined,
@@ -268,6 +269,7 @@ export default iterateJsdoc(({
    * @returns {boolean} Whether the root tag was added
    */
   const addObjectTypeRoot = ({
+    destructuredText,
     hasPropertyRest,
     hasRestElement,
     inc,
@@ -287,6 +289,7 @@ export default iterateJsdoc(({
 
     const anyType = settings.mode === 'typescript' ? 'any' : '*';
     missingTags.push({
+      destructuredText,
       // As for other unnamed roots, the position is that of the first property
       functionParameterIdx: getParamIndex(names[0]),
       functionParameterName: rootName,
@@ -356,6 +359,7 @@ export default iterateJsdoc(({
       }
 
       if (useObjectTypeForDestructuredRoots && addObjectTypeRoot({
+        destructuredText: getDestructuredText(functionParameterIdx),
         hasPropertyRest,
         hasRestElement,
         inc,
