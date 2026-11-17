@@ -286,11 +286,12 @@ export default {
           return `/**${body.replace(/^[ \t]+/v, '')}\n${indent}`;
         }
 
-        return `/**\n${indent}*${body}\n${indent}`;
+        // Separate a leading slash from the JSDoc star to avoid creating `*/`.
+        return `/**\n${indent}*${body.replace(/^\//v, ' /')}\n${indent}`;
       }
 
       const inner = comments.map((comment) => {
-        return `${indent}*${comment.value.trimEnd()}`;
+        return `${indent}*${comment.value.trimEnd().replace(/^\//v, ' /')}`;
       }).join('\n');
 
       return `/**\n${inner}\n${indent}`;

@@ -1,8 +1,6 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
-// If supporting Node >= 10, we could loosen the default to this for the
-//   initial letter: \\p{Upper}
-const matchDescriptionDefault = '^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$';
+const matchDescriptionDefault = '^\n?([\\p{Upper}`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$';
 
 /**
  * @param {string} value

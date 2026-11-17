@@ -1310,12 +1310,16 @@ export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, 
 function quux (foo, bar) {}
 // Message: Missing JSDoc @param "foo" declaration.
 
-const key = 'id';
-/**
- * @param root0
+/** @since 1.0.0
+ * @returns {string}
  */
-function quux ({[key]: a, b}) {}
-// Message: Missing JSDoc @param "root0.b" declaration.
+function quux (foo) {}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/** @since 1.0.0
+ */
+function quux (foo, bar) {}
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 
@@ -2029,12 +2033,5 @@ let test = (): (id: number) => string =>
   return (id) => `${id}`;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
-
-const key = 'id';
-/**
- * @param root0
- * @param root0.b
- */
-function quux ({[key]: a, b}) {}
 ````
 
