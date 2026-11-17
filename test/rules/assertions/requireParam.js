@@ -2830,6 +2830,66 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * Adds numbers. */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * Adds numbers.
+         * @param foo
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {number} foo */
+        function quux (foo, bar) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @param {number} foo
+         * @param bar
+         */
+        function quux (foo, bar) {}
+      `,
+    },
+    {
+      code: `
+        /** Adds
+         * numbers. */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      output: `
+        /** Adds
+         * numbers.
+         * @param foo
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
          * Desc.
          */
         function quux ({firstOption, secondOption, thirdOption, fourthOption}) {}
