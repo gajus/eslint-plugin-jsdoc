@@ -1,9 +1,15 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
+  context,
+  jsdoc,
   report,
   utils,
 }) => {
+  const {
+    fix,
+  } = context.options[0] || {};
+
   const iteratingFunction = utils.isIteratingFunctionOrVariable();
 
   if (iteratingFunction) {
@@ -20,7 +26,27 @@ export default iterateJsdoc(({
   }
 
   utils.forEachPreferredTag('implements', (tag) => {
-    report('@implements used on a non-constructor function', null, tag);
+    const message = '@implements used on a non-constructor function';
+    if (fix === 'remove') {
+      utils.reportJSDoc(message, tag, () => {
+        utils.removeTag(jsdoc.tags.indexOf(tag), {
+          removeEmptyBlock: true,
+        });
+      }, true);
+      return;
+    }
+
+    // A second `@type` would conflict with the existing one
+    if (fix === 'type' && tag.type && !utils.hasTag('type')) {
+      utils.reportJSDoc(message, tag, () => {
+        utils.changeTag(tag, {
+          tag: '@type',
+        });
+      }, true);
+      return;
+    }
+
+    report(message, null, tag);
   });
 }, {
   contextDefaults: true,
@@ -29,6 +55,7 @@ export default iterateJsdoc(({
       description: 'Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors).',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/implements-on-classes.md#repos-sticky-header',
     },
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
@@ -68,6 +95,17 @@ section of our Advanced docs for more on the expected format.`,
               ],
             },
             type: 'array',
+          },
+          fix: {
+            description: `Set to \`"remove"\` to have the fixer remove the \`@implements\` tag, or to
+\`"type"\` to have it change \`@implements {Type}\` to \`@type {Type}\` (not done
+when the block already has a \`@type\` tag or the tag has no type). Not set by
+default, so the rule only reports.`,
+            enum: [
+              'remove',
+              'type',
+            ],
+            type: 'string',
           },
         },
         type: 'object',

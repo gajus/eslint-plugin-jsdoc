@@ -2,8 +2,10 @@
 <a name="implements-on-classes"></a>
 # <code>implements-on-classes</code>
 
+* [Fixer](#user-content-implements-on-classes-fixer)
 * [Options](#user-content-implements-on-classes-options)
     * [`contexts`](#user-content-implements-on-classes-options-contexts)
+    * [`fix`](#user-content-implements-on-classes-options-fix)
 * [Context and settings](#user-content-implements-on-classes-context-and-settings)
 * [Failing examples](#user-content-implements-on-classes-failing-examples)
 * [Passing examples](#user-content-implements-on-classes-passing-examples)
@@ -17,6 +19,14 @@ an ES6 class constructor, will not be flagged.
 To indicate that a function follows another function's signature, one might
 instead use `@type` to indicate the `@function` or `@callback` to which the
 function is adhering.
+
+<a name="user-content-implements-on-classes-fixer"></a>
+<a name="implements-on-classes-fixer"></a>
+## Fixer
+
+With the `fix` option set to `"remove"`, the `@implements` tag is removed; set to
+`"type"`, `@implements {Type}` becomes `@type {Type}` (unless the block already has
+a `@type` tag or the tag has no type). Without the option, the rule only reports.
 
 <a name="user-content-implements-on-classes-options"></a>
 <a name="implements-on-classes-options"></a>
@@ -43,6 +53,15 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+<a name="user-content-implements-on-classes-options-fix"></a>
+<a name="implements-on-classes-options-fix"></a>
+### <code>fix</code>
+
+Set to `"remove"` to have the fixer remove the `@implements` tag, or to
+`"type"` to have it change `@implements {Type}` to `@type {Type}` (not done
+when the block already has a `@type` tag or the tag has no type). Not set by
+default, so the rule only reports.
+
 
 <a name="user-content-implements-on-classes-context-and-settings"></a>
 <a name="implements-on-classes-context-and-settings"></a>
@@ -53,7 +72,7 @@ section of our Advanced docs for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`contexts`, `fix`|
 
 <a name="user-content-implements-on-classes-failing-examples"></a>
 <a name="implements-on-classes-failing-examples"></a>
@@ -131,6 +150,43 @@ class Foo {
     bar() {}
 }
 // "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
+// Message: @implements used on a non-constructor function
+
+/**
+ * Desc.
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"remove"}]
+// Message: @implements used on a non-constructor function
+
+/** @implements {SomeClass} */
+function quux () {
+
+}
+// "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"remove"}]
+// Message: @implements used on a non-constructor function
+
+/**
+ * Desc.
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"type"}]
+// Message: @implements used on a non-constructor function
+
+/**
+ * @type {SomeType}
+ * @implements {SomeClass}
+ */
+const quux = function () {
+
+};
+// "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"type"}]
 // Message: @implements used on a non-constructor function
 ````
 
