@@ -2,6 +2,7 @@
 <a name="require-param-name"></a>
 # <code>require-param-name</code>
 
+* [Fixer](#user-content-require-param-name-fixer)
 * [Options](#user-content-require-param-name-options)
     * [`contexts`](#user-content-require-param-name-options-contexts)
 * [Context and settings](#user-content-require-param-name-context-and-settings)
@@ -14,6 +15,15 @@ Requires that all `@param` tags have names.
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
+
+<a name="user-content-require-param-name-fixer"></a>
+<a name="require-param-name-fixer"></a>
+## Fixer
+
+Adds the missing name when the `@param` tags can be matched to the function's
+parameters by position: there are as many `@param` tags as parameters and each
+parameter is a plain identifier (with or without a default value). Destructured
+and rest parameters are reported without a fix.
 
 <a name="user-content-require-param-name-options"></a>
 <a name="require-param-name-options"></a>
@@ -107,6 +117,43 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ * @param {string} foo
+ * @param {number}
+ */
+function quux (foo, bar = 1) {
+
+}
+// Message: There must be an identifier after @param tag.
+
+/** @param {string} */
+const quux = (foo) => {};
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {string}
+ */
+function quux (foo, bar) {
+
+}
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {object}
+ */
+function quux ({foo}) {
+
+}
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {string}
+ */
+function quux (...foo) {
+
+}
+// Message: There must be an identifier after @param tag.
 ````
 
 

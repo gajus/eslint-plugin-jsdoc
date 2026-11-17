@@ -15,6 +15,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'There must be an identifier after @param type.',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -31,6 +39,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'There must be an identifier after @param tag.',
         },
       ],
+      output: `
+          /**
+           * @param {string} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -54,6 +70,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+      output: `
+          /**
+           * @param {string} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -119,6 +143,96 @@ export default /** @type {import('../index.js').TestCases} */ ({
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @param {string} foo
+           * @param {number}
+           */
+          function quux (foo, bar = 1) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+      output: `
+          /**
+           * @param {string} foo
+           * @param {number} bar
+           */
+          function quux (foo, bar = 1) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /** @param {string} */
+          const quux = (foo) => {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+      output: `
+          /** @param {string} foo */
+          const quux = (foo) => {};
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string}
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object}
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {string}
+           */
+          function quux (...foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
     },
   ],
   valid: [
