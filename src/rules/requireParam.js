@@ -507,7 +507,9 @@ export default iterateJsdoc(({
         offset :
         firstParamLine;
 
-      createTokens(expectedIdx, baseOffset + expectedIdx, 0);
+      // A tag on the opening line (`/** @since 1`) puts the offset on that line,
+      //   but the new tag must be added after it, not before the `/**`
+      createTokens(expectedIdx, Math.max(1, baseOffset + expectedIdx), 0);
     }
   };
 
