@@ -243,6 +243,74 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param foo
+           */
+          export function quux (foo) {
+            return foo;
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param foo
+           */
+          function quux (foo) {
+            return foo;
+          }
+          module.exports = quux;
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param foo
+           */
+          function quux (foo) {
+            return foo;
+          }
+          export {quux};
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -365,6 +433,41 @@ export default /** @type {import('../index.js').TestCases} */ ({
           exemptDestructuredRootsFromChecks: true,
         },
       },
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param foo
+           */
+          function quux (foo) {
+            return foo;
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param foo
+           */
+          function quux (foo) {
+            return foo;
+          }
+          module.exports = quux;
+      `,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+          },
+        },
+      ],
     },
   ],
 });

@@ -977,7 +977,42 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
   );
 };
 
+/**
+ * Normalizes the `publicOnly` option of the rules which support it.
+ * @param {boolean|{[key: string]: boolean|undefined}} publicOnly
+ * @returns {import('./rules/requireJsdoc.js').RequireJsdocOpts}
+ */
+const getPublicOnlyOptions = (publicOnly) => {
+  const opts = typeof publicOnly === 'object' ? publicOnly : {};
+  return {
+    ancestorsOnly: Boolean(opts.ancestorsOnly ?? false),
+    esm: Boolean(opts.esm ?? true),
+    initModuleExports: Boolean(opts.cjs ?? true),
+    initWindow: Boolean(opts.window ?? false),
+  };
+};
+
+/**
+ * Whether a rule with a `publicOnly` option should skip `node` because it is
+ * not exported.
+ * @param {boolean|{[key: string]: boolean|undefined}} publicOnly
+ * @param {import('eslint').Rule.Node|null} node
+ * @param {import('eslint').SourceCode} sourceCode
+ * @param {import('./iterateJsdoc.js').Settings} settings
+ * @returns {boolean}
+ */
+const isSkippedAsNotPublic = (publicOnly, node, sourceCode, settings) => {
+  return Boolean(publicOnly && node) && !isUncommentedExport(
+    /** @type {import('eslint').Rule.Node} */ (node),
+    sourceCode,
+    getPublicOnlyOptions(publicOnly),
+    settings,
+  );
+};
+
 export default {
+  getPublicOnlyOptions,
+  isSkippedAsNotPublic,
   isUncommentedExport,
   parse,
 };
