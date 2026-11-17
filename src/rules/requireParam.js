@@ -36,6 +36,7 @@ export default iterateJsdoc(({
   context,
   jsdoc,
   node,
+  settings,
   utils,
 }) => {
   /* eslint-enable complexity -- Temporary */
@@ -63,6 +64,7 @@ export default iterateJsdoc(({
       'root',
     ],
     useDefaultObjectProperties = false,
+    useObjectTypeForDestructuredRoots = false,
   } = context.options[0] || {};
 
   if (interfaceExemptsParamsCheck && node &&
@@ -234,6 +236,51 @@ export default iterateJsdoc(({
     };
   };
 
+  /**
+   * For a destructured parameter with no tag at all, adds one root tag whose
+   * type lists the properties (`{{a: any, b: any}}`), instead of a root tag
+   * and one tag per property. Only for flat object patterns with identifier
+   * keys and without rest elements.
+   * @param {{
+   *   hasPropertyRest: boolean|undefined,
+   *   hasRestElement: boolean|undefined,
+   *   inc: boolean|undefined,
+   *   names: string[],
+   *   rootName: string
+   * }} cfg
+   * @returns {boolean} Whether the root tag was added
+   */
+  const addObjectTypeRoot = ({
+    hasPropertyRest,
+    hasRestElement,
+    inc,
+    names,
+    rootName,
+  }) => {
+    // Array patterns have names like `"0"`, nested ones like `a.b`
+    if (hasRestElement || hasPropertyRest || !names.length || names.some((name) => {
+      return !(/^[\p{L}_$][\p{L}\p{N}_$]*$/v).test(name);
+    }) || jsdocParameterNames.some(({
+      name,
+    }) => {
+      return !name || name === rootName || name.startsWith(`${rootName}.`);
+    })) {
+      return false;
+    }
+
+    const anyType = settings.mode === 'typescript' ? 'any' : '*';
+    missingTags.push({
+      // As for other unnamed roots, the position is that of the first property
+      functionParameterIdx: getParamIndex(names[0]),
+      functionParameterName: rootName,
+      inc,
+      type: `{{${names.map((name) => {
+        return `${name}: ${anyType}`;
+      }).join(', ')}}}`,
+    });
+    return true;
+  };
+
   let [
     nextRootName,
     incremented,
@@ -288,6 +335,16 @@ export default iterateJsdoc(({
       }
 
       if (!checkDestructuredRoots) {
+        continue;
+      }
+
+      if (useObjectTypeForDestructuredRoots && addObjectTypeRoot({
+        hasPropertyRest,
+        hasRestElement,
+        inc,
+        names,
+        rootName,
+      })) {
         continue;
       }
 
@@ -843,6 +900,15 @@ function quux ({foo}, [bar], {baz}) {
           useDefaultObjectProperties: {
             description: `Set to \`true\` if you wish to expect documentation of properties on objects
 supplied as default values. Defaults to \`false\`.`,
+            type: 'boolean',
+          },
+          useObjectTypeForDestructuredRoots: {
+            description: `Set to \`true\` to have the fixer document a destructured parameter which has no
+tags at all with a single root tag whose type lists the properties, e.g.,
+\`@param {{bar: any}} root0\` (\`*\` instead of \`any\` outside of \`typescript\` mode),
+instead of \`@param root0\` and \`@param root0.bar\`. Only applies to patterns
+without nested patterns or rest elements; others are fixed as before.
+Defaults to \`false\`.`,
             type: 'boolean',
           },
         },
