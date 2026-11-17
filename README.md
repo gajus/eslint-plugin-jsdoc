@@ -533,7 +533,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-next-type](./docs/rules/require-next-type.md#readme) | Requires a type for `@next` tags |
 |:heavy_check_mark:|:wrench:| [require-param](./docs/rules/require-param.md#readme) | Requires that all function parameters are documented with a `@param` tag. |
 |:heavy_check_mark:|:wrench:| [require-param-description](./docs/rules/require-param-description.md#readme) | Requires that each `@param` tag has a `description` value. |
-|:heavy_check_mark:|| [require-param-name](./docs/rules/require-param-name.md#readme) | Requires that all `@param` tags have names. |
+|:heavy_check_mark:|:wrench:| [require-param-name](./docs/rules/require-param-name.md#readme) | Requires that all `@param` tags have names. |
 |:heavy_check_mark: (Off in TS; On in TS flavor)|:wrench:| [require-param-type](./docs/rules/require-param-type.md#readme) | Requires that each `@param` tag has a type value (in curly brackets). |
 |:heavy_check_mark:|:wrench:| [require-property](./docs/rules/require-property.md#readme) | Requires that all `@typedef` and `@namespace` tags have `@property` when their type is a plain `object`, `Object`, or `PlainObject`. |
 |:heavy_check_mark:|| [require-property-description](./docs/rules/require-property-description.md#readme) | Requires that each `@property` tag has a `description` value. |

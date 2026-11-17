@@ -1,16 +1,65 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
+/**
+ * Returns the parameter names of the function when they can be matched to
+ * the `@param` tags by position: every parameter is a plain identifier (with
+ * or without a default) and there are as many tags as parameters.
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('comment-parser').Spec[]} paramTags
+ * @returns {string[]|null}
+ */
+const getNamesByPosition = (utils, paramTags) => {
+  if (!utils.isIteratingFunction()) {
+    return null;
+  }
+
+  const names = utils.getFunctionParameterNames();
+  if (names.length !== paramTags.length || !names.every((name) => {
+    return typeof name === 'string' && name !== 'this';
+  })) {
+    return null;
+  }
+
+  return /** @type {string[]} */ (names);
+};
+
 export default iterateJsdoc(({
+  jsdoc,
   report,
   utils,
 }) => {
   utils.forEachPreferredTag('param', (jsdocParameter, targetTagName) => {
     if (jsdocParameter.tag && jsdocParameter.name === '') {
-      report(
-        `There must be an identifier after @${targetTagName} ${jsdocParameter.type === '' ? 'type' : 'tag'}.`,
-        null,
-        jsdocParameter,
-      );
+      const message = `There must be an identifier after @${targetTagName} ${jsdocParameter.type === '' ? 'type' : 'tag'}.`;
+      const paramTags = jsdoc.tags.filter(({
+        tag,
+      }) => {
+        return tag === targetTagName;
+      });
+      const name = getNamesByPosition(utils, paramTags)?.[
+        paramTags.indexOf(jsdocParameter)
+      ];
+
+      if (!name) {
+        report(message, null, jsdocParameter);
+        return;
+      }
+
+      utils.reportJSDoc(message, jsdocParameter, () => {
+        const {
+          tokens,
+        } = jsdocParameter.source[0];
+        tokens.name = name;
+        if (tokens.type) {
+          tokens.postType = ' ';
+        } else {
+          tokens.postTag = ' ';
+        }
+
+        if (tokens.end && !tokens.postName) {
+          tokens.postName = ' ';
+        }
+      });
     }
   });
 }, {
@@ -20,6 +69,7 @@ export default iterateJsdoc(({
       description: 'Requires that all `@param` tags have names.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-name.md#repos-sticky-header',
     },
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
