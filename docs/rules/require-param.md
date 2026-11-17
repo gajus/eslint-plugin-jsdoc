@@ -1335,6 +1335,13 @@ function quux (foo, bar) {}
  * numbers. */
 function quux (foo) {}
 // Message: Missing JSDoc @param "foo" declaration.
+
+const key = 'id';
+/**
+ * @param root0
+ */
+function quux ({[key]: a, b}) {}
+// Message: Missing JSDoc @param "root0.b" declaration.
 ````
 
 
@@ -2048,5 +2055,12 @@ let test = (): (id: number) => string =>
   return (id) => `${id}`;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
+
+const key = 'id';
+/**
+ * @param root0
+ * @param root0.b
+ */
+function quux ({[key]: a, b}) {}
 ````
 
