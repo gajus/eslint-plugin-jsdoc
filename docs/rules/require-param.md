@@ -559,7 +559,7 @@ function quux (foo) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param foo
@@ -586,7 +586,7 @@ function quux ({foo}) {
 
 }
 // "jsdoc/require-param": ["error"|"warn", {"enableFixer":false}]
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -594,7 +594,7 @@ function quux ({foo}) {
 function quux ({foo: bar = 5} = {}) {
 
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{foo: bar = 5} = {}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param
@@ -602,7 +602,7 @@ function quux ({foo: bar = 5} = {}) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param
@@ -611,7 +611,7 @@ function quux ({foo}) {
 
 }
 // "jsdoc/require-param": ["error"|"warn", {"autoIncrementBase":1}]
-// Message: Missing JSDoc @param "root1" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "root1" declaration.
 
 /**
  * @param options
@@ -627,7 +627,7 @@ function quux ({foo}) {
 function quux ({ foo, bar: { baz }}) {
 
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{ foo, bar: { baz }}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param root0
@@ -645,7 +645,7 @@ function quux ({foo}, {bar}) {
 
 }
 // "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg"]}]
-// Message: Missing JSDoc @param "arg0" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "arg0" declaration.
 
 /**
  *
@@ -654,7 +654,7 @@ function quux ({foo}, {bar}) {
 
 }
 // "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg","config"]}]
-// Message: Missing JSDoc @param "arg" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "arg" declaration.
 
 /**
  *
@@ -663,7 +663,7 @@ function quux ({foo}, {bar}) {
 
 }
 // "jsdoc/require-param": ["error"|"warn", {"enableRootFixer":false,"unnamedRootBase":["arg","config"]}]
-// Message: Missing JSDoc @param "arg" declaration for the destructured parameter `{foo}`.
+// Message: Missing JSDoc @param "arg" declaration.
 
 /**
  *
@@ -848,7 +848,7 @@ function quux (foo) {
  */
 function quux ({bar, baz}, foo) {
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{bar, baz}`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -862,7 +862,7 @@ function quux (foo, {bar, baz}) {
  */
 function quux ([bar, baz], foo) {
 }
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `[bar, baz]`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -1071,7 +1071,7 @@ class Client {
     data: { last_modified?: number }
   ) {}
 }
-// Message: Missing JSDoc @param "data" declaration for the destructured parameter `data: { last_modified?: number }`.
+// Message: Missing JSDoc @param "data" declaration.
 
 /**
  * @param cfg
@@ -1239,7 +1239,7 @@ class A {
     console.log(foo, bar);
   }
 }
-// Message: Missing JSDoc @param "root1" declaration for the destructured parameter `{ bar }`.
+// Message: Missing JSDoc @param "root1" declaration.
 
 /**
  * Some desc.
@@ -1273,7 +1273,7 @@ function quux ({
 }) {
 }
 // "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{ abc, def }`.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param foo
@@ -1336,11 +1336,12 @@ function quux (foo, bar) {}
 function quux (foo) {}
 // Message: Missing JSDoc @param "foo" declaration.
 
+const key = 'id';
 /**
- * Desc.
+ * @param root0
  */
-function quux ({firstOption, secondOption, thirdOption, fourthOption}) {}
-// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{firstOption, secondOption, thirdOpti...`.
+function quux ({[key]: a, b}) {}
+// Message: Missing JSDoc @param "root0.b" declaration.
 ````
 
 
@@ -2054,5 +2055,12 @@ let test = (): (id: number) => string =>
   return (id) => `${id}`;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
+
+const key = 'id';
+/**
+ * @param root0
+ * @param root0.b
+ */
+function quux ({[key]: a, b}) {}
 ````
 

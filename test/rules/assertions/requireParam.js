@@ -2889,6 +2889,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        const key = 'id';
+        /**
+         * @param root0
+         */
+        function quux ({[key]: a, b}) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "root0.b" declaration.',
+        },
+      ],
+      output: `
+        const key = 'id';
+        /**
+         * @param root0
+         * @param root0.b
+         */
+        function quux ({[key]: a, b}) {}
+      `,
+    },
+    {
+      code: `
         /**
          * Desc.
          */
@@ -4128,6 +4151,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+    },
+    {
+      code: `
+        const key = 'id';
+        /**
+         * @param root0
+         * @param root0.b
+         */
+        function quux ({[key]: a, b}) {}
+      `,
     },
   ],
 });
