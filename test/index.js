@@ -2,7 +2,9 @@ import {
   buildForbidRuleDefinition,
 } from '../src/buildForbidRuleDefinition.js';
 import jsdocDefault, {
+  configs,
   jsdoc,
+  rules as pluginRules,
 } from '../src/index.js';
 import {
   runRuleTests,
@@ -216,6 +218,74 @@ describe('jsdoc()', () => {
         },
       });
     }).to.throw();
+  });
+});
+
+describe('"all" configs', () => {
+  const alwaysOff = [
+    'jsdoc/check-examples',
+    'jsdoc/match-name',
+    'jsdoc/no-missing-syntax',
+    'jsdoc/no-restricted-syntax',
+    'jsdoc/no-unnecessary-type-assertion',
+    'jsdoc/require-tags',
+    'jsdoc/text-escaping',
+  ];
+
+  /** @type {Record<string, string[]>} */
+  const keptOff = {
+    'flat/all': [
+      'jsdoc/no-types',
+      'jsdoc/ts-ban-ts-comment',
+      'jsdoc/ts-method-signature-style',
+      'jsdoc/ts-no-unnecessary-template-expression',
+      'jsdoc/ts-prefer-function-type',
+    ],
+    'flat/all-typescript': [
+      'jsdoc/no-undefined-types',
+      'jsdoc/require-param-type',
+      'jsdoc/require-property-type',
+      'jsdoc/require-returns-type',
+    ],
+    'flat/all-typescript-flavor': [
+      'jsdoc/no-types',
+      'jsdoc/no-undefined-types',
+    ],
+  };
+
+  const allRuleNames = Object.keys(pluginRules).map((ruleName) => {
+    return `jsdoc/${ruleName}`;
+  }).toSorted();
+
+  for (const configName of Object.keys(keptOff)) {
+    it(`turns on all rules but the excluded ones in \`${configName}\``, () => {
+      const config = /** @type {import('eslint').Linter.Config} */ (
+        configs[configName]
+      );
+      const configRules = config.rules ?? {};
+      const offRules = Object.keys(configRules).filter((ruleName) => {
+        return configRules[ruleName] === 'off';
+      }).toSorted();
+
+      expect(config.name).to.equal(`jsdoc/${configName}`);
+      expect(Object.keys(configRules).toSorted()).to.deep.equal(allRuleNames);
+      expect(offRules).to.deep.equal([
+        ...alwaysOff,
+        ...keptOff[configName],
+      ].toSorted());
+    });
+  }
+
+  it('uses "error" in the `-error` variants', () => {
+    const config = /** @type {import('eslint').Linter.Config} */ (
+      configs['flat/all']
+    );
+    const errorConfig = /** @type {import('eslint').Linter.Config} */ (
+      configs['flat/all-error']
+    );
+
+    expect(config.rules?.['jsdoc/require-description']).to.equal('warn');
+    expect(errorConfig.rules?.['jsdoc/require-description']).to.equal('error');
   });
 });
 
