@@ -632,6 +632,13 @@ export interface Rules {
                 context?: string;
               }
           )[];
+          /**
+           * Set to `"remove"` to have the fixer remove the `@implements` tag, or to
+           * `"type"` to have it change `@implements {Type}` to `@type {Type}` (not done
+           * when the block already has a `@type` tag or the tag has no type). Not set by
+           * default, so the rule only reports.
+           */
+          fix?: "remove" | "type";
         }
       ];
 

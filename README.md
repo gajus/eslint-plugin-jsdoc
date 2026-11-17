@@ -501,7 +501,7 @@ non-default-recommended fixer).
 ||:wrench:| [convert-to-jsdoc-comments](./docs/rules/convert-to-jsdoc-comments.md#readme) | Converts non-JSDoc comments preceding or following nodes into JSDoc ones |
 |:heavy_check_mark:|:wrench:| [empty-tags](./docs/rules/empty-tags.md#readme) | Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content |
 |:heavy_check_mark:|:wrench:| [escape-inline-tags](./docs/rules/escape-inline-tags.md#readme) | Reports use of JSDoc tags in non-tag positions (in the default "typescript" mode). |
-|:heavy_check_mark:|| [implements-on-classes](./docs/rules/implements-on-classes.md#readme) | Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). |
+|:heavy_check_mark:|:wrench:| [implements-on-classes](./docs/rules/implements-on-classes.md#readme) | Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). |
 ||| [imports-as-dependencies](./docs/rules/imports-as-dependencies.md#readme) | Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies` |
 ||| [informative-docs](./docs/rules/informative-docs.md#readme) | This rule reports doc comments that only restate their attached name. |
 ||:wrench:| [lines-before-block](./docs/rules/lines-before-block.md#readme) | Enforces minimum number of newlines before JSDoc comment blocks |
