@@ -8,7 +8,7 @@ minimumReleaseAgeExclude:
   - '@types/semver@7.8.0'
   - globals@17.9.0
   - '@es-joy/jsdoc-eslint-parser@0.28.0'
-  - '@es-joy/jsdoccomment@0.93.0 || 0.93.1 || 0.93.2 || 0.94.0 || 0.95.0 || 0.95.1 || 0.97.0 || 0.98.0 || 0.100.0 || 1.0.0 || 1.1.0'
+  - '@es-joy/jsdoccomment@0.93.0 || 0.93.1 || 0.93.2 || 0.94.0 || 0.95.0 || 0.95.1 || 0.97.0 || 0.98.0 || 0.100.0 || 1.0.0 || 1.1.0 || 1.2.0'
   - '@types/node@26.2.0'
   - comment-parser@1.4.8
   - eslint@10.8.1
@@ -31,8 +31,17 @@ minimumReleaseAgeExclude:
   - rimraf@6.1.4
   - '@es-joy/escodegen@5.0.0 || 5.0.1'
   - '@isaacs/nonrecursive-glob-match@1.1.0'
-  - glob@14.0.4
+  - glob@14.0.4 || 14.0.6
   - minimatch@11.0.5
+  - '@babel/core@8.1.2'
+  - '@babel/eslint-parser@8.1.2'
+  - '@babel/generator@8.1.2'
+  - '@babel/helper-string-parser@8.1.2'
+  - '@babel/helpers@8.1.2'
+  - '@babel/parser@8.1.2'
+  - '@babel/template@8.1.2'
+  - '@babel/traverse@8.1.2'
+  - '@babel/types@8.1.2'
 
 overrides:
   yargs@^17: 17.7.3

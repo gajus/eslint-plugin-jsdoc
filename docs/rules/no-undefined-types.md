@@ -133,6 +133,15 @@ function quux(foo, bar, baz) {
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
 /**
+ * Has no type to check.
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
+// Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
+
+/**
  * @param {HerType} baz - Foo.
  */
 function quux(foo, bar, baz) {
