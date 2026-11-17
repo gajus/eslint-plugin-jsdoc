@@ -28,6 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 name: Build and release
 on:
-  push:
-    branches:
-      - main
+  # Once a day, so that the changes merged since the previous run go out
+  #   together in one release; can also be started by hand. Not on the hour,
+  #   as GitHub may delay or drop scheduled runs at the start of an hour
+  schedule:
+    - cron: '17 0 * * *'
+  workflow_dispatch:
