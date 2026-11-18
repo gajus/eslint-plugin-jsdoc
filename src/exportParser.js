@@ -475,6 +475,49 @@ const initVariables = function (node, globals, opts) {
 };
 
 /**
+ * @param {import('estree').Node} node
+ * @returns {boolean}
+ */
+const isModuleExports = (node) => {
+  return node.type === 'MemberExpression' &&
+    node.object.type === 'Identifier' && node.object.name === 'module' &&
+    node.property.type === 'Identifier' && node.property.name === 'exports';
+};
+
+/**
+ * Whether a top-level statement exports names which may be declared later in
+ * the file: `export {foo}`, `export default foo`, `module.exports = {foo}`,
+ * `module.exports.foo = foo` or `exports.foo = foo`
+ * @param {import('estree').Node} node
+ * @returns {boolean}
+ */
+const isExportOfNames = (node) => {
+  switch (node.type) {
+    case 'ExportDefaultDeclaration':
+      return node.declaration.type === 'Identifier';
+    case 'ExportNamedDeclaration':
+      return !node.declaration;
+    case 'ExpressionStatement': {
+      if (node.expression.type !== 'AssignmentExpression') {
+        return false;
+      }
+
+      const {
+        left,
+      } = node.expression;
+
+      return isModuleExports(left) || left.type === 'MemberExpression' && (
+        isModuleExports(left.object) ||
+        left.object.type === 'Identifier' && left.object.name === 'exports'
+      );
+    }
+
+    default:
+      return false;
+  }
+};
+
+/**
  * Populates variable maps using AST
  * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node} node
  * @param {CreatedNode} globals
@@ -628,6 +671,19 @@ const mapVariables = function (node, globals, opt, isExport) {
           globals,
           opts,
         );
+      }
+
+      // Exports may name declarations which come later in the file, and a
+      //   later declaration replaces the symbol which was marked as exported
+      for (const childNode of node.body) {
+        if (isExportOfNames(childNode)) {
+          mapVariables(
+          /** @type {import('eslint').Rule.Node} */
+            (childNode),
+            globals,
+            opts,
+          );
+        }
       }
 
       break;
