@@ -17,6 +17,15 @@ jobs:
       - run: pnpm install
       - run: pnpm build
       - run: pnpm lint
+      - run: pnpm create-docs
+      - name: check that the generated files are up to date
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            git diff
+            echo '::error::Generated files are not up to date; run `pnpm create-docs` and commit the result.'
+            exit 1
+          fi
     timeout-minutes: 10
   test:
     runs-on: ubuntu-latest

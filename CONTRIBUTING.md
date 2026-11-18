@@ -45,6 +45,8 @@ Once these files are modified, you can run `pnpm create-docs` to have
 these files integrated into the main `/README.md`. While you should include
 the built file in your PR, you will not want to make manual changes
 directly to this file, as they will be overwritten.
+The rule docs also include the test cases as examples, so run `pnpm create-docs`
+after changing tests as well; CI fails when the generated files are not up to date.
 
 ## Testing
 
