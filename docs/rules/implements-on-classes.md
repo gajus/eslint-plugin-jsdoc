@@ -188,6 +188,15 @@ const quux = function () {
 };
 // "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"type"}]
 // Message: @implements used on a non-constructor function
+
+/**
+ * Desc.
+ * @implements {SomeClass} */
+function quux () {
+
+}
+// "jsdoc/implements-on-classes": ["error"|"warn", {"fix":"remove"}]
+// Message: @implements used on a non-constructor function
 ````
 
 
