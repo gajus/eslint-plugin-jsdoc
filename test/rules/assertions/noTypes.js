@@ -354,6 +354,113 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export const sleep = (ms: number): Promise<unknown> => {};
       `,
     },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param {{a: string,
+           *   b: number}} obj The obj
+           */
+          function quux (obj) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @param obj The obj
+           */
+          function quux (obj) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string}
+           *   foo The foo
+           */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo The foo
+           */
+          function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {{
+           *   a: string
+           * }} opts The options.
+           */
+          function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      output: `
+          /**
+           * @param opts The options.
+           */
+          function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {{a: string,
+           *   b: number}} The result
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Types are not permitted on @returns.',
+        },
+      ],
+      output: `
+          /**
+           * @returns The result
+           */
+          function quux () {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string}
+           *   foo The foo */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo The foo
+           */
+          function quux (foo) {}
+      `,
+    },
   ],
   valid: [
     {

@@ -10,7 +10,76 @@ const removeType = ({
   tokens.type = '';
 };
 
+/**
+ * @param {import('comment-parser').Tokens} tokens
+ * @returns {boolean}
+ */
+const hasNameOrDescription = ({
+  description,
+  name,
+}) => {
+  return Boolean(name || description);
+};
+
+/**
+ * Removes the type from every line of a tag. A name and description which
+ * followed a type spanning lines (or which start on the next line) are moved up
+ * to the tag line, and the lines left empty are dropped.
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {import('comment-parser').Spec} tag
+ */
+const removeTypes = (jsdoc, tag) => {
+  const [
+    tagLine,
+    ...otherLines
+  ] = tag.source;
+  removeType(tagLine);
+
+  for (const line of otherLines) {
+    const hadType = Boolean(line.tokens.type);
+    removeType(line);
+
+    const {
+      tokens,
+    } = line;
+    const movedUp = !hasNameOrDescription(tagLine.tokens) && hasNameOrDescription(tokens);
+    if (movedUp) {
+      Object.assign(tagLine.tokens, {
+        // Drop the space which preceded a closing delimiter on that line
+        description: tokens.end ? tokens.description.trimEnd() : tokens.description,
+        name: tokens.name,
+        postName: tokens.postName,
+        postTag: ' ',
+      });
+      Object.assign(tokens, {
+        description: '',
+        name: '',
+        postName: '',
+        postType: '',
+      });
+    }
+
+    if ((hadType || movedUp) && !hasNameOrDescription(tokens)) {
+      if (tokens.end) {
+        tokens.delimiter = '';
+        tokens.postDelimiter = '';
+      } else {
+        jsdoc.source = jsdoc.source.filter(({
+          number,
+        }) => {
+          return number !== line.number;
+        });
+      }
+    }
+
+    if (!hadType) {
+      break;
+    }
+  }
+};
+
 export default iterateJsdoc(({
+  jsdoc,
   node,
   utils,
 }) => {
@@ -25,9 +94,7 @@ export default iterateJsdoc(({
   for (const tag of tags) {
     if (tag.type) {
       utils.reportJSDoc(`Types are not permitted on @${tag.tag}.`, tag, () => {
-        for (const source of tag.source) {
-          removeType(source);
-        }
+        removeTypes(jsdoc, tag);
       });
     }
   }
@@ -39,9 +106,7 @@ export default iterateJsdoc(({
     for (const tag of propertyTags) {
       if (tag.type) {
         utils.reportJSDoc(`Types are not permitted on @${tag.tag} in the supplied context.`, tag, () => {
-          for (const source of tag.source) {
-            removeType(source);
-          }
+          removeTypes(jsdoc, tag);
         });
       }
     }
