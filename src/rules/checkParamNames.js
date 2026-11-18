@@ -97,9 +97,15 @@ const makeParamOrderFix = (
       return count + source.length - 1;
     }, 0);
 
-    const initialOffset =
+    const initialOffset = Math.max(
+      // A tag on the opening line (`/** @param x`) leaves that line behind,
+      //   so the tags must be added after it
+      1,
       /** @type {import('../iterateJsdoc.js').Integer} */ (utils.getFirstLine()) +
-      firstChangedTagIndex + unchangedPriorTagDescriptions;
+      firstChangedTagIndex + unchangedPriorTagDescriptions,
+    );
+
+    const closingLineStart = jsdoc.source[jsdoc.source.length - 1].tokens.start;
 
     for (const index of itemsToMoveRange) {
       utils.removeTag(index + firstChangedTagIndex);
@@ -116,10 +122,21 @@ const makeParamOrderFix = (
         ...otherLines
       ] = changedTag.source;
 
+      const firstLineTokens = withoutClosing(firstLine.tokens, utils.newLineEnd);
+
       utils.addTag(
         changedTag.tag,
         extraTagCount + initialOffset + index,
-        withoutClosing(firstLine.tokens, utils.newLineEnd),
+        {
+          ...firstLineTokens,
+
+          // A tag on the opening line (`/** @param x`) carries the block's
+          //   opening delimiter, which must not be copied to the new line
+          ...firstLineTokens.delimiter === '/**' ? {
+            delimiter: '*',
+            start: closingLineStart,
+          } : {},
+        },
       );
 
       for (const {
