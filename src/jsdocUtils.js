@@ -2104,7 +2104,11 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
           postName: '',
           postType: '',
         } : (nameAndDesc ? {
+          // The name and description may start on a later line
+          description: nameAndDesc[0].tokens.description,
+          end: nameAndDesc[0].tokens.end,
           name: nameAndDesc[0].tokens.name,
+          postName: nameAndDesc[0].tokens.postName,
           postType: ' ',
         } : {})),
         type: '{' + typeBracketSpacing + firstTypeLine + (!typeLines.length && lastTypeLine === undefined ? typeBracketSpacing + '}' : ''),
