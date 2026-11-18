@@ -1507,6 +1507,35 @@ const obj = {
         };
       `,
     },
+    {
+      code: `
+          class A {
+            /**
+             * The count.
+             * @readonly */
+            count = 1;
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '\'@readonly\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+          class A {
+            /**
+             * The count.
+             */
+            count = 1;
+          }
+      `,
+    },
   ],
   valid: [
     {
