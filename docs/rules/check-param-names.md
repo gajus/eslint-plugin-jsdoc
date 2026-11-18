@@ -875,6 +875,21 @@ function quux (a, b) {}
 function quux (a, b) {}
 // "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Expected @param names to be "a, b". Got "b, a".
+
+/** @param b The b
+ * @param a The a
+ */
+function quux (a, b) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "a, b". Got "b, a".
+
+/** @param c The c
+ * @param a The a
+ * @param b The b
+ */
+function quux (a, b, c) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "a, b, c". Got "c, a, b".
 ````
 
 
