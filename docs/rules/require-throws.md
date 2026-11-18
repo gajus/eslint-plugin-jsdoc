@@ -277,6 +277,26 @@ function quux (foo) {
   throw new Error('err')
 }
 // Message: JSDoc @throws declaration set to "never" but throw value found.
+
+/**
+ *
+ */
+function quux () {
+  (() => {
+    throw new Error('err');
+  })();
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux () {
+  (function () {
+    throw new Error('err');
+  })();
+}
+// Message: Missing JSDoc @throws declaration.
 ````
 
 
@@ -371,6 +391,33 @@ async function foo() {
  * @throws {never}
  */
 function quux (foo) {
+}
+
+/**
+ *
+ */
+function quux () {
+  (async () => {
+    throw new Error('err');
+  })();
+}
+
+/**
+ *
+ */
+function quux () {
+  (function * () {
+    throw new Error('err');
+  })();
+}
+
+/**
+ *
+ */
+function quux () {
+  (() => {
+    return 1;
+  })();
 }
 ````
 
