@@ -206,6 +206,46 @@ describe('jsdoc()', () => {
     });
   });
 
+  it('does not change the shared config between calls', () => {
+    const first = jsdoc({
+      config: 'flat/recommended',
+      files: [
+        'src/**',
+      ],
+      rules: {
+        'jsdoc/require-description': 'error',
+      },
+    });
+    const second = jsdoc({
+      config: 'flat/recommended',
+      files: [
+        'test/**',
+      ],
+    });
+
+    expect(first).to.not.equal(second);
+    expect(first.files).to.deep.equal([
+      'src/**',
+    ]);
+    expect(second.files).to.deep.equal([
+      'test/**',
+    ]);
+    expect(second.rules?.['jsdoc/require-description']).to.not.equal('error');
+    expect(configs['flat/recommended'].files).to.equal(undefined);
+    expect(configs['flat/recommended'].rules?.['jsdoc/require-description']).to.not.equal('error');
+  });
+
+  it('returns a copy of a config array', () => {
+    const cfg = /** @type {unknown} */ (jsdoc({
+      // @ts-expect-error Array configs are not in the `config` type
+      config: 'examples-and-default-expressions',
+    }));
+
+    expect(Array.isArray(cfg)).to.equal(true);
+    expect(cfg).to.not.equal(configs['examples-and-default-expressions']);
+    expect(cfg).to.have.length(configs['examples-and-default-expressions'].length);
+  });
+
   it('throws when no jsdoc plugin is present with `extraRuleDefinitions`', () => {
     expect(() => {
       jsdoc({
