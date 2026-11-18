@@ -83,10 +83,8 @@ export const runRuleTests = ({
     return assertion;
   });
   if (count) {
-    // eslint-disable-next-line no-console -- CLI
-    console.error(`Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`);
-
-    return;
+    // Otherwise the rule's cases would silently not run
+    throw new Error(`Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`);
   }
 
   assertions.valid = assertions.valid.map((assertion) => {
