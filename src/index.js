@@ -671,19 +671,19 @@ index.configs['flat/all-typescript-flavor-error'] = createAllTypeScriptFlavorRul
 index.configs['flat/contents-typescript'] = createContentsTypescriptRuleset('warn', 'flat/contents-typescript');
 index.configs['flat/contents-typescript-error'] = createContentsTypescriptRuleset('error', 'flat/contents-typescript-error');
 index.configs['flat/contents-typescript-flavor'] = createContentsTypescriptFlavorRuleset('warn', 'flat/contents-typescript-flavor');
-index.configs['flat/contents-typescript-flavor-error'] = createContentsTypescriptFlavorRuleset('error', 'flat/contents-typescript-error-flavor');
+index.configs['flat/contents-typescript-flavor-error'] = createContentsTypescriptFlavorRuleset('error', 'flat/contents-typescript-flavor-error');
 index.configs['flat/logical-typescript'] = createLogicalTypescriptRuleset('warn', 'flat/logical-typescript');
 index.configs['flat/logical-typescript-error'] = createLogicalTypescriptRuleset('error', 'flat/logical-typescript-error');
 index.configs['flat/logical-typescript-flavor'] = createLogicalTypescriptFlavorRuleset('warn', 'flat/logical-typescript-flavor');
-index.configs['flat/logical-typescript-flavor-error'] = createLogicalTypescriptFlavorRuleset('error', 'flat/logical-typescript-error-flavor');
+index.configs['flat/logical-typescript-flavor-error'] = createLogicalTypescriptFlavorRuleset('error', 'flat/logical-typescript-flavor-error');
 index.configs['flat/requirements-typescript'] = createRequirementsTypeScriptRuleset('warn', 'flat/requirements-typescript');
 index.configs['flat/requirements-typescript-error'] = createRequirementsTypeScriptRuleset('error', 'flat/requirements-typescript-error');
 index.configs['flat/requirements-typescript-flavor'] = createRequirementsTypeScriptFlavorRuleset('warn', 'flat/requirements-typescript-flavor');
-index.configs['flat/requirements-typescript-flavor-error'] = createRequirementsTypeScriptFlavorRuleset('error', 'flat/requirements-typescript-error-flavor');
+index.configs['flat/requirements-typescript-flavor-error'] = createRequirementsTypeScriptFlavorRuleset('error', 'flat/requirements-typescript-flavor-error');
 index.configs['flat/stylistic-typescript'] = createStylisticTypeScriptRuleset('warn', 'flat/stylistic-typescript');
 index.configs['flat/stylistic-typescript-error'] = createStylisticTypeScriptRuleset('error', 'flat/stylistic-typescript-error');
 index.configs['flat/stylistic-typescript-flavor'] = createStylisticTypeScriptFlavorRuleset('warn', 'flat/stylistic-typescript-flavor');
-index.configs['flat/stylistic-typescript-flavor-error'] = createStylisticTypeScriptFlavorRuleset('error', 'flat/stylistic-typescript-error-flavor');
+index.configs['flat/stylistic-typescript-flavor-error'] = createStylisticTypeScriptFlavorRuleset('error', 'flat/stylistic-typescript-flavor-error');
 
 index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
   {

@@ -289,6 +289,21 @@ describe('"all" configs', () => {
   });
 });
 
+describe('flat config names', () => {
+  it('names each `flat/` config after its key', () => {
+    for (const [
+      configName,
+      config,
+    ] of Object.entries(configs)) {
+      if (!configName.startsWith('flat/') || Array.isArray(config)) {
+        continue;
+      }
+
+      expect(config.name).to.equal(`jsdoc/${configName}`);
+    }
+  });
+});
+
 describe('buildForbidRuleDefinition', () => {
   it('Falls back in description when `description` and `contextName` are missing', () => {
     const rule = buildForbidRuleDefinition({
