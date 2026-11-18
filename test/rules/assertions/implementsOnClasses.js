@@ -163,6 +163,113 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Desc.
+           * @implements {SomeClass}
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          fix: 'remove',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /** @implements {SomeClass} */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          fix: 'remove',
+        },
+      ],
+      output: `
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @implements {SomeClass}
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          fix: 'type',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @type {SomeClass}
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @type {SomeType}
+           * @implements {SomeClass}
+           */
+          const quux = function () {
+
+          };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          fix: 'type',
+        },
+      ],
+    },
   ],
   valid: [
     {

@@ -4,6 +4,7 @@
 
 * [Options](#user-content-require-returns-description-options)
     * [`contexts`](#user-content-require-returns-description-options-contexts)
+    * [`publicOnly`](#user-content-require-returns-description-options-publiconly)
 * [Context and settings](#user-content-require-returns-description-context-and-settings)
 * [Failing examples](#user-content-require-returns-description-failing-examples)
 * [Passing examples](#user-content-require-returns-description-passing-examples)
@@ -38,6 +39,23 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+<a name="user-content-require-returns-description-options-publiconly"></a>
+<a name="require-returns-description-options-publiconly"></a>
+### <code>publicOnly</code>
+
+This option will insist that missing `@returns` descriptions are only reported
+for functions that are exported from the module.
+May be a boolean or object. If set to `true`, the defaults below will be
+used. If unset, reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (`false` unless
+otherwise noted):
+
+- `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+- `esm` - ESM exports are checked (Defaults to `true`)
+- `cjs` - CommonJS exports are checked (Defaults to `true`)
+- `window` - Window global exports are checked
+
 
 <a name="user-content-require-returns-description-context-and-settings"></a>
 <a name="require-returns-description-context-and-settings"></a>
@@ -49,7 +67,7 @@ section of our Advanced docs for more on the expected format.
 |Tags|`returns`|
 |Aliases|`return`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`contexts`, `publicOnly`|
 
 <a name="user-content-require-returns-description-failing-examples"></a>
 <a name="require-returns-description-failing-examples"></a>
@@ -114,6 +132,38 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
+
+/**
+ * Desc.
+ * @returns {number}
+ */
+export function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * Desc.
+ * @returns {number}
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * Desc.
+ * @returns {number}
+ */
+function quux (foo) {
+  return foo;
+}
+export {quux};
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @returns description.
 ````
 
 
@@ -184,5 +234,24 @@ function quux () {
  * @callback
  * @returns
  */
+
+/**
+ * Desc.
+ * @returns {number}
+ */
+function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * Desc.
+ * @returns {number}
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
 ````
 

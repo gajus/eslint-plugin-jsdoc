@@ -5,6 +5,7 @@
 * [Options](#user-content-require-param-description-options)
     * [`contexts`](#user-content-require-param-description-options-contexts)
     * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
+    * [`publicOnly`](#user-content-require-param-description-options-publiconly)
     * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
 * [Context and settings](#user-content-require-param-description-context-and-settings)
 * [Failing examples](#user-content-require-param-description-failing-examples)
@@ -50,6 +51,23 @@ section of our Advanced docs for more on the expected format.
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
+<a name="user-content-require-param-description-options-publiconly"></a>
+<a name="require-param-description-options-publiconly"></a>
+### <code>publicOnly</code>
+
+This option will insist that missing `@param` descriptions are only reported
+for functions that are exported from the module.
+May be a boolean or object. If set to `true`, the defaults below will be
+used. If unset, reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (`false` unless
+otherwise noted):
+
+- `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+- `esm` - ESM exports are checked (Defaults to `true`)
+- `cjs` - CommonJS exports are checked (Defaults to `true`)
+- `window` - Window global exports are checked
+
 <a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
 ### <code>setDefaultDestructuredRootDescription</code>
@@ -71,7 +89,7 @@ string. Defaults to `false`.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`, `defaultDestructuredRootDescription`, `setDefaultDestructuredRootDescription`|
+|Options|`contexts`, `defaultDestructuredRootDescription`, `publicOnly`, `setDefaultDestructuredRootDescription`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
 <a name="user-content-require-param-description-failing-examples"></a>
@@ -171,6 +189,38 @@ function quux (foo, {bar}, baz) {
 }
 // "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":false}]
 // Message: Missing JSDoc @param "root" description.
+
+/**
+ * Desc.
+ * @param foo
+ */
+export function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * Desc.
+ * @param foo
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * Desc.
+ * @param foo
+ */
+function quux (foo) {
+  return foo;
+}
+export {quux};
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @param "foo" description.
 ````
 
 
@@ -241,5 +291,24 @@ function quux (foo, {bar: {baz}}) {
 
 }
 // Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
+
+/**
+ * Desc.
+ * @param foo
+ */
+function quux (foo) {
+  return foo;
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * Desc.
+ * @param foo
+ */
+function quux (foo) {
+  return foo;
+}
+module.exports = quux;
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
 ````
 

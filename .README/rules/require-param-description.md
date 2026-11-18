@@ -21,7 +21,7 @@ Will exempt destructured roots and their children if
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`, `defaultDestructuredRootDescription`, `setDefaultDestructuredRootDescription`|
+|Options|`contexts`, `defaultDestructuredRootDescription`, `publicOnly`, `setDefaultDestructuredRootDescription`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
 ## Failing examples

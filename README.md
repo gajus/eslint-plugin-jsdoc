@@ -183,6 +183,30 @@ The general starting rulesets you can extend from in flat config are:
   - `jsdoc.configs['flat/recommended-tsdoc-error']`: The same, reporting with failing errors instead of mere warnings
 - `jsdoc.configs['flat/recommended-mixed']`: A combination of `flat/recommended-typescript-flavor` and `flat/recommended-typescript` with automatic assignment of subconfig based on file extension (`**/*.{js,jsx,cjs,mjs}` and `**/*.{ts,tsx,cts,mts}`, respectively)
 
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative-all-flat-configs"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config-declarative-all-flat-configs"></a>
+#### &quot;All&quot; Flat Configs
+
+These turn on every rule which can work without further configuration, on top of
+the matching recommended config, for projects that want to start strict and turn
+rules off:
+
+- `jsdoc.configs['flat/all']`: based on `flat/recommended`
+  - `jsdoc.configs['flat/all-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/all-typescript']`: based on `flat/recommended-typescript`
+  - `jsdoc.configs['flat/all-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/all-typescript-flavor']`: based on `flat/recommended-typescript-flavor`
+  - `jsdoc.configs['flat/all-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+
+Each keeps off the rules which its recommended config turns off for its kind of
+project (e.g., `no-types` where types belong in JSDoc), and, in all of them, the
+rules which do nothing useful until configured (`match-name`, `no-missing-syntax`,
+`no-restricted-syntax`, `require-tags`, `text-escaping`), which need type
+information (`no-unnecessary-type-assertion`) or which do not work in ESLint 8+
+(`check-examples`). As with ESLint's own "all" config, the set of rules will change
+as rules are added, and some rules (e.g., `require-file-overview`, `require-example`,
+`convert-to-jsdoc-comments`) are strict by design.
+
 <a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
 <a name="eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
 #### Granular Flat Configs
@@ -501,7 +525,7 @@ non-default-recommended fixer).
 ||:wrench:| [convert-to-jsdoc-comments](./docs/rules/convert-to-jsdoc-comments.md#readme) | Converts non-JSDoc comments preceding or following nodes into JSDoc ones |
 |:heavy_check_mark:|:wrench:| [empty-tags](./docs/rules/empty-tags.md#readme) | Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content |
 |:heavy_check_mark:|:wrench:| [escape-inline-tags](./docs/rules/escape-inline-tags.md#readme) | Reports use of JSDoc tags in non-tag positions (in the default "typescript" mode). |
-|:heavy_check_mark:|| [implements-on-classes](./docs/rules/implements-on-classes.md#readme) | Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). |
+|:heavy_check_mark:|:wrench:| [implements-on-classes](./docs/rules/implements-on-classes.md#readme) | Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). |
 ||| [imports-as-dependencies](./docs/rules/imports-as-dependencies.md#readme) | Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies` |
 ||| [informative-docs](./docs/rules/informative-docs.md#readme) | This rule reports doc comments that only restate their attached name. |
 ||:wrench:| [lines-before-block](./docs/rules/lines-before-block.md#readme) | Enforces minimum number of newlines before JSDoc comment blocks |
@@ -533,7 +557,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-next-type](./docs/rules/require-next-type.md#readme) | Requires a type for `@next` tags |
 |:heavy_check_mark:|:wrench:| [require-param](./docs/rules/require-param.md#readme) | Requires that all function parameters are documented with a `@param` tag. |
 |:heavy_check_mark:|:wrench:| [require-param-description](./docs/rules/require-param-description.md#readme) | Requires that each `@param` tag has a `description` value. |
-|:heavy_check_mark:|| [require-param-name](./docs/rules/require-param-name.md#readme) | Requires that all `@param` tags have names. |
+|:heavy_check_mark:|:wrench:| [require-param-name](./docs/rules/require-param-name.md#readme) | Requires that all `@param` tags have names. |
 |:heavy_check_mark: (Off in TS; On in TS flavor)|:wrench:| [require-param-type](./docs/rules/require-param-type.md#readme) | Requires that each `@param` tag has a type value (in curly brackets). |
 |:heavy_check_mark:|:wrench:| [require-property](./docs/rules/require-property.md#readme) | Requires that all `@typedef` and `@namespace` tags have `@property` when their type is a plain `object`, `Object`, or `PlainObject`. |
 |:heavy_check_mark:|| [require-property-description](./docs/rules/require-property-description.md#readme) | Requires that each `@property` tag has a `description` value. |

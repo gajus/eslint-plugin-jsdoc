@@ -97,13 +97,7 @@ export default iterateJsdoc(({
     }
 
     if (publicOnly) {
-      /** @type {import('./requireJsdoc.js').RequireJsdocOpts} */
-      const opt = {
-        ancestorsOnly: Boolean(publicOnly?.ancestorsOnly ?? false),
-        esm: Boolean(publicOnly?.esm ?? true),
-        initModuleExports: Boolean(publicOnly?.cjs ?? true),
-        initWindow: Boolean(publicOnly?.window ?? false),
-      };
+      const opt = exportParser.getPublicOnlyOptions(publicOnly);
       /* c8 ignore next -- Fallback to deprecated method */
       const {
         // @ts-expect-error ESLint < 10

@@ -1,3 +1,4 @@
+import exportParser from '../exportParser.js';
 import iterateJsdoc from '../iterateJsdoc.js';
 
 /**
@@ -15,7 +16,10 @@ const checkDescription = (description) => {
 export default iterateJsdoc(({
   context,
   jsdoc,
+  node,
   report,
+  settings,
+  sourceCode,
   utils,
 }) => {
   if (utils.avoidDocs()) {
@@ -24,7 +28,12 @@ export default iterateJsdoc(({
 
   const {
     descriptionStyle = 'body',
+    publicOnly = false,
   } = context.options[0] || {};
+
+  if (exportParser.isSkippedAsNotPublic(publicOnly, node, sourceCode, settings)) {
+    return;
+  }
 
   let targetTagName = utils.getPreferredTagName({
     // We skip reporting except when `@description` is essential to the rule,
@@ -180,6 +189,45 @@ to cause exemption of the rule.`,
               type: 'string',
             },
             type: 'array',
+          },
+          publicOnly: {
+            description: `This option will insist that a missing description is only reported for
+functions / class declarations that are exported from the module.
+May be a boolean or object. If set to \`true\`, the defaults below will be
+used. If unset, reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (\`false\` unless
+otherwise noted):
+
+- \`ancestorsOnly\` - Optimization to only check node ancestors to check if node is exported
+- \`esm\` - ESM exports are checked (Defaults to \`true\`)
+- \`cjs\` - CommonJS exports are checked (Defaults to \`true\`)
+- \`window\` - Window global exports are checked`,
+            oneOf: [
+              {
+                default: false,
+                type: 'boolean',
+              },
+              {
+                additionalProperties: false,
+                default: {},
+                properties: {
+                  ancestorsOnly: {
+                    type: 'boolean',
+                  },
+                  cjs: {
+                    type: 'boolean',
+                  },
+                  esm: {
+                    type: 'boolean',
+                  },
+                  window: {
+                    type: 'boolean',
+                  },
+                },
+                type: 'object',
+              },
+            ],
           },
         },
         type: 'object',

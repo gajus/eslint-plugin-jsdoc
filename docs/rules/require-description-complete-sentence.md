@@ -431,6 +431,29 @@ function quux (foo) {
  */
 function quux () {}
 // Message: Sentences must be more than punctuation.
+
+/**
+ * Adds numbers.
+ * @example
+ * const total = sum(a, b)
+ * @returns {number} sum(a, b)
+ */
+function sum (a, b) {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Formats the user name
+ * for display.
+ * @param {string} name user name
+ */
+function quux (name) {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Desc.
+ * @param {string} a The value */
+function quux (a) {}
+// Message: Sentences must end with a period.
 ````
 
 

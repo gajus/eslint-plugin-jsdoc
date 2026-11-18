@@ -8,6 +8,13 @@ Requires that all `@param` tags have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
+## Fixer
+
+Adds the missing name when the `@param` tags can be matched to the function's
+parameters by position: there are as many `@param` tags as parameters and each
+parameter is a plain identifier (with or without a default value). Destructured
+and rest parameters are reported without a fix.
+
 ## Options
 
 {"gitdown": "options"}
