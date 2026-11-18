@@ -270,6 +270,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Desc.
+           * @implements {SomeClass} */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          fix: 'remove',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           */
+          function quux () {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
