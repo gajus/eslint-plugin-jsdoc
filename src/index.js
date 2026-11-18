@@ -85,7 +85,7 @@ import {
 import semver from 'semver';
 
 /**
- * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
+ * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements" | "all"} ConfigGroups
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @typedef {`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}` |

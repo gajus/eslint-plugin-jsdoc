@@ -232,7 +232,7 @@ describe('"all" configs', () => {
     'jsdoc/text-escaping',
   ];
 
-  /** @type {Record<string, string[]>} */
+  /** @type {Record<'flat/all'|'flat/all-typescript'|'flat/all-typescript-flavor', string[]>} */
   const keptOff = {
     'flat/all': [
       'jsdoc/no-types',
@@ -253,11 +253,11 @@ describe('"all" configs', () => {
     ],
   };
 
-  const allRuleNames = Object.keys(pluginRules).map((ruleName) => {
+  const allRuleNames = Object.keys(/** @type {NonNullable<typeof pluginRules>} */ (pluginRules)).map((ruleName) => {
     return `jsdoc/${ruleName}`;
   }).toSorted();
 
-  for (const configName of Object.keys(keptOff)) {
+  for (const configName of /** @type {(keyof typeof keptOff)[]} */ (Object.keys(keptOff))) {
     it(`turns on all rules but the excluded ones in \`${configName}\``, () => {
       const config = /** @type {import('eslint').Linter.Config} */ (
         configs[configName]
