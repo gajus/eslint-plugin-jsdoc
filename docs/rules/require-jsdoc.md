@@ -1196,6 +1196,36 @@ export const obj = {
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
+
+export {foo};
+function foo () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+export {foo};
+const foo = () => {};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default foo;
+function foo () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+module.exports = {parse};
+function parse () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+module.exports.parse = parse;
+function parse () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+exports.parse = parse;
+function parse () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 
@@ -2237,5 +2267,9 @@ const obj = {
 export default wrap(function () {
 });
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+setup();
+function foo () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
 ````
 
