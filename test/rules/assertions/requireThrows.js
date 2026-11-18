@@ -298,6 +298,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
            *
            */
           function quux (foo) {
+            try {
+              throw new Error('err')
+            } finally {
+              cleanup()
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
             const a = 'b'
             switch(a) {
               case 'b':
@@ -392,6 +412,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
             try {
               throw new Error('err')
             } catch(e) {}
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            try {
+              throw new Error('err')
+            } catch(e) {
+            } finally {
+              cleanup()
+            }
           }
       `,
     },
