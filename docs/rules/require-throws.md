@@ -229,6 +229,18 @@ function quux (foo) {
  *
  */
 function quux (foo) {
+  try {
+    throw new Error('err')
+  } finally {
+    cleanup()
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
   const a = 'b'
   switch(a) {
     case 'b':
@@ -290,6 +302,18 @@ function quux (foo) {
   try {
     throw new Error('err')
   } catch(e) {}
+}
+
+/**
+ *
+ */
+function quux (foo) {
+  try {
+    throw new Error('err')
+  } catch(e) {
+  } finally {
+    cleanup()
+  }
 }
 
 /**
