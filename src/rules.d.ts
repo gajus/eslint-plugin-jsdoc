@@ -643,7 +643,26 @@ export interface Rules {
       ];
 
   /** Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies` */
-  "jsdoc/imports-as-dependencies": [];
+  "jsdoc/imports-as-dependencies": 
+    | []
+    | [
+        {
+          /**
+           * Whether packages listed in `dependencies` may be imported. Defaults to `true`.
+           */
+          dependencies?: boolean;
+          /**
+           * Whether packages listed in `devDependencies` may be imported. Defaults to `true`.
+           */
+          devDependencies?: boolean;
+          /**
+           * Whether packages listed in `peerDependencies` may be imported. Defaults to
+           * `false`, so that a package which is only a peer dependency is reported, as
+           * projects usually also list such packages in `devDependencies`.
+           */
+          peerDependencies?: boolean;
+        }
+      ];
 
   /** This rule reports doc comments that only restate their attached name. */
   "jsdoc/informative-docs": 

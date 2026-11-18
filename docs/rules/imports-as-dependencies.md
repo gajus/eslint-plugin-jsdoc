@@ -3,7 +3,8 @@
 ### <code>imports-as-dependencies</code>
 
 This rule will report an issue if JSDoc `import()` statements point to a package
-which is not listed in `dependencies` or `devDependencies`.
+which is not listed in `dependencies` or `devDependencies` (by
+default; see the options).
 
 |||
 |---|---|
@@ -11,7 +12,34 @@ which is not listed in `dependencies` or `devDependencies`.
 |Tags|(Any)|
 |Recommended|false|
 |Settings||
-|Options||
+|Options|`dependencies`, `devDependencies`, `peerDependencies`|
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
+
+A single options object has the following properties.
+
+<a name="user-content-options-dependencies"></a>
+<a name="options-dependencies"></a>
+### <code>dependencies</code>
+
+Whether packages listed in `dependencies` may be imported. Defaults to `true`.
+
+<a name="user-content-options-devdependencies"></a>
+<a name="options-devdependencies"></a>
+### <code>devDependencies</code>
+
+Whether packages listed in `devDependencies` may be imported. Defaults to `true`.
+
+<a name="user-content-options-peerdependencies"></a>
+<a name="options-peerdependencies"></a>
+### <code>peerDependencies</code>
+
+Whether packages listed in `peerDependencies` may be imported. Defaults to
+`false`, so that a package which is only a peer dependency is reported, as
+projects usually also list such packages in `devDependencies`.
+
 
 <a name="user-content-failing-examples"></a>
 <a name="failing-examples"></a>
@@ -49,6 +77,18 @@ The following patterns are considered problems:
 /**
  * @type {null|{bar: string, [Symbol.dispose](): import('sth').SomeApi}}
  */
+// Message: import points to package which is not found in dependencies
+
+/**
+ * @type {null|import('eslint').SomeApi}
+ */
+// "jsdoc/imports-as-dependencies": ["error"|"warn", {"devDependencies":false}]
+// Message: import points to package which is not found in dependencies
+
+/**
+ * @type {null|import('@es-joy/jsdoccomment').SomeApi}
+ */
+// "jsdoc/imports-as-dependencies": ["error"|"warn", {"dependencies":false}]
 // Message: import points to package which is not found in dependencies
 ````
 
@@ -113,5 +153,10 @@ The following patterns are not considered problems:
 /**
  * @type {null|import('ts-api-utils').SomeApi}
  */
+
+/**
+ * @type {null|import('eslint').SomeApi}
+ */
+// "jsdoc/imports-as-dependencies": ["error"|"warn", {"devDependencies":false,"peerDependencies":true}]
 ````
 
