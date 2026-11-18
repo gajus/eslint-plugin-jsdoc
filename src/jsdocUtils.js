@@ -1586,9 +1586,11 @@ const hasThrowValue = (node, innerFunction) => {
       return true;
     }
 
-    // We only consider it to throw an error if the catch or finally blocks throw an error.
+    // A throw in the `try` block escapes only when there is no `catch`; one in
+    //   the `catch` or `finally` block always does.
     case 'TryStatement': {
-      return hasThrowValue(node.handler && node.handler.body) ||
+      return (!node.handler && hasThrowValue(node.block)) ||
+        hasThrowValue(node.handler && node.handler.body) ||
         hasThrowValue(node.finalizer);
     }
 
