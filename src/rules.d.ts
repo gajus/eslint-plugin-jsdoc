@@ -2200,6 +2200,15 @@ export interface Rules {
            * supplied as default values. Defaults to `false`.
            */
           useDefaultObjectProperties?: boolean;
+          /**
+           * Set to `true` to have the fixer document a destructured parameter which has no
+           * tags at all with a single root tag whose type lists the properties, e.g.,
+           * `@param {{bar: any}} root0` (`*` instead of `any` outside of `typescript` mode),
+           * instead of `@param root0` and `@param root0.bar`. Only applies to patterns
+           * without nested patterns or rest elements; others are fixed as before.
+           * Defaults to `false`.
+           */
+          useObjectTypeForDestructuredRoots?: boolean;
         }
       ];
 

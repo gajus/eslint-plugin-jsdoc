@@ -2951,6 +2951,187 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux ({firstOption, secondOption, thirdOption, fourthOption}) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @returns {void}
+         */
+        const quux = ({bar, baz = 1}) => {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar, baz = 1}`.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * @param {{bar: any, baz: any}} root0
+         * @returns {void}
+         */
+        const quux = ({bar, baz = 1}) => {};
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         */
+        function quux ({bar}, baz) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "baz" declaration.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param {{bar: *}} root0
+         * @param baz
+         */
+        function quux ({bar}, baz) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         */
+        function quux ({bar: {baz}}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar: {baz}}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.bar.baz" declaration.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param root0
+         * @param root0.bar
+         * @param root0.bar.baz
+         */
+        function quux ({bar: {baz}}) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param root0
+         */
+        function quux ({bar}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * @param root0
+         * @param root0.bar
+         */
+        function quux ({bar}) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         */
+        function quux ([bar]) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `[bar]`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0."0"" declaration.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param root0
+         * @param root0."0"
+         */
+        function quux ([bar]) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param baz Baz.
+         */
+        function quux (baz, {bar}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{bar}`.',
+        },
+      ],
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
+      output: `
+        /**
+         * @param baz Baz.
+         * @param {{bar: any}} root0
+         */
+        function quux (baz, {bar}) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -4161,6 +4342,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         function quux ({[key]: a, b}) {}
       `,
+    },
+    {
+      code: `
+        /**
+         * @param {{bar: any}} root0
+         */
+        function quux ({bar}) {}
+      `,
+      options: [
+        {
+          useObjectTypeForDestructuredRoots: true,
+        },
+      ],
     },
   ],
 });
