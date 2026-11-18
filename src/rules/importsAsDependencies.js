@@ -19,29 +19,24 @@ import {
 } from 'node:path';
 
 /**
- * @type {Set<string>|null}
+ * @typedef {'dependencies'|'devDependencies'|'peerDependencies'} DependencyField
  */
-let deps;
 
-const setDeps = function () {
+/**
+ * The project's `package.json`, read once; `null` if it could not be read.
+ * @type {{[key in DependencyField]?: {[name: string]: string}}|null|undefined}
+ */
+let pkg;
+
+const setPkg = function () {
   try {
-    const pkg = JSON.parse(
+    pkg = JSON.parse(
       readFileSync(join(process.cwd(), './package.json'), 'utf8'),
     );
-    deps = new Set([
-      ...(pkg.dependencies ?
-        /* c8 ignore next 2 */
-        Object.keys(pkg.dependencies) :
-        []),
-      ...(pkg.devDependencies ?
-        /* c8 ignore next 2 */
-        Object.keys(pkg.devDependencies) :
-        []),
-    ]);
   /* c8 ignore next -- our package.json exists */
   } catch (error) {
     /* c8 ignore next -- our package.json exists */
-    deps = null;
+    pkg = null;
     /* c8 ignore next 4 -- our package.json exists */
     /* eslint-disable no-console -- Inform user */
     console.log(error);
@@ -49,21 +44,66 @@ const setDeps = function () {
   }
 };
 
+/**
+ * The allowed package names, for each combination of checked fields.
+ * @type {Map<string, Set<string>>}
+ */
+const depsByFields = new Map();
+
+/**
+ * @param {DependencyField[]} fields
+ * @returns {Set<string>}
+ */
+const getDeps = (fields) => {
+  const key = fields.join(',');
+  let deps = depsByFields.get(key);
+  if (!deps) {
+    deps = new Set(fields.flatMap((field) => {
+      // A missing field spreads to nothing
+      return Object.keys({
+        .../** @type {NonNullable<typeof pkg>} */ (pkg)[field],
+      });
+    }));
+    depsByFields.set(key, deps);
+  }
+
+  return deps;
+};
+
+/**
+ * For each imported package, the name to look for in `package.json`:
+ * `@types/<name>` when the package has no types of its own.
+ * @type {Map<string, string>}
+ */
 const moduleCheck = new Map();
 
 export default iterateJsdoc(({
+  context,
   jsdoc,
   settings,
   utils,
 }) => {
-  if (deps === undefined) {
-    setDeps();
+  if (pkg === undefined) {
+    setPkg();
   }
 
   /* c8 ignore next 3 -- our package.json exists */
-  if (deps === null) {
+  if (pkg === null) {
     return;
   }
+
+  /** @type {{[key in DependencyField]: boolean}} */
+  const checkedFields = {
+    dependencies: true,
+    devDependencies: true,
+    peerDependencies: false,
+    ...context.options[0],
+  };
+  const deps = getDeps(
+    /** @type {DependencyField[]} */ (Object.keys(checkedFields)).filter((field) => {
+      return checkedFields[field];
+    }),
+  );
 
   const {
     mode,
@@ -85,13 +125,8 @@ export default iterateJsdoc(({
 
     // eslint-disable-next-line no-loop-func -- Safe
     traverse(typeAst, (nde) => {
-      /* c8 ignore next 3 -- TS guard */
-      if (deps === null) {
-        return;
-      }
-
       if (nde.type === 'JsdocTypeImport') {
-        let mod = nde.element.value.replace(
+        const mod = nde.element.value.replace(
           /^(@[^\/]+\/[^\/]+|[^\/]+).*$/v, '$1',
         );
 
@@ -104,23 +139,24 @@ export default iterateJsdoc(({
           // moduleCheck.set(mod, !deps.has(mod));
           return;
         } else if (!moduleCheck.has(mod)) {
-          let pkg;
+          let modulePkg;
           try {
-            pkg = JSON.parse(
+            modulePkg = JSON.parse(
               readFileSync(join(process.cwd(), 'node_modules', mod, './package.json'), 'utf8'),
             );
           } catch {
             // Ignore
           }
 
-          if (!pkg || (!pkg.types && !pkg.typings && !resolve.types(pkg))) {
-            mod = `@types/${mod}`;
-          }
-
-          moduleCheck.set(mod, !deps.has(mod));
+          moduleCheck.set(
+            mod,
+            !modulePkg || (!modulePkg.types && !modulePkg.typings && !resolve.types(modulePkg)) ?
+              `@types/${mod}` :
+              mod,
+          );
         }
 
-        if (moduleCheck.get(mod)) {
+        if (!deps.has(/** @type {string} */ (moduleCheck.get(mod)))) {
           utils.reportJSDoc(
             'import points to package which is not found in dependencies',
             tag,
@@ -136,6 +172,28 @@ export default iterateJsdoc(({
       description: 'Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies`',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/imports-as-dependencies.md#repos-sticky-header',
     },
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          dependencies: {
+            description: 'Whether packages listed in `dependencies` may be imported. Defaults to `true`.',
+            type: 'boolean',
+          },
+          devDependencies: {
+            description: 'Whether packages listed in `devDependencies` may be imported. Defaults to `true`.',
+            type: 'boolean',
+          },
+          peerDependencies: {
+            description: `Whether packages listed in \`peerDependencies\` may be imported. Defaults to
+\`false\`, so that a package which is only a peer dependency is reported, as
+projects usually also list such packages in \`devDependencies\`.`,
+            type: 'boolean',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });

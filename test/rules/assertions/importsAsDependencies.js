@@ -83,6 +83,42 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @type {null|import('eslint').SomeApi}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'import points to package which is not found in dependencies',
+        },
+      ],
+      options: [
+        {
+          devDependencies: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {null|import('@es-joy/jsdoccomment').SomeApi}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'import points to package which is not found in dependencies',
+        },
+      ],
+      options: [
+        {
+          dependencies: false,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -176,6 +212,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @type {null|import('ts-api-utils').SomeApi}
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * @type {null|import('eslint').SomeApi}
+         */
+      `,
+      options: [
+        {
+          devDependencies: false,
+          peerDependencies: true,
+        },
+      ],
     },
   ],
 });

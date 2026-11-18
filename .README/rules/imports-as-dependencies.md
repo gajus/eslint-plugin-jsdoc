@@ -1,7 +1,8 @@
 ### `imports-as-dependencies`
 
 This rule will report an issue if JSDoc `import()` statements point to a package
-which is not listed in `dependencies` or `devDependencies`.
+which is not listed in `dependencies` or `devDependencies` (by
+default; see the options).
 
 |||
 |---|---|
@@ -9,7 +10,11 @@ which is not listed in `dependencies` or `devDependencies`.
 |Tags|(Any)|
 |Recommended|false|
 |Settings||
-|Options||
+|Options|`dependencies`, `devDependencies`, `peerDependencies`|
+
+## Options
+
+{"gitdown": "options"}
 
 ## Failing examples
 
