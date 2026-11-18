@@ -1305,6 +1305,67 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param {{a: string,
+           *   b: number}} obj The obj
+           */
+          function quux (obj) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent comma separator usage',
+        },
+      ],
+      output: `
+          /**
+           * @param {{a: string, b: number}} obj The obj
+           */
+          function quux (obj) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {Array<string>}
+           *   foo The foo description
+           */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+          /**
+           * @param {string[]} foo The foo description
+           */
+          function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {Array<string>}
+           *   foo The foo */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+          /**
+           * @param {string[]} foo The foo */
+          function quux (foo) {}
+      `,
+    },
   ],
   valid: [
     {
