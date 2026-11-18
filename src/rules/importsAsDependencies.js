@@ -58,10 +58,11 @@ const getDeps = (fields) => {
   const key = fields.join(',');
   let deps = depsByFields.get(key);
   if (!deps) {
+    const projectPkg = /** @type {NonNullable<typeof pkg>} */ (pkg);
     deps = new Set(fields.flatMap((field) => {
       // A missing field spreads to nothing
       return Object.keys({
-        .../** @type {NonNullable<typeof pkg>} */ (pkg)[field],
+        ...projectPkg[field],
       });
     }));
     depsByFields.set(key, deps);
@@ -123,7 +124,6 @@ export default iterateJsdoc(({
       continue;
     }
 
-    // eslint-disable-next-line no-loop-func -- Safe
     traverse(typeAst, (nde) => {
       if (nde.type === 'JsdocTypeImport') {
         const mod = nde.element.value.replace(
