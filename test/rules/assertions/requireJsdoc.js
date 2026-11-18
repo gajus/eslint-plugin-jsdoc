@@ -4586,6 +4586,153 @@ function quux (foo) {
         };
       `,
     },
+    {
+      code: `
+          export {foo};
+          function foo () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          export {foo};
+          /**
+           *
+           */
+          function foo () {}
+      `,
+    },
+    {
+      code: `
+          export {foo};
+          const foo = () => {};
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+      output: `
+          export {foo};
+          /**
+           *
+           */
+          const foo = () => {};
+      `,
+    },
+    {
+      code: `
+          export default foo;
+          function foo () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          export default foo;
+          /**
+           *
+           */
+          function foo () {}
+      `,
+    },
+    {
+      code: `
+          module.exports = {parse};
+          function parse () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          module.exports = {parse};
+          /**
+           *
+           */
+          function parse () {}
+      `,
+    },
+    {
+      code: `
+          module.exports.parse = parse;
+          function parse () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          module.exports.parse = parse;
+          /**
+           *
+           */
+          function parse () {}
+      `,
+    },
+    {
+      code: `
+          exports.parse = parse;
+          function parse () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          exports.parse = parse;
+          /**
+           *
+           */
+          function parse () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -7014,6 +7161,17 @@ function quux (foo) {
           require: {
             FunctionExpression: true,
           },
+        },
+      ],
+    },
+    {
+      code: `
+          setup();
+          function foo () {}
+      `,
+      options: [
+        {
+          publicOnly: true,
         },
       ],
     },

@@ -1675,6 +1675,48 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+          /**
+           * @param foo Foo.
+           * @param bar Bar. */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "bar" does not match an existing function parameter.',
+          suggestions: [
+            {
+              desc: 'Remove the extra @param "bar".',
+              output: `
+          /**
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          extraParams: true,
+        },
+      ],
+      output: `
+          /**
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
+    {
+      code: `
           /** @param b The b
            * @param a The a
            */

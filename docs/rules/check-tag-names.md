@@ -985,6 +985,15 @@ const obj = {
 };
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@property' is redundant when using a type system.
+
+class A {
+  /**
+   * The count.
+   * @readonly */
+  count = 1;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@readonly' is redundant when using a type system.
 ````
 
 

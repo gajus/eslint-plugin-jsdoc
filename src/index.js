@@ -916,7 +916,17 @@ export const jsdoc = function (cfg) {
         throw new TypeError('Disallowed config value');
       }
 
-      outputConfig = /** @type {import('eslint').Linter.Config} */ (index.configs[cfg.config]);
+      const sharedConfig = index.configs[cfg.config];
+
+      // A copy, as the shared config must not be changed by later calls (some
+      //   configs, such as `examples`, are arrays)
+      outputConfig = /** @type {import('eslint').Linter.Config} */ (Array.isArray(sharedConfig) ?
+        [
+          ...sharedConfig,
+        ] :
+        {
+          ...sharedConfig,
+        });
     }
 
     if (cfg.rules) {

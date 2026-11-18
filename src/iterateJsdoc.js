@@ -1099,6 +1099,17 @@ const getUtils = (
     removeEmptyBlock = false,
     tagSourceOffset = 0,
   } = {}) => {
+    // Otherwise removing the tag's last line would remove the delimiter too
+    if (jsdoc.tags[tagIndex].source.some(({
+      tokens: {
+        end,
+      },
+    }) => {
+      return end;
+    })) {
+      utils.moveClosingDelimiterToOwnLine();
+    }
+
     const {
       source: tagSource,
     } = jsdoc.tags[tagIndex];

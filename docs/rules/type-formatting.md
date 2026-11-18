@@ -551,6 +551,26 @@ The following patterns are considered problems:
 // Settings: {"jsdoc":{"mode":"permissive"}}
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
 // Message: Inconsistent semicolon separator usage
+
+/**
+ * @param {{a: string,
+ *   b: number}} obj The obj
+ */
+function quux (obj) {}
+// Message: Inconsistent comma separator usage
+
+/**
+ * @param {Array<string>}
+ *   foo The foo description
+ */
+function quux (foo) {}
+// Message: Array bracket style should be square
+
+/**
+ * @param {Array<string>}
+ *   foo The foo */
+function quux (foo) {}
+// Message: Array bracket style should be square
 ````
 
 

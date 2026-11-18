@@ -175,6 +175,42 @@ const sleep = (ms: number): Promise<unknown> => {};
 export const sleep = (ms: number): Promise<unknown> => {};
 // "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 // Message: Types are not permitted on @param.
+
+/**
+ * Desc.
+ * @param {{a: string,
+ *   b: number}} obj The obj
+ */
+function quux (obj) {}
+// Message: Types are not permitted on @param.
+
+/**
+ * @param {string}
+ *   foo The foo
+ */
+function quux (foo) {}
+// Message: Types are not permitted on @param.
+
+/**
+ * @param {{
+ *   a: string
+ * }} opts The options.
+ */
+function quux (opts) {}
+// Message: Types are not permitted on @param.
+
+/**
+ * @returns {{a: string,
+ *   b: number}} The result
+ */
+function quux () {}
+// Message: Types are not permitted on @returns.
+
+/**
+ * @param {string}
+ *   foo The foo */
+function quux (foo) {}
+// Message: Types are not permitted on @param.
 ````
 
 
