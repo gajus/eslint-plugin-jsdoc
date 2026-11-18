@@ -789,3 +789,27 @@ for (const [
     ruleName: `prefer-type-${typeName}`,
   });
 }
+
+describe('runRuleTests', () => {
+  it('throws when an error of an invalid case has no `line`', () => {
+    expect(() => {
+      runRuleTests({
+        assertions: {
+          invalid: [
+            {
+              code: '/** */ function quux () {}',
+              errors: [
+                {
+                  message: 'Missing JSDoc block description.',
+                },
+              ],
+            },
+          ],
+          valid: [],
+        },
+        config: jsdocDefault,
+        ruleName: 'require-description',
+      });
+    }).to.throw('Rule, `require-description`, missing line numbers in errors: 1');
+  });
+});
