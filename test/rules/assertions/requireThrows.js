@@ -391,6 +391,42 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            (() => {
+              throw new Error('err');
+            })();
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            (function () {
+              throw new Error('err');
+            })();
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -521,6 +557,42 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         function quux (foo) {
         }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            (async () => {
+              throw new Error('err');
+            })();
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            (function * () {
+              throw new Error('err');
+            })();
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            (() => {
+              return 1;
+            })();
+          }
       `,
     },
   ],

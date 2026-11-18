@@ -1558,6 +1558,17 @@ const hasThrowValue = (node, innerFunction) => {
       });
     }
 
+    // A function called right where it is defined runs its body here; an
+    //   `async` one rejects instead, and a generator only runs when iterated.
+    case 'CallExpression': {
+      const {
+        callee,
+      } = node;
+
+      return (callee.type === 'ArrowFunctionExpression' || callee.type === 'FunctionExpression') &&
+        !callee.async && !callee.generator && hasThrowValue(callee.body);
+    }
+
     case 'DoWhileStatement':
     case 'ForInStatement':
     case 'ForOfStatement':
@@ -1566,6 +1577,10 @@ const hasThrowValue = (node, innerFunction) => {
     case 'WhileStatement':
     case 'WithStatement': {
       return hasThrowValue(node.body);
+    }
+
+    case 'ExpressionStatement': {
+      return hasThrowValue(node.expression);
     }
 
     case 'IfStatement': {
