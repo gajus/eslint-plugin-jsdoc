@@ -13,7 +13,7 @@ export default iterateJsdoc(({
     match,
   } = context.options[0] || {};
   if (!match) {
-    report('Rule `no-restricted-syntax` is missing a `match` option.');
+    report('Rule `match-name` is missing a `match` option.');
 
     return;
   }

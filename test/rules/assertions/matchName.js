@@ -320,7 +320,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Rule `no-restricted-syntax` is missing a `match` option.',
+          message: 'Rule `match-name` is missing a `match` option.',
         },
       ],
       options: [],
