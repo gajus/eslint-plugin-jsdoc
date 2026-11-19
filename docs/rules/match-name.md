@@ -202,7 +202,7 @@ function quux () {
  */
 function quux () {}
 // "jsdoc/match-name": ["error"|"warn", ]
-// Message: Rule `no-restricted-syntax` is missing a `match` option.
+// Message: Rule `match-name` is missing a `match` option.
 
 /**
  * @param {
