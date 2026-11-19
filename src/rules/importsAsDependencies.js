@@ -151,7 +151,8 @@ export default iterateJsdoc(({
           moduleCheck.set(
             mod,
             !modulePkg || (!modulePkg.types && !modulePkg.typings && !resolve.types(modulePkg)) ?
-              `@types/${mod}` :
+              // DefinitelyTyped names `@scope/name` as `@types/scope__name`
+              `@types/${mod.replace(/^@([^\/]+)\//v, '$1__')}` :
               mod,
           );
         }
