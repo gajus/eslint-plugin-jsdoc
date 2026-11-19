@@ -116,8 +116,11 @@ const hasRejectValue = (node, innerFunction, isAsync) => {
       return isAsync === true;
     }
 
+    // A rejection in the `try` block escapes only when there is no `catch`; one
+    //   in the `catch` or `finally` block always does.
     case 'TryStatement': {
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.handler && node.handler.body), innerFunction, isAsync) ||
+      return (!node.handler && hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.block), innerFunction, isAsync)) ||
+        hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.handler && node.handler.body), innerFunction, isAsync) ||
         hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.finalizer), innerFunction, isAsync);
     }
 

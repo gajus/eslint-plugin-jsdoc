@@ -322,6 +322,46 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Loads it.
+           */
+          async function quux (conn) {
+            try {
+              throw new Error('not ready');
+            } finally {
+              conn.release();
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Promise-rejecting function requires `@rejects` tag',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Loads it.
+           */
+          function quux (conn) {
+            try {
+              return Promise.reject(new Error('x'));
+            } finally {
+              conn.release();
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Promise-rejecting function requires `@rejects` tag',
+        },
+      ],
+    },
   ],
   valid: [
     {
