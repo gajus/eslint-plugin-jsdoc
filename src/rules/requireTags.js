@@ -25,8 +25,10 @@ export default buildForbidRuleDefinition({
     const cntxts = tags?.map((tag) => {
       const tagName = typeof tag === 'string' ? tag : tag.tag;
       return {
+        // Quoted, as tag names such as `memberof!` or `vue.prop` are not valid
+        //   unquoted selector values
         comment: `JsdocBlock:not(*:has(JsdocTag[tag=${
-          tagName
+          JSON.stringify(tagName)
         }]))`,
         context: typeof tag === 'string' ? 'any' : tag.context,
         message: `Missing required tag "${tagName}"`,
