@@ -231,6 +231,30 @@ async function quux () {
   }
 }
 // Message: Promise-rejecting function requires `@rejects` tag
+
+/**
+ * Loads it.
+ */
+async function quux (conn) {
+  try {
+    throw new Error('not ready');
+  } finally {
+    conn.release();
+  }
+}
+// Message: Promise-rejecting function requires `@rejects` tag
+
+/**
+ * Loads it.
+ */
+function quux (conn) {
+  try {
+    return Promise.reject(new Error('x'));
+  } finally {
+    conn.release();
+  }
+}
+// Message: Promise-rejecting function requires `@rejects` tag
 ````
 
 
