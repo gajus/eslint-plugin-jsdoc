@@ -59,6 +59,20 @@ function quux () {}
  */
 function quux () {}
 // Message: Rule `require-tags` is missing a `tags` option.
+
+/**
+ * Desc.
+ */
+function quux () {}
+// "jsdoc/require-tags": ["error"|"warn", {"tags":["memberof!"]}]
+// Message: Missing required tag "memberof!"
+
+/**
+ * Desc.
+ */
+function quux () {}
+// "jsdoc/require-tags": ["error"|"warn", {"tags":["vue.prop"]}]
+// Message: Missing required tag "vue.prop"
 ````
 
 
@@ -81,5 +95,11 @@ function quux () {}
  */
 class Quux {}
 // "jsdoc/require-tags": ["error"|"warn", {"tags":[{"context":"FunctionDeclaration","tag":"see"}]}]
+
+/**
+ * @memberof! Foo
+ */
+function quux () {}
+// "jsdoc/require-tags": ["error"|"warn", {"tags":["memberof!"]}]
 ````
 
