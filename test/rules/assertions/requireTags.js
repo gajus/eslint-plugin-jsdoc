@@ -83,6 +83,48 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Desc.
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing required tag "memberof!"',
+        },
+      ],
+      options: [
+        {
+          tags: [
+            'memberof!',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing required tag "vue.prop"',
+        },
+      ],
+      options: [
+        {
+          tags: [
+            'vue.prop',
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -114,6 +156,21 @@ export default {
               context: 'FunctionDeclaration',
               tag: 'see',
             },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @memberof! Foo
+           */
+          function quux () {}
+      `,
+      options: [
+        {
+          tags: [
+            'memberof!',
           ],
         },
       ],
