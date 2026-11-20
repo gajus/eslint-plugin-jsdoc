@@ -43,8 +43,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 1,
-          message: 'Syntax is required: FunctionDeclaration with ' +
-            'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+          message: 'Rule `no-missing-syntax` is missing a `contexts` option.',
         },
       ],
       settings: {
@@ -349,6 +348,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @implements {Bar}
+       */
+      class Quux {}
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Rule `no-missing-syntax` is missing a `contexts` option.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag="implements"])',
+              context: 'ClassDeclaration',
+            },
+          ],
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Rule `no-missing-syntax` is missing a `contexts` option.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -561,39 +605,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-    },
-    {
-      code: `
-      /**
-       * @implements {Bar}
-       */
-      class Quux {}
-      `,
-      settings: {
-        jsdoc: {
-          contexts: [
-            {
-              comment: 'JsdocBlock:has(JsdocTag[tag="implements"])',
-              context: 'ClassDeclaration',
-            },
-          ],
-        },
-      },
-    },
-    {
-      code: `
-      /**
-       * Desc.
-       */
-      function quux () {}
-      `,
-      settings: {
-        jsdoc: {
-          contexts: [
-            'FunctionDeclaration',
-          ],
-        },
-      },
     },
   ],
 });

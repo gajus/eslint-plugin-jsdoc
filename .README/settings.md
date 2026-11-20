@@ -367,7 +367,8 @@ values are objects with the following optional properties:
 ### `contexts`
 
 `settings.jsdoc.contexts` can be used as the default for any rules
-with a `contexts` property option. **Please note**: This will replace any
+with a `contexts` property option, except `no-missing-syntax` and
+`no-restricted-syntax`, which need their own `contexts` option. **Please note**: This will replace any
 default contexts, including for function rules, so if, for example, you exclude
 `FunctionDeclaration` here, rules like `require-param` will not check
 function declarations.
