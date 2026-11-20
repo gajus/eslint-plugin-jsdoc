@@ -46,18 +46,18 @@ export default iterateJsdoc(({
   info: {
     comment,
   },
+  settings,
   state,
   utils,
 }) => {
-  if (!context.options[0]) {
+  /**
+   * @type {Context[]|undefined}
+   */
+  const contexts = context.options[0]?.contexts ?? settings.contexts;
+  if (!contexts) {
     // Handle error later
     return;
   }
-
-  /**
-   * @type {Context[]}
-   */
-  const contexts = context.options[0].contexts;
 
   const {
     contextStr,

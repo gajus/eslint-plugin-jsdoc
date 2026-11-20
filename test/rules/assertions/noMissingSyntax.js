@@ -562,5 +562,38 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @implements {Bar}
+       */
+      class Quux {}
+      `,
+      settings: {
+        jsdoc: {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag="implements"])',
+              context: 'ClassDeclaration',
+            },
+          ],
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      },
+    },
   ],
 });
