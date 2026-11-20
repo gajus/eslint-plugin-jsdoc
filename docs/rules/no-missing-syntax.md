@@ -299,5 +299,17 @@ function quux () {
  * @callback Foo
  */
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["any"]}]
+
+/**
+ * @implements {Bar}
+ */
+class Quux {}
+// Settings: {"jsdoc":{"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"implements\"])","context":"ClassDeclaration"}]}}
+
+/**
+ * Desc.
+ */
+function quux () {}
+// Settings: {"jsdoc":{"contexts":["FunctionDeclaration"]}}
 ````
 
