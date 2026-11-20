@@ -1857,8 +1857,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: `
       /**
-       * @typedef {Object} foo
-       * @property {object} bar
+       * @typedef {object} foo
+       * @property {Object} bar
        */
       `,
       settings: {
@@ -1925,8 +1925,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: `
       /**
-       * @typedef {Object} foo
-       * @property {object} bar
+       * @typedef {object} foo
+       * @property {Object} bar
        */
       `,
       settings: {
@@ -2468,6 +2468,83 @@ export default /** @type {import('../index.js').TestCases} */ ({
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @typedef {object} Options
+           * @property {object} extra
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc @property "extra" type "object"; prefer: "Record<string, unknown>".',
+        },
+      ],
+      options: [
+        {
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: [
+                'object',
+              ],
+            },
+          ],
+        },
+      ],
+      output: `
+          /**
+           * @typedef {object} Options
+           * @property {Record<string, unknown>} extra
+           */
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Record<string, unknown>',
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * Converts a {String} value.
+           * @param {String} value
+           */
+          function quux (value) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc @param "value" type "String"; prefer: "string".',
+        },
+      ],
+      output: `
+          /**
+           * Converts a {String} value.
+           * @param {string} value
+           */
+          function quux (value) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {{
+           *   a: String
+           * }} value
+           */
+          function quux (value) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "value" type "String"; prefer: "string".',
+        },
+      ],
     },
   ],
   valid: [
