@@ -467,6 +467,114 @@ const maybeResult = () => {
   }
 };
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a': {
+    log(kind);
+    break;
+  }
+  default:
+    return 'other';
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    if (log(kind)) {
+      break;
+    }
+
+    return 'a';
+  default:
+    return 'other';
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    if (log(kind)) {
+      return 'a';
+    } else {
+      break;
+    }
+
+  default:
+    return 'other';
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    try {
+      break;
+    } catch {
+      log(kind);
+    }
+
+  default:
+    return 'other';
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    try {
+      log(kind);
+    } catch {
+      break;
+    }
+
+  default:
+    return 'other';
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    return 'a';
+  default:
+    log(kind);
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 
@@ -1226,6 +1334,53 @@ function foo() {
 function maybeTrue() {
   if (Math.random() > 0.5) {
     return true;
+  }
+}
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a': {
+    return 'a';
+  }
+  default: {
+    return 'other';
+  }
+  }
+}
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    for (const item of kind) {
+      break;
+    }
+
+    return 'a';
+  default:
+    return 'other';
+  }
+}
+
+/**
+ * @returns {string}
+ */
+function quux (kind) {
+  switch (kind) {
+  case 'a':
+    try {
+      log(kind);
+    } finally {
+      log(kind);
+    }
+
+  default:
+    return 'other';
   }
 }
 ````
