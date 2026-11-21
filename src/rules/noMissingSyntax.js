@@ -70,10 +70,9 @@ export default iterateJsdoc(({
   contextSelected: true,
   exit ({
     context,
-    settings,
     state,
   }) {
-    if (!context.options.length && !settings.contexts) {
+    if (!context.options[0]?.contexts) {
       context.report({
         loc: {
           end: {
@@ -96,7 +95,7 @@ export default iterateJsdoc(({
     /**
      * @type {Context[]}
      */
-    const contexts = (context.options[0] ?? {}).contexts ?? settings?.contexts;
+    const contexts = context.options[0].contexts;
 
     // Report when MISSING
     contexts.some((cntxt) => {
@@ -212,4 +211,6 @@ section of our Advanced docs for more on the expected format.`,
     ],
     type: 'suggestion',
   },
+  // As with `no-restricted-syntax`, `settings.jsdoc.contexts` does not apply
+  nonGlobalSettings: true,
 });

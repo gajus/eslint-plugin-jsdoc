@@ -110,7 +110,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}}
-// Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))
+// Message: Rule `no-missing-syntax` is missing a `contexts` option.
 
 /**
  * @implements {Bar|Foo}
@@ -202,6 +202,20 @@ function quux () {}
  */
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration"}]}]
 // Message: Syntax is required: FunctionDeclaration
+
+/**
+ * @implements {Bar}
+ */
+class Quux {}
+// Settings: {"jsdoc":{"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"implements\"])","context":"ClassDeclaration"}]}}
+// Message: Rule `no-missing-syntax` is missing a `contexts` option.
+
+/**
+ * Desc.
+ */
+function quux () {}
+// Settings: {"jsdoc":{"contexts":["FunctionDeclaration"]}}
+// Message: Rule `no-missing-syntax` is missing a `contexts` option.
 ````
 
 
