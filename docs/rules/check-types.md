@@ -872,6 +872,29 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":{"replacement":"Object<>","unifyParentAndChildTypeChecks":true},"Object.<>":"Object<>","object<>":"Object<>"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @typedef {object} Options
+ * @property {object} extra
+ */
+// Settings: {"jsdoc":{"preferredTypes":{"object":"Record<string, unknown>"}}}
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
+// Message: Invalid JSDoc @property "extra" type "object"; prefer: "Record<string, unknown>".
+
+/**
+ * Converts a {String} value.
+ * @param {String} value
+ */
+function quux (value) {}
+// Message: Invalid JSDoc @param "value" type "String"; prefer: "string".
+
+/**
+ * @param {{
+ *   a: String
+ * }} value
+ */
+function quux (value) {}
+// Message: Invalid JSDoc @param "value" type "String"; prefer: "string".
 ````
 
 

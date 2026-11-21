@@ -67,6 +67,11 @@ export default iterateJsdoc(({
 
     const isSingleLineBlock = delimiter === '/**';
     const delim = isSingleLineBlock ? '*' : delimiter;
+    // On a line with content (` * @param a */`), the `*` delimiter is the
+    //   line's own asterisk, so only an asterisk before it is an extra one
+    const isContentDelimiter = delimiter === '*' && Boolean(
+      tag || type || name || description.replaceAll(/[\t *]/gv, ''),
+    );
     const endAsterisks = allowWhitespace ?
       (isSingleLineBlock ? endAsterisksSingleLineNoBlockWS : endAsterisksMultipleLineNoBlockWS) :
       (isSingleLineBlock ? endAsterisksSingleLineBlockWS : endAsterisksMultipleLineBlockWS);
@@ -79,13 +84,14 @@ export default iterateJsdoc(({
 
     if (
       !endingAsterisksAndSpaces ||
-      !isSingleLineBlock && endingAsterisksAndSpaces[1] && !endingAsterisksAndSpaces[1].trim()
+      !isSingleLineBlock && endingAsterisksAndSpaces[1] && !endingAsterisksAndSpaces[1].trim() ||
+      isContentDelimiter && !endingAsterisksAndSpaces[1].includes('*')
     ) {
       return false;
     }
 
     const endFix = () => {
-      if (!isSingleLineBlock) {
+      if (!isSingleLineBlock && !isContentDelimiter) {
         tokens.delimiter = '';
       }
 

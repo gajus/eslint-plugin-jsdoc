@@ -751,6 +751,170 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a': {
+              log(kind);
+              break;
+            }
+            default:
+              return 'other';
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              if (log(kind)) {
+                break;
+              }
+
+              return 'a';
+            default:
+              return 'other';
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              if (log(kind)) {
+                return 'a';
+              } else {
+                break;
+              }
+
+            default:
+              return 'other';
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              try {
+                break;
+              } catch {
+                log(kind);
+              }
+
+            default:
+              return 'other';
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              try {
+                log(kind);
+              } catch {
+                break;
+              }
+
+            default:
+              return 'other';
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              return 'a';
+            default:
+              log(kind);
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1828,6 +1992,62 @@ export default /** @type {import('../index.js').TestCases} */ ({
           return true;
         }
       }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a': {
+              return 'a';
+            }
+            default: {
+              return 'other';
+            }
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              for (const item of kind) {
+                break;
+              }
+
+              return 'a';
+            default:
+              return 'other';
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {string}
+           */
+          function quux (kind) {
+            switch (kind) {
+            case 'a':
+              try {
+                log(kind);
+              } finally {
+                log(kind);
+              }
+
+            default:
+              return 'other';
+            }
+          }
       `,
     },
   ],

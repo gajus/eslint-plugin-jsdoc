@@ -351,6 +351,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /** Desc. */
       `,
     },
+    {
+      code: `
+      /**
+       * Desc.
+       * foo **/
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      output: `
+      /**
+       * Desc.
+       * foo*/
+      `,
+    },
   ],
   valid: [
     {
@@ -518,6 +536,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
           allowWhitespace: true,
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       * @param a */
+      function quux (a) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       * @readonly */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       * @returns {string} */
+      function quux () {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Desc.
+       * foo*/
+      `,
     },
   ],
 });

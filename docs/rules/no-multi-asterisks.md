@@ -181,6 +181,11 @@ The following patterns are considered problems:
 /** Desc. **/
 // "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
 // Message: Should be no multiple asterisks on end lines.
+
+/**
+ * Desc.
+ * foo **/
+// Message: Should be no multiple asterisks on end lines.
 ````
 
 
@@ -283,5 +288,23 @@ function foo() {
     //
 }
 // "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
+
+/**
+ * Desc.
+ * @param a */
+function quux (a) {}
+
+/**
+ * Desc.
+ * @readonly */
+
+/**
+ * Desc.
+ * @returns {string} */
+function quux () {}
+
+/**
+ * Desc.
+ * foo*/
 ````
 

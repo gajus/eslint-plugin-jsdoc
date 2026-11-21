@@ -131,6 +131,44 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
 };
 
 /**
+ * Checks if a statement in a `switch` case may `break` out of the `switch`
+ * (a `break` in a nested loop, `switch` or function does not).
+ * @param {ESTreeOrTypeScriptNode|null|undefined} node
+ * @returns {boolean}
+ */
+const hasBreak = (node) => {
+  if (!node) {
+    return false;
+  }
+
+  switch (node.type) {
+    case 'BlockStatement': {
+      return node.body.some((nde) => {
+        return hasBreak(nde);
+      });
+    }
+
+    case 'BreakStatement': {
+      return true;
+    }
+
+    case 'IfStatement': {
+      return hasBreak(node.consequent) || hasBreak(node.alternate);
+    }
+
+    case 'TryStatement': {
+      return hasBreak(node.block) ||
+        hasBreak(node.handler && node.handler.body) ||
+        hasBreak(node.finalizer);
+    }
+
+    default: {
+      return false;
+    }
+  }
+};
+
+/**
  * Checks if a node has a return statement. Void return does not count.
  * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @param {PromiseFilter} promFilter
@@ -212,14 +250,19 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
     }
 
     case 'SwitchStatement': {
-      return /** @type {import('@typescript-eslint/types').TSESTree.SwitchStatement} */ (node).cases.every(
-        (someCase) => {
+      const {
+        cases,
+      } = /** @type {import('@typescript-eslint/types').TSESTree.SwitchStatement} */ (node);
+
+      // A case may fall through to the next one, but the last case may not
+      //   fall off the end, and no case may `break` out
+      return allBrancheshaveReturnValues(cases.at(-1)?.consequent.at(-1), promFilter) &&
+        cases.every((someCase) => {
           return !someCase.consequent.some((consNode) => {
-            return consNode.type === 'BreakStatement' ||
+            return hasBreak(consNode) ||
             consNode.type === 'ReturnStatement' && consNode.argument === null;
           });
-        },
-      );
+        });
     }
 
     case 'ThrowStatement': {

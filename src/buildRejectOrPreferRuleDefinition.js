@@ -422,18 +422,33 @@ export const buildRejectOrPreferRuleDefinition = ({
         if (invalidTypes.length) {
           const fixedType = stringify(typeAst, generate);
 
+          // Replace within the tag's own lines only, as the description or
+          //   another tag (e.g., an exempted one) may hold the same text
+          const lines = sourceCode.getText(jsdocNode).split('\n');
+          const firstLine = jsdocTag.source[0].number;
+          const lastLine = /** @type {import('comment-parser').Line} */ (
+            jsdocTag.source.at(-1)
+          ).number;
+          const tagText = lines.slice(firstLine, lastLine + 1).join('\n');
+          const typeText = `{${jsdocTag.type}}`;
+
           /**
-           * @type {import('eslint').Rule.ReportFixer}
+           * A type over several lines is not found as one text (the lines
+           * have their own `*`), so it is not fixable.
+           * @type {import('eslint').Rule.ReportFixer|null}
            */
-          const fix = (fixer) => {
-            return fixer.replaceText(
-              jsdocNode,
-              sourceCode.getText(jsdocNode).replace(
-                `{${jsdocTag.type}}`,
-                `{${fixedType}}`,
-              ),
-            );
-          };
+          const fix = tagText.includes(typeText) ?
+            (fixer) => {
+              return fixer.replaceText(
+                jsdocNode,
+                [
+                  ...lines.slice(0, firstLine),
+                  tagText.replace(typeText, `{${fixedType}}`),
+                  ...lines.slice(lastLine + 1),
+                ].join('\n'),
+              );
+            } :
+            null;
 
           for (const [
             badType,
