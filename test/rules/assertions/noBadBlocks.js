@@ -163,6 +163,62 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
     },
+    {
+      code: `
+          /***************************
+           * Helpers
+           ***************************/
+
+          /*
+           * @param foo The foo.
+           */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      output: `
+          /***************************
+           * Helpers
+           ***************************/
+
+          /**
+           * @param foo The foo.
+           */
+          function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+          /*
+           * @param foo The foo.
+           */
+          function quux (foo) {}
+
+          /***************************
+           * Helpers
+           ***************************/
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo The foo.
+           */
+          function quux (foo) {}
+
+          /***************************
+           * Helpers
+           ***************************/
+      `,
+    },
   ],
   valid: [
     {
