@@ -360,6 +360,94 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{name: string, on: ((e: "a") => void) & ((e: "b") => void)}} opts The options
+         */
+        function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+      ],
+      options: [
+        'method',
+      ],
+      output: `
+        /**
+         * @param {{name: string, on(e: "a"): void, on(e: "b"): void}} opts The options
+         */
+        function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{on: ((e: "a") => void) & ((e: "b") => void), name: string}} opts The options
+         */
+        function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+      ],
+      options: [
+        'method',
+      ],
+      output: `
+        /**
+         * @param {{on(e: "a"): void, on(e: "b"): void, name: string}} opts The options
+         */
+        function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {{
+         *   id: number,
+         *   name: string,
+         *   on: ((e: "a") => void) & ((e: "b") => void)
+         * }} Emitter
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+        {
+          line: 3,
+          message: 'Found function property; prefer method signature.',
+        },
+      ],
+      options: [
+        'method',
+      ],
+      output: `
+        /**
+         * @typedef {{
+         *   id: number,
+         *   name: string,
+         *   on(e: "a"): void,
+         *   on(e: "b"): void
+         * }} Emitter
+         */
+      `,
+    },
   ],
   valid: [
     {
