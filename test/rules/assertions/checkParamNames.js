@@ -2583,5 +2583,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux ({[key]: a, b}) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param a A
+         * @param type Type
+         * @param arg Arg
+         */
+        export function fn(a: string, ...[type, arg]: FnArgs): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param opts Opts
+         * @param opts.x X
+         * @param type Type
+         * @param arg Arg
+         */
+        export function fn({x}: Opts, ...[type, arg]: FnArgs): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
   ],
 });
