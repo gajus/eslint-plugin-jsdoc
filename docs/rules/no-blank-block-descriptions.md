@@ -104,5 +104,17 @@ function functionWithClearName() {}
 
 /** @someTag */
 function functionWithClearName() {}
+
+/** Some desc.
+ *
+ * @param {number} x
+ */
+function functionWithClearName(x) {}
+
+/** Some desc.
+ *
+ * More desc.
+ */
+function functionWithClearName() {}
 ````
 
