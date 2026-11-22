@@ -454,6 +454,30 @@ function quux (name) {}
  * @param {string} a The value */
 function quux (a) {}
 // Message: Sentences must end with a period.
+
+/** returns the name. */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
+
+/** Returns the name */
+function quux () {}
+// Message: Sentences must end with a period.
+
+/**
+ * returns the name. */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Returns the name */
+function quux () {}
+// Message: Sentences must end with a period.
+
+/**
+ * returns the name. 
+ */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
 ````
 
 
