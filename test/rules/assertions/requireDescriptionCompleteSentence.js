@@ -737,14 +737,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      output: `
-          /**
-           * Sorry, but this isn't a complete sentence Mr. .
-           */
-          function quux () {
-
-          }
-      `,
     },
     {
       code: `
@@ -1039,6 +1031,94 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * Desc.
          * @param {string} a The value. */
         function quux (a) {}
+      `,
+    },
+    {
+      code: `
+          /** returns the name. */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+          /** Returns the name. */
+          function quux () {}
+      `,
+    },
+    {
+      code: `
+          /** Returns the name */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+      output: `
+          /** Returns the name. */
+          function quux () {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * returns the name. */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+          /**
+           * Returns the name. */
+          function quux () {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Returns the name */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+      output: `
+          /**
+           * Returns the name. */
+          function quux () {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * returns the name.\u0020
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+          /**
+           * Returns the name.\u0020
+           */
+          function quux () {}
       `,
     },
   ],

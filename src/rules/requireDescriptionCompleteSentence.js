@@ -124,8 +124,10 @@ const validateDescription = (
     const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
       let text = sourceCode.getText(jsdocNode);
 
-      if (!/[.:?!]$/v.test(paragraph)) {
-        const line = paragraph.split('\n').findLast(Boolean);
+      // A block description keeps the space before a `*/` on its line
+      const trimmedParagraph = paragraph.trimEnd();
+      if (!/[.:?!]$/v.test(trimmedParagraph)) {
+        const line = trimmedParagraph.split('\n').findLast(Boolean);
 
         // Only search from the line where this description starts, so that an
         //   earlier line ending in the same text (e.g., in an `@example`) is
