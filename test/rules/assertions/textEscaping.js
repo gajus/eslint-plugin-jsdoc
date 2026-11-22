@@ -205,6 +205,62 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * Uses <b> and \`x<y\`.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'You have unescaped HTML characters < or &',
+        },
+      ],
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+      output: `
+        /**
+         * Uses &lt;b> and \`x<y\`.
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * \`\`\`js
+         * a<b
+         * \`\`\`
+         * Then <b>.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'You have unescaped HTML characters < or &',
+        },
+      ],
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+      output: `
+        /**
+         * \`\`\`js
+         * a<b
+         * \`\`\`
+         * Then &lt;b>.
+         */
+        function quux () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -343,6 +399,80 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           escapeMarkdown: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Returns a \`Map<string, number>\` of counts.
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * True when \`a&&b\` holds.
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Gets the element type.
+         *
+         * \`\`\`ts
+         * type Example = ElementType<string[]>;
+         * \`\`\`
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @returns {Map<string, number>} A \`Map<string, number>\` of counts.
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @remarks
+         * \`\`\`ts
+         * const m: Map<string, number> = count();
+         * \`\`\`
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          escapeHTML: true,
         },
       ],
     },

@@ -5,12 +5,21 @@ import iterateJsdoc from '../iterateJsdoc.js';
 const htmlRegex = /(<|&(?!(?:amp|lt|gt|quot|apos);))(?=\S)/v;
 const markdownRegex = /(?<!\\)(`+)([^`]+)\1(?!`)/v;
 
+// The text of a Markdown code span is shown as is, so it is not escaped (same
+//   code span pattern as in `escape-inline-tags`)
+const codeSpanRegex = /(?<!\\)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/v;
+const codeSpanOrHtmlRegex = new RegExp(`${codeSpanRegex.source}|${htmlRegex.source}`, 'gv');
+
 /**
  * @param {string} desc
  * @returns {string}
  */
 const htmlReplacer = (desc) => {
-  return desc.replaceAll(new RegExp(htmlRegex, 'gv'), (_) => {
+  return desc.replaceAll(codeSpanOrHtmlRegex, (_, codeSpanBackticks) => {
+    if (codeSpanBackticks) {
+      return _;
+    }
+
     if (_ === '<') {
       return '&lt;';
     }
@@ -62,12 +71,67 @@ export default iterateJsdoc(({
   } = utils.getDescription();
 
   if (escapeHTML) {
-    if (descriptions.some((desc) => {
-      return htmlRegex.test(desc);
-    })) {
-      const line = utils.setDescriptionLines(htmlRegex, htmlReplacer);
+    // Fenced code (from a line starting with ``` to the next one) is also
+    //   shown as is
+    /** @type {Set<import('../iterateJsdoc.js').Integer>} */
+    const fencedLines = new Set();
+    let inFence = false;
+    for (const {
+      number,
+      tokens: {
+        description,
+      },
+    } of jsdoc.source) {
+      const isFence = description.startsWith('```');
+      if (inFence || isFence) {
+        fencedLines.add(number);
+      }
+
+      if (isFence) {
+        inFence = !inFence;
+      }
+    }
+
+    /**
+     * Escapes the first of the lines that has text to escape.
+     * @param {import('comment-parser').Line[]} lines
+     * @returns {import('../iterateJsdoc.js').Integer|undefined} The number of
+     *   the escaped line
+     */
+    const escapeFirstLine = (lines) => {
+      const line = lines.find(({
+        number,
+        tokens: {
+          description,
+        },
+      }) => {
+        return !fencedLines.has(number) && htmlReplacer(description) !== description;
+      });
+      if (!line) {
+        return undefined;
+      }
+
+      line.tokens.description = htmlReplacer(line.tokens.description);
+      return line.number;
+    };
+
+    /** @type {import('comment-parser').Line[]} */
+    const blockDescriptionLines = [];
+    for (const [
+      idx,
+      line,
+    ] of jsdoc.source.entries()) {
+      if (idx && (line.tokens.tag || line.tokens.end)) {
+        break;
+      }
+
+      blockDescriptionLines.push(line);
+    }
+
+    const blockLine = escapeFirstLine(blockDescriptionLines);
+    if (blockLine !== undefined) {
       utils.reportJSDoc('You have unescaped HTML characters < or &', {
-        line,
+        line: blockLine,
       }, () => {}, true);
       return;
     }
@@ -77,13 +141,8 @@ export default iterateJsdoc(({
         continue;
       }
 
-      if (/** @type {string[]} */ (
-        utils.getTagDescription(tag, true)
-      ).some((desc) => {
-        return htmlRegex.test(desc);
-      })) {
-        const line = utils.setTagDescription(tag, htmlRegex, htmlReplacer) +
-          tag.source[0].number;
+      const line = escapeFirstLine(tag.source);
+      if (line !== undefined) {
         utils.reportJSDoc('You have unescaped HTML characters < or & in a tag', {
           line,
         }, () => {}, true);
@@ -140,7 +199,8 @@ export default iterateJsdoc(({
         properties: {
           escapeHTML: {
             description: `This option escapes all \`<\` and \`&\` characters (except those followed by
-whitespace which are treated as literals by Visual Studio Code). Defaults to
+whitespace which are treated as literals by Visual Studio Code, and those in
+Markdown code spans or fenced code, which are shown as is). Defaults to
 \`false\`.`,
             type: 'boolean',
           },
