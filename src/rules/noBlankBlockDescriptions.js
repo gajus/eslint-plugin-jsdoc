@@ -24,7 +24,7 @@ export default iterateJsdoc(({
       tag,
     },
   }, idx) => {
-    if (delimiter === '/**') {
+    if (delimiter === '/**' && !description) {
       return false;
     }
 

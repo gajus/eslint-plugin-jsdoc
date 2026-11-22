@@ -142,5 +142,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function functionWithClearName() {}
       `,
     },
+    {
+      code: `
+      /** Some desc.
+       *
+       * @param {number} x
+       */
+      function functionWithClearName(x) {}
+      `,
+    },
+    {
+      code: `
+      /** Some desc.
+       *
+       * More desc.
+       */
+      function functionWithClearName() {}
+      `,
+    },
   ],
 });
