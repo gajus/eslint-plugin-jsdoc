@@ -62,5 +62,13 @@ The following patterns are not considered problems:
  * @param {{}} someName
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
+
+/**
+ * @param {"a" | "b" | (string & {})} someName
+ */
+
+/**
+ * @param {T & {}} someName
+ */
 ````
 
