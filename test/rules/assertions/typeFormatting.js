@@ -1366,6 +1366,86 @@ export default {
           function quux (foo) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @param {Array<() => void>} foo The foo
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+        /**
+         * @param {(() => void)[]} foo The foo
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {Array<keyof Foo>} foo The foo
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+        /**
+         * @param {(keyof Foo)[]} foo The foo
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {Array<?Foo>} foo The foo
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+        /**
+         * @param {(?Foo)[]} foo The foo
+         */
+        function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {Array<A extends B ? C : D>} foo The foo
+         */
+        function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be square',
+        },
+      ],
+      output: `
+        /**
+         * @param {(A extends B ? C : D)[]} foo The foo
+         */
+        function quux (foo) {}
+      `,
+    },
   ],
   valid: [
     {

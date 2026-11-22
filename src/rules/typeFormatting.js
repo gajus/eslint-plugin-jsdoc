@@ -1,6 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   rewireByParsedType,
+  setArrayBrackets,
 } from '../jsdocUtils.js';
 import {
   generate,
@@ -273,7 +274,7 @@ export default iterateJsdoc(({
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (nde);
           if ('value' in typeNode.left && typeNode.left.value === 'Array') {
             if (typeNode.meta.brackets !== arrayBrackets) {
-              typeNode.meta.brackets = arrayBrackets;
+              setArrayBrackets(typeNode, arrayBrackets);
               errorMessage = `Array bracket style should be ${arrayBrackets}`;
             }
           } else if (typeNode.meta.dot !== genericDot) {
