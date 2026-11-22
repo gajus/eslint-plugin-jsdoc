@@ -2546,6 +2546,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param {Array<() => void>} foo The foo
+           */
+          function quux (foo) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
+        },
+      ],
+      output: `
+          /**
+           * @param {(() => void)[]} foo The foo
+           */
+          function quux (foo) {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'Array<>': '[]',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

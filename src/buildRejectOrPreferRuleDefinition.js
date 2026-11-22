@@ -1,5 +1,8 @@
 import iterateJsdoc from './iterateJsdoc.js';
 import {
+  setArrayBrackets,
+} from './jsdocUtils.js';
+import {
   generate,
 } from '@es-joy/escodegen';
 import {
@@ -30,7 +33,10 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
       parentNode
     ).meta;
     if (preferred === '[]') {
-      parentMeta.brackets = 'square';
+      setArrayBrackets(
+        /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (parentNode),
+        'square',
+      );
       parentMeta.dot = false;
       ret = 'Array';
     } else {

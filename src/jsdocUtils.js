@@ -2250,6 +2250,52 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
   }
 };
 
+/**
+ * Element types of an array type that need no parentheses before `[]`
+ * (`stringify` adds them itself for unions and intersections).
+ */
+const squareBracketElementTypes = new Set([
+  'JsdocTypeAny',
+  'JsdocTypeGeneric',
+  'JsdocTypeImport',
+  'JsdocTypeIntersection',
+  'JsdocTypeName',
+  'JsdocTypeNamePath',
+  'JsdocTypeNull',
+  'JsdocTypeNumber',
+  'JsdocTypeObject',
+  'JsdocTypeParenthesis',
+  'JsdocTypeSpecialNamePath',
+  'JsdocTypeStringValue',
+  'JsdocTypeSymbol',
+  'JsdocTypeTemplateLiteral',
+  'JsdocTypeTuple',
+  'JsdocTypeUndefined',
+  'JsdocTypeUnion',
+  'JsdocTypeUnknown',
+]);
+
+/**
+ * Sets the brackets of an `Array` type. With square brackets, an element type
+ * that would otherwise bind differently is put in parentheses, so that, e.g.,
+ * `Array<() => void>` becomes `(() => void)[]`, not `() => void[]`.
+ * @param {import('jsdoc-type-pratt-parser').GenericResult} typeNode
+ * @param {'angle'|'square'} brackets
+ * @returns {void}
+ */
+const setArrayBrackets = (typeNode, brackets) => {
+  typeNode.meta.brackets = brackets;
+  const [
+    element,
+  ] = typeNode.elements;
+  if (brackets === 'square' && !squareBracketElementTypes.has(element.type)) {
+    typeNode.elements[0] = {
+      element,
+      type: 'JsdocTypeParenthesis',
+    };
+  }
+};
+
 export {
   comparePaths,
   dropPathSegmentQuotes,
@@ -2293,6 +2339,7 @@ export {
   parseClosureTemplateTag,
   pathDoesNotBeginWith,
   rewireByParsedType,
+  setArrayBrackets,
   setTagStructure,
   strictNativeTypes,
   tagMightHaveEitherTypeOrNamePosition,
