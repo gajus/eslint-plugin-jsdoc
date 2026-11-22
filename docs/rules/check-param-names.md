@@ -1391,5 +1391,22 @@ const key = 'id';
  * @param root0.b
  */
 function quux ({[key]: a, b}) {}
+
+/**
+ * Desc.
+ * @param a A
+ * @param type Type
+ * @param arg Arg
+ */
+export function fn(a: string, ...[type, arg]: FnArgs): void {}
+
+/**
+ * Desc.
+ * @param opts Opts
+ * @param opts.x X
+ * @param type Type
+ * @param arg Arg
+ */
+export function fn({x}: Opts, ...[type, arg]: FnArgs): void {}
 ````
 

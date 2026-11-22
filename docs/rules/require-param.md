@@ -1403,6 +1403,20 @@ function quux ([bar]) {}
 function quux (baz, {bar}) {}
 // "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
 // Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{bar}`.
+
+/**
+ * Desc.
+ * @param a A
+ */
+export function fn(a: string, ...[type, arg]: FnArgs): void {}
+// Message: Missing JSDoc @param "type" declaration.
+
+/**
+ * Desc.
+ * @param a A
+ */
+export function fn(a: string, ...[type, {b}]: FnArgs): void {}
+// Message: Missing JSDoc @param "type" declaration.
 ````
 
 
@@ -2129,5 +2143,20 @@ function quux ({[key]: a, b}) {}
  */
 function quux ({bar}) {}
 // "jsdoc/require-param": ["error"|"warn", {"useObjectTypeForDestructuredRoots":true}]
+
+/**
+ * Desc.
+ * @param type Type
+ * @param arg Arg
+ */
+export function fn(...[type, arg]: FnArgs): void {}
+
+/**
+ * Desc.
+ * @param a A
+ * @param type Type
+ * @param arg Arg
+ */
+export function fn(a: string, ...[type, arg]: FnArgs): void {}
 ````
 
