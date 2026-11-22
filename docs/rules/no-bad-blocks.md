@@ -114,6 +114,26 @@ function quux (foo) {
 }
 // "jsdoc/no-bad-blocks": ["error"|"warn", {"preventAllMultiAsteriskBlocks":true}]
 // Message: Expected JSDoc-like comment to begin with two asterisks.
+
+/***************************
+ * Helpers
+ ***************************/
+
+/*
+ * @param foo The foo.
+ */
+function quux (foo) {}
+// Message: Expected JSDoc-like comment to begin with two asterisks.
+
+/*
+ * @param foo The foo.
+ */
+function quux (foo) {}
+
+/***************************
+ * Helpers
+ ***************************/
+// Message: Expected JSDoc-like comment to begin with two asterisks.
 ````
 
 
