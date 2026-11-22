@@ -571,6 +571,30 @@ function quux (foo) {}
  *   foo The foo */
 function quux (foo) {}
 // Message: Array bracket style should be square
+
+/**
+ * @param {Array<() => void>} foo The foo
+ */
+function quux (foo) {}
+// Message: Array bracket style should be square
+
+/**
+ * @param {Array<keyof Foo>} foo The foo
+ */
+function quux (foo) {}
+// Message: Array bracket style should be square
+
+/**
+ * @param {Array<?Foo>} foo The foo
+ */
+function quux (foo) {}
+// Message: Array bracket style should be square
+
+/**
+ * @param {Array<A extends B ? C : D>} foo The foo
+ */
+function quux (foo) {}
+// Message: Array bracket style should be square
 ````
 
 
