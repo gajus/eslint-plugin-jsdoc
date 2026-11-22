@@ -3185,7 +3185,8 @@ export interface Rules {
         {
           /**
            * This option escapes all `<` and `&` characters (except those followed by
-           * whitespace which are treated as literals by Visual Studio Code). Defaults to
+           * whitespace which are treated as literals by Visual Studio Code, and those in
+           * Markdown code spans or fenced code, which are shown as is). Defaults to
            * `false`.
            */
           escapeHTML?: boolean;

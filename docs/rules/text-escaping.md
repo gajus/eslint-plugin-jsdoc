@@ -39,7 +39,8 @@ A single options object has the following properties.
 ### <code>escapeHTML</code>
 
 This option escapes all `<` and `&` characters (except those followed by
-whitespace which are treated as literals by Visual Studio Code). Defaults to
+whitespace which are treated as literals by Visual Studio Code, and those in
+Markdown code spans or fenced code, which are shown as is). Defaults to
 `false`.
 
 <a name="user-content-text-escaping-options-escapemarkdown"></a>
@@ -125,6 +126,23 @@ The following patterns are considered problems:
  */
 // "jsdoc/text-escaping": ["error"|"warn", {"escapeMarkdown":true}]
 // Message: You have unescaped Markdown backtick sequences in a tag
+
+/**
+ * Uses <b> and `x<y`.
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+// Message: You have unescaped HTML characters < or &
+
+/**
+ * ```js
+ * a<b
+ * ```
+ * Then <b>.
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+// Message: You have unescaped HTML characters < or &
 ````
 
 
@@ -197,5 +215,44 @@ The following patterns are not considered problems:
  * ```
  */
 // "jsdoc/text-escaping": ["error"|"warn", {"escapeMarkdown":true}]
+
+/**
+ * Returns a `Map<string, number>` of counts.
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * True when `a&&b` holds.
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * Gets the element type.
+ *
+ * ```ts
+ * type Example = ElementType<string[]>;
+ * ```
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * Desc.
+ * @returns {Map<string, number>} A `Map<string, number>` of counts.
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * Desc.
+ * @remarks
+ * ```ts
+ * const m: Map<string, number> = count();
+ * ```
+ */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
 ````
 
