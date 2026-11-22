@@ -157,6 +157,30 @@ The following patterns are considered problems:
  */
 // "jsdoc/ts-method-signature-style": ["error"|"warn", "property"]
 // Message: Found method signature; prefer function property.
+
+/**
+ * @param {{name: string, on: ((e: "a") => void) & ((e: "b") => void)}} opts The options
+ */
+function quux (opts) {}
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+// Message: Found function property; prefer method signature.
+
+/**
+ * @param {{on: ((e: "a") => void) & ((e: "b") => void), name: string}} opts The options
+ */
+function quux (opts) {}
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+// Message: Found function property; prefer method signature.
+
+/**
+ * @typedef {{
+ *   id: number,
+ *   name: string,
+ *   on: ((e: "a") => void) & ((e: "b") => void)
+ * }} Emitter
+ */
+// "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
+// Message: Found function property; prefer method signature.
 ````
 
 
