@@ -33,10 +33,12 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, (nde) => {
+    traverse(parsedType, (nde, parentNode) => {
       switch (nde.type) {
         case 'JsdocTypeObject': {
-          if (!nde.elements.length) {
+          // As with typescript-eslint, `{}` in an intersection (e.g., the
+          //   common `string & {}`) does not widen the type
+          if (!nde.elements.length && parentNode?.type !== 'JsdocTypeIntersection') {
             utils.reportJSDoc('No empty object type.', tag);
           }
         }

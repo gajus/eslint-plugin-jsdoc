@@ -61,5 +61,19 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         * @param {"a" | "b" | (string & {})} someName
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {T & {}} someName
+         */
+      `,
+    },
   ],
 };
