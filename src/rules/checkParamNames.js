@@ -229,6 +229,10 @@ const validateParameterNames = (
   let dotted = 0;
   let thisOffset = 0;
 
+  // The position of the next tag within a rest tuple (`...[type, arg]`),
+  //   whose elements are each documented by a tag
+  let restTupleIndex = 0;
+
   return paramTags.some(([
     ,
     tag,
@@ -307,9 +311,10 @@ const validateParameterNames = (
         Array.isArray(functionParameterName.name)
     ) {
       const actualName = tag.name.trim();
-      const expectedName = functionParameterName.name[index];
+      const expectedName = functionParameterName.name[restTupleIndex];
       if (actualName === expectedName) {
         thisOffset--;
+        restTupleIndex++;
         return false;
       }
 

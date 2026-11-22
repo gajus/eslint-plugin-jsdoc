@@ -3132,6 +3132,65 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (baz, {bar}) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param a A
+         */
+        export function fn(a: string, ...[type, arg]: FnArgs): void {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "type" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "arg" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      output: `
+        /**
+         * Desc.
+         * @param a A
+         * @param type
+         * @param arg
+         */
+        export function fn(a: string, ...[type, arg]: FnArgs): void {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param a A
+         */
+        export function fn(a: string, ...[type, {b}]: FnArgs): void {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "type" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      output: `
+        /**
+         * Desc.
+         * @param a A
+         * @param type
+         */
+        export function fn(a: string, ...[type, {b}]: FnArgs): void {}
+      `,
+    },
   ],
   valid: [
     {
@@ -4355,6 +4414,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
           useObjectTypeForDestructuredRoots: true,
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param type Type
+         * @param arg Arg
+         */
+        export function fn(...[type, arg]: FnArgs): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param a A
+         * @param type Type
+         * @param arg Arg
+         */
+        export function fn(a: string, ...[type, arg]: FnArgs): void {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
     },
   ],
 });

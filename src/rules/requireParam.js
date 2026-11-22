@@ -464,6 +464,27 @@ export default iterateJsdoc(({
         continue;
       }
 
+      // Each element of a rest tuple (`...[type, arg]`) has its own tag
+      if (Array.isArray(functionParameterName.name)) {
+        const tupleIdx = getParamIndex(String(functionParameterName.name));
+        for (const elementName of functionParameterName.name) {
+          // An element that is itself a pattern has no name
+          if (elementName && !jsdocParameterNames.some(({
+            name,
+          }) => {
+            return name === elementName;
+          })) {
+            missingTags.push({
+              functionParameterIdx: tupleIdx,
+              functionParameterName: elementName,
+              inc,
+            });
+          }
+        }
+
+        continue;
+      }
+
       funcParamName = /** @type {string} */ (functionParameterName.name);
       type = '{...any}';
     } else {
