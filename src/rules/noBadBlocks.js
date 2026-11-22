@@ -31,7 +31,6 @@ export default iterateJsdoc(({
     } = {},
   ] = context.options;
 
-  let extraAsterisks = false;
   const nonJsdocNodes = /** @type {import('estree').Node[]} */ (
     allComments
   ).filter((comment) => {
@@ -54,7 +53,6 @@ export default iterateJsdoc(({
       }
 
       sliceIndex = multiline.length;
-      extraAsterisks = true;
       if (preventAllMultiAsteriskBlocks) {
         return true;
       }
@@ -80,15 +78,12 @@ export default iterateJsdoc(({
       makeReport
     )(context, node);
 
-    // eslint-disable-next-line no-loop-func
     const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
-      const text = sourceCode.getText(node);
-
+      // Decided for each comment (`/*` or `/***`), whatever other comments
+      //   the file has
       return fixer.replaceText(
         node,
-        extraAsterisks ?
-          text.replace(extraAsteriskCommentRegexp, '/**') :
-          text.replace('/*', '/**'),
+        sourceCode.getText(node).replace(/^\/\*+/v, '/**'),
       );
     };
 
