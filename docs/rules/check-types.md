@@ -895,6 +895,13 @@ function quux (value) {}
  */
 function quux (value) {}
 // Message: Invalid JSDoc @param "value" type "String"; prefer: "string".
+
+/**
+ * @param {Array<() => void>} foo The foo
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"preferredTypes":{"Array<>":"[]"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
 ````
 
 
