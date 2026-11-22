@@ -112,7 +112,6 @@ export default iterateJsdoc(({
             const intersection = parentNode.parentNode;
             const objectField = intersection.parentNode;
             const object = objectField.parentNode;
-            // const objFieldIndex = object.elements.indexOf(objectField);
 
             /**
              * @param {import('jsdoc-type-pratt-parser').FunctionResult} func
@@ -141,12 +140,7 @@ export default iterateJsdoc(({
 
             /** @type {import('jsdoc-type-pratt-parser').MethodSignatureResult[]} */
             const methods = [];
-            /** @type {number[]} */
-            const methodIndexes = [];
-            for (const [
-              index,
-              element,
-            ] of intersection.elements.entries()) {
+            for (const element of intersection.elements) {
               if (
                 element.type !== 'JsdocTypeParenthesis' ||
                 element.element.type !== 'JsdocTypeFunction'
@@ -155,18 +149,19 @@ export default iterateJsdoc(({
               }
 
               methods.push(convertToMethod(element.element));
-              methodIndexes.push(index);
             }
 
             utils.reportJSDoc(
               'Found function property; prefer method signature.',
               tag,
               enableFixer ? () => {
-                for (const methodIndex of methodIndexes.toReversed()) {
-                  object.elements.splice(methodIndex, 1);
+                // Replace the field itself (not the fields at the positions of
+                //   the functions in the intersection); the report for another
+                //   function of the same field may have replaced it already
+                const fieldIndex = object.elements.indexOf(objectField);
+                if (fieldIndex !== -1) {
+                  object.elements.splice(fieldIndex, 1, ...methods);
                 }
-
-                object.elements.splice(methodIndexes[0], 0, ...methods);
 
                 rewireByParsedType(jsdoc, tag, parsedType, indent);
               } : null,
