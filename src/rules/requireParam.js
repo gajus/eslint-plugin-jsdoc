@@ -350,7 +350,13 @@ export default iterateJsdoc(({
       let rootName;
       if (functionParameterName[0]) {
         rootName = functionParameterName[0];
-      } else if (matchedJsdoc && matchedJsdoc.name) {
+      } else if (
+        matchedJsdoc && matchedJsdoc.name &&
+        // A tag at this position that has the name of another (not
+        //   destructured) parameter documents that parameter (an earlier
+        //   tag is missing)
+        !functionParameterNames.includes(matchedJsdoc.name)
+      ) {
         rootName = matchedJsdoc.name;
         if (matchedJsdoc.type && matchedJsdoc.type.search(checkTypesRegex) === -1) {
           continue;
