@@ -3305,7 +3305,7 @@ export interface Rules {
     | [
         {
           /**
-           * Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
+           * Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square". Not applied in `closure` mode, which has no `type[]` syntax.
            */
           arrayBrackets?: "angle" | "square";
           /**
