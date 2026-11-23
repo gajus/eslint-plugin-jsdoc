@@ -549,6 +549,18 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Desc.
+ */
+function quux ([first, ...others]) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `[first, ...others]`.
+
+/**
+ * Desc.
+ */
+function quux ({a, list: [x, ...y]}) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{a, list: [x, ...y]}`.
+
+/**
  *
  */
 function quux (foo) {
