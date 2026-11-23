@@ -20,7 +20,7 @@ A single options object has the following properties.
 <a name="type-formatting-options-arraybrackets"></a>
 ### <code>arrayBrackets</code>
 
-Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
+Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square". Not applied in `closure` mode, which has no `type[]` syntax.
 
 <a name="user-content-type-formatting-options-arrowfunctionpostreturnmarkerspacing"></a>
 <a name="type-formatting-options-arrowfunctionpostreturnmarkerspacing"></a>
@@ -804,5 +804,11 @@ The following patterns are not considered problems:
  * @typedef {K extends keyof AllCodeGenerationSchemas ? AllCodeGenerationSchemas[K] : EXPECTED_ANY} CodeGenValue
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
+
+/**
+ * @param {Array<string>} foo The foo
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
