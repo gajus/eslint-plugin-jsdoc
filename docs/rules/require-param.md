@@ -1429,6 +1429,23 @@ export function fn(a: string, ...[type, arg]: FnArgs): void {}
  */
 export function fn(a: string, ...[type, {b}]: FnArgs): void {}
 // Message: Missing JSDoc @param "type" declaration.
+
+/**
+ * Desc.
+ * @param options Options.
+ * @param context Context.
+ * @param context.logger Logger.
+ */
+function quux ({verbose}, {logger}) {}
+// Message: Missing JSDoc @param "options.verbose" declaration.
+
+/**
+ * Desc.
+ * @param source Source.
+ * @param target Target.
+ */
+function quux ({path}, {path: dest}) {}
+// Message: Missing JSDoc @param "source.path" declaration.
 ````
 
 
