@@ -1444,7 +1444,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "bar, foo". Got "foo".',
-          suggestions: 1,
+          suggestions: [],
         },
       ],
       options: [
@@ -1551,7 +1551,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected @param names to be "key, ...params". Got "params".',
-          suggestions: 1,
+          suggestions: [],
         },
       ],
       languageOptions: {
@@ -1767,6 +1767,138 @@ export default /** @type {import('../index.js').TestCases} */ ({
            * @param c The c
            */
           function quux (a, b, c) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} [count=1] How many.
+           */
+          function quux (total) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "total". Got "count".',
+          suggestions: [
+            {
+              desc: 'Rename @param "count" to "total".',
+              output: `
+          /**
+           * @param {number} [total=1] How many.
+           */
+          function quux (total) {}
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          badParamNames: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {number} [total=1] How many.
+           */
+          function quux (total) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string} label The label.
+           */
+          function quux (id, label) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "id, label". Got "label".',
+        },
+      ],
+      options: [
+        {
+          badParamNames: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object} options Options.
+           * @param {boolean} options.verbose Verbose.
+           */
+          function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "opts". Got "options".',
+          suggestions: [
+            {
+              desc: 'Rename @param "options" to "opts".',
+              output: `
+          /**
+           * @param {object} opts Options.
+           * @param {boolean} opts.verbose Verbose.
+           */
+          function quux (opts) {}
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          badParamNames: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {object} opts Options.
+           * @param {boolean} opts.verbose Verbose.
+           */
+          function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param a A.
+           * @param b B.
+           * @param b.c C.
+           */
+          function quux (a) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "b" does not match an existing function parameter.',
+          suggestions: [
+            {
+              desc: 'Remove the extra @param "b".',
+              output: `
+          /**
+           * @param a A.
+           */
+          function quux (a) {}
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          extraParams: true,
+        },
+      ],
+      output: `
+          /**
+           * @param a A.
+           */
+          function quux (a) {}
       `,
     },
   ],

@@ -282,9 +282,17 @@ const validateParameterNames = (
       }
 
       const removeExtraParam = () => {
-        const currentTagIndex = jsdoc.tags.indexOf(tag);
-        if (currentTagIndex !== -1) {
-          utils.removeTag(currentTagIndex);
+        // With the tags of its properties (`b.c`), from the last one so that
+        //   the indexes of the others stay the same
+        const tagIndexes = jsdoc.tags.flatMap((tg, tgIndex) => {
+          return tg === tag || (tg.tag === tag.tag && tg.name.startsWith(`${tag.name}.`)) ?
+            [
+              tgIndex,
+            ] :
+            [];
+        });
+        for (const tagIndex of tagIndexes.toReversed()) {
+          utils.removeTag(tagIndex);
         }
       };
 
@@ -555,22 +563,37 @@ const validateParameterNames = (
         }
       }
 
+      const oldName = tag.name.trim();
       const renameBadParam = () => {
-        tag.source[0].tokens.name = String(funcParamName);
+        // Also the tags of its properties (`old.prop`); replacing only the
+        //   name keeps the optional and default syntax (`[name=default]`)
+        for (const renamedTag of jsdoc.tags) {
+          if (renamedTag === tag || (renamedTag.tag === tag.tag && renamedTag.name.startsWith(`${oldName}.`))) {
+            renamedTag.source[0].tokens.name = renamedTag.source[0].tokens.name.replace(
+              oldName, String(funcParamName),
+            );
+          }
+        }
       };
+
+      // A tag with the name of another parameter documents that parameter (an
+      //   earlier tag is missing), so it is not renamed
+      const canRename = !expectedParamNames.includes(oldName);
 
       utils.reportJSDoc(
         message,
         tag,
-        badParamNames ? renameBadParam : null,
+        badParamNames && canRename ? renameBadParam : null,
         true,
         undefined,
-        [
-          {
-            desc: `Rename @${targetTagName} "${tag.name.trim()}" to "${funcParamName}".`,
-            handler: renameBadParam,
-          },
-        ],
+        canRename ?
+          [
+            {
+              desc: `Rename @${targetTagName} "${oldName}" to "${funcParamName}".`,
+              handler: renameBadParam,
+            },
+          ] :
+          undefined,
       );
 
       return true;
