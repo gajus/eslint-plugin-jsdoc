@@ -4763,6 +4763,57 @@ function quux (foo) {
       export declare function quux(foo: string): void;
       `,
     },
+    {
+      code: `
+      export const value = 1;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'VariableDeclaration',
+          ],
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export const value = 1;
+      `,
+    },
+    {
+      code: `
+      export namespace Helpers {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSModuleDeclaration',
+          ],
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export namespace Helpers {}
+      `,
+    },
   ],
   valid: [
     {
@@ -7202,6 +7253,35 @@ function quux (foo) {
       options: [
         {
           publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+      /** Value docs. */
+      export const value = 1;
+      `,
+      options: [
+        {
+          contexts: [
+            'VariableDeclaration',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /** Helpers. */
+      export namespace Helpers {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSModuleDeclaration',
+          ],
         },
       ],
     },
