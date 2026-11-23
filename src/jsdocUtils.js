@@ -2099,6 +2099,8 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
       tokens: {
         ...tag.source[0].tokens,
         ...(typeLines.length || lastTypeLine ? {
+          // The name and description go on the last type line
+          description: '',
           end: '',
           name: '',
           postName: '',
@@ -2123,6 +2125,7 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
           // Grab any delimiter info from first item
           ...tag.source[0].tokens,
           delimiter: tag.source[0].tokens.delimiter === '/**' ? '*' : tag.source[0].tokens.delimiter,
+          description: '',
           end: '',
           name: '',
           postName: '',
