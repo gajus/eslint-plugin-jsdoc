@@ -1536,6 +1536,28 @@ const obj = {
           }
       `,
     },
+    {
+      code: `
+          /**
+           * Unlike @return, this documents the value.
+           * @return {string} The value.
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag (preference). Replace "return" JSDoc tag with "returns".',
+        },
+      ],
+      output: `
+          /**
+           * Unlike @return, this documents the value.
+           * @returns {string} The value.
+           */
+          function quux () {}
+      `,
+    },
   ],
   valid: [
     {
