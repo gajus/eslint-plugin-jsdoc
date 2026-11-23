@@ -343,6 +343,7 @@ export default iterateJsdoc(({
         hasPropertyRest,
         hasRestElement,
         names,
+        restElements,
         rests,
       } = /**
            * @type {import('../jsdocUtils.js').FlattendRootInfo & {
@@ -448,7 +449,7 @@ export default iterateJsdoc(({
             ),
             functionParameterName: fullParamName,
             inc,
-            type: hasRestElement && !hasPropertyRest ? '{...any}' : undefined,
+            type: restElements[idx] ? '{...any}' : undefined,
           });
         }
       }

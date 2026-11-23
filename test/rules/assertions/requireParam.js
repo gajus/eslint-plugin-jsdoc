@@ -8,6 +8,78 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * Desc.
+           */
+          function quux ([first, ...others]) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `[first, ...others]`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0."0"" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0."1"" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @param root0
+           * @param root0."0"
+           * @param {...any} root0."1"
+           */
+          function quux ([first, ...others]) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           */
+          function quux ({a, list: [x, ...y]}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{a, list: [x, ...y]}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.a" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.list" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.list.0" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.list.1" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @param root0
+           * @param root0.a
+           * @param root0.list
+           * @param root0.list.0
+           * @param {...any} root0.list.1
+           */
+          function quux ({a, list: [x, ...y]}) {}
+      `,
+    },
+    {
+      code: `
+          /**
            *
            */
           function quux (foo) {
