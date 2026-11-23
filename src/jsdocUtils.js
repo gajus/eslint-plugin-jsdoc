@@ -65,6 +65,7 @@ const setTagStructure = (mode) => {
  *   hasPropertyRest: boolean,
  *   hasRestElement: boolean,
  *   names: string[],
+ *   restElements: boolean[],
  *   rests: boolean[],
  * }} FlattendRootInfo
  */
@@ -97,6 +98,12 @@ const flattenRoots = (params, root = '') => {
    * @type {boolean[]}
    */
   const rests = [];
+
+  /**
+   * For each name, whether it is the rest element of an array
+   * @type {boolean[]}
+   */
+  const restElements = [];
 
   const names = params.reduce(
     /**
@@ -135,6 +142,7 @@ const flattenRoots = (params, root = '') => {
           ...flattened.names,
         ].filter(Boolean));
         rests.push(false, ...flattened.rests);
+        restElements.push(false, ...flattened.restElements);
 
         return acc.concat(inner);
       }
@@ -147,13 +155,18 @@ const flattenRoots = (params, root = '') => {
           rests.push(false);
         }
 
-        if ('restElement' in cur && cur.restElement) {
+        const isRestElement = Boolean('restElement' in cur && cur.restElement);
+        if (isRestElement) {
           hasRestElement = true;
         }
+
+        // An array's rest element, not an object's rest property
+        restElements.push(isRestElement && !rests.at(-1));
 
         acc.push(root ? `${root}.${String(cur.name)}` : String(cur.name));
       } else if (typeof cur !== 'undefined') {
         rests.push(false);
+        restElements.push(false);
         acc.push(root ? `${root}.${cur}` : cur);
       }
 
@@ -165,6 +178,7 @@ const flattenRoots = (params, root = '') => {
     hasPropertyRest,
     hasRestElement,
     names,
+    restElements,
     rests,
   };
 };
@@ -246,6 +260,7 @@ const getFunctionParameterNames = (
             hasPropertyRest: false,
             hasRestElement: false,
             names: [],
+            restElements: [],
             rests: [],
           },
         ];

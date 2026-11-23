@@ -140,6 +140,12 @@ describe('jsdocUtils', () => {
           names: [
             'base.data', 'base.data.last_modified', 'base.options', 'base.options.headers',
           ],
+          restElements: [
+            false,
+            false,
+            false,
+            false,
+          ],
           rests: [
             false,
             false,
@@ -169,6 +175,12 @@ describe('jsdocUtils', () => {
           hasRestElement: false,
           names: [
             'data', 'data.last_modified', 'options', 'options.headers',
+          ],
+          restElements: [
+            false,
+            false,
+            false,
+            false,
           ],
           rests: [
             false,
