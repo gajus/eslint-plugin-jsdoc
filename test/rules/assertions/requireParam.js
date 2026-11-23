@@ -1666,6 +1666,61 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+          /**
+           * Draws a shape.
+           * @param canvas The canvas.
+           * @param callback Called when done.
+           */
+          function quux (canvas, {color}, callback) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{color}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.color" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * Draws a shape.
+           * @param canvas The canvas.
+           * @param root0
+           * @param root0.color
+           * @param callback Called when done.
+           */
+          function quux (canvas, {color}, callback) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param opts Opts.
+           * @param a
+           */
+          function quux (a, {b}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{b}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.b" declaration.',
+        },
+      ],
+      options: [
+        {
+          enableRootFixer: false,
+        },
+      ],
+    },
+    {
+      code: `
         class TestClass {
           /**
            * A class method.
