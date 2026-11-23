@@ -4733,6 +4733,36 @@ function quux (foo) {
           function parse () {}
       `,
     },
+    {
+      code: `
+      export declare function quux(foo: string): void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export declare function quux(foo: string): void;
+      `,
+    },
   ],
   valid: [
     {

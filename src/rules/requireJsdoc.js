@@ -694,6 +694,15 @@ export default {
         /** @type {ESLintOrTSNode|import('@typescript-eslint/types').TSESTree.Decorator} */
         let baseNode = getReducedASTNode(node, sourceCode);
 
+        // The comment of an exported `declare function` (whose comment is
+        //   found before `export`) goes before `export`, not after it
+        const parent = /** @type {import('eslint').Rule.Node} */ (
+          /** @type {import('eslint').Rule.Node} */ (baseNode).parent
+        );
+        if (baseNode.type === 'TSDeclareFunction' && parent.type === 'ExportNamedDeclaration') {
+          baseNode = parent;
+        }
+
         const decorator = getDecorator(
           /** @type {import('eslint').Rule.Node} */
           (baseNode),
