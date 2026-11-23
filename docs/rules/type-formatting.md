@@ -595,6 +595,25 @@ function quux (foo) {}
  */
 function quux (foo) {}
 // Message: Array bracket style should be square
+
+/**
+ * @param {{a: string, b: number}} cfg The configuration
+ */
+function quux (cfg) {}
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
+// Message: Inconsistent linebreak separator usage
+
+/**
+ * @returns {{a: string, b: number}} The result
+ */
+function quux () {}
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
+// Message: Inconsistent linebreak separator usage
+
+/** @param {{a: string, b: number}} cfg The configuration */
+function quux (cfg) {}
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
+// Message: Inconsistent linebreak separator usage
 ````
 
 
