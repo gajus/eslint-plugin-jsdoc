@@ -185,17 +185,18 @@ export default iterateJsdoc(({
    *   newAdd?: boolean
    * })[]} jsdocTags
    * @param {import('../iterateJsdoc.js').Integer} indexAtFunctionParams
+   * @param {string} missingName The name of the tag to add
    * @returns {{
    *   foundIndex: import('../iterateJsdoc.js').Integer,
    *   tagLineCount: import('../iterateJsdoc.js').Integer,
    * }}
    */
-  const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
+  const findExpectedIndex = (jsdocTags, indexAtFunctionParams, missingName) => {
     // Get the parameters that come after the current index in the flattened order
     const remainingFlattenedRoots = flattenedRoots.slice((indexAtFunctionParams || 0) + 1);
 
     // Find the first existing tag that comes after the current parameter in the flattened order
-    const foundIndex = jsdocTags.findIndex(({
+    let foundIndex = jsdocTags.findIndex(({
       name,
       newAdd,
     }) => {
@@ -223,6 +224,32 @@ export default iterateJsdoc(({
         return false;
       });
     });
+
+    // A destructured root has no name in the flattened roots, so the tag found
+    //   may be a property of a later root (`context.logger`): add the tag
+    //   before that root's own tag (`context`). A property with no later tag
+    //   goes after the tags of its own root, not after all tags.
+    const missingRoot = missingName.split('.')[0];
+    if (foundIndex > -1) {
+      const foundRoot = jsdocTags[foundIndex].name.split('.')[0];
+      const foundRootIdx = jsdocTags.findIndex(({
+        name,
+      }) => {
+        return name === foundRoot;
+      });
+      if (foundRoot !== missingRoot && foundRootIdx > -1 && foundRootIdx < foundIndex) {
+        foundIndex = foundRootIdx;
+      }
+    } else if (missingName.includes('.')) {
+      const lastRootIdx = jsdocTags.findLastIndex(({
+        name,
+      }) => {
+        return name === missingRoot || name.startsWith(`${missingRoot}.`);
+      });
+      if (lastRootIdx > -1 && lastRootIdx + 1 < jsdocTags.length) {
+        foundIndex = lastRootIdx + 1;
+      }
+    }
 
     const tags = foundIndex > -1 ?
       jsdocTags.slice(0, foundIndex) :
@@ -598,7 +625,7 @@ export default iterateJsdoc(({
         foundIndex,
         tagLineCount: expectedIdx,
       } =
-        findExpectedIndex(jsdoc.tags, functionParameterIdx);
+        findExpectedIndex(jsdoc.tags, functionParameterIdx, functionParameterName);
 
       const firstParamLine = jsdoc.source.findIndex(({
         tokens,

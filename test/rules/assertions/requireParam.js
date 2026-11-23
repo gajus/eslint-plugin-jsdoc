@@ -2326,9 +2326,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /**
        * Description.
        * @param {Object} options
-       * @param {FooBar} foo
        * @param options.foo
        * @param options.foo.bar
+       * @param {FooBar} foo
        */
       function quux ({ foo: { bar } }) {}
       `,
@@ -3261,6 +3261,63 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @param type
          */
         export function fn(a: string, ...[type, {b}]: FnArgs): void {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param options Options.
+           * @param context Context.
+           * @param context.logger Logger.
+           */
+          function quux ({verbose}, {logger}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "options.verbose" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @param options Options.
+           * @param options.verbose
+           * @param context Context.
+           * @param context.logger Logger.
+           */
+          function quux ({verbose}, {logger}) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Desc.
+           * @param source Source.
+           * @param target Target.
+           */
+          function quux ({path}, {path: dest}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "source.path" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "target.path" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * Desc.
+           * @param source Source.
+           * @param source.path
+           * @param target Target.
+           * @param target.path
+           */
+          function quux ({path}, {path: dest}) {}
       `,
     },
   ],
