@@ -1230,6 +1230,14 @@ function parse () {}
 export declare function quux(foo: string): void;
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
+
+export const value = 1;
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration"]}]
+// Message: Missing JSDoc comment.
+
+export namespace Helpers {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSModuleDeclaration"]}]
+// Message: Missing JSDoc comment.
 ````
 
 
@@ -2275,5 +2283,13 @@ export default wrap(function () {
 setup();
 function foo () {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
+
+/** Value docs. */
+export const value = 1;
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration"]}]
+
+/** Helpers. */
+export namespace Helpers {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSModuleDeclaration"]}]
 ````
 
