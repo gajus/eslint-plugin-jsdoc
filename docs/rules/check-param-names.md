@@ -899,6 +899,37 @@ function quux (a, b) {}
 function quux (a, b, c) {}
 // "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Expected @param names to be "a, b, c". Got "c, a, b".
+
+/**
+ * @param {number} [count=1] How many.
+ */
+function quux (total) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "total". Got "count".
+
+/**
+ * @param {string} label The label.
+ */
+function quux (id, label) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "id, label". Got "label".
+
+/**
+ * @param {object} options Options.
+ * @param {boolean} options.verbose Verbose.
+ */
+function quux (opts) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "opts". Got "options".
+
+/**
+ * @param a A.
+ * @param b B.
+ * @param b.c C.
+ */
+function quux (a) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"extraParams":true}]
+// Message: @param "b" does not match an existing function parameter.
 ````
 
 
