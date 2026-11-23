@@ -1446,6 +1446,89 @@ export default {
         function quux (foo) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{a: string, b: number}} cfg The configuration
+         */
+        function quux (cfg) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'linebreak',
+        },
+      ],
+      output: `
+        /**
+         * @param {{
+         *   a: string
+         *   b: number
+         * }} cfg The configuration
+         */
+        function quux (cfg) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @returns {{a: string, b: number}} The result
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'linebreak',
+        },
+      ],
+      output: `
+        /**
+         * @returns {{
+         *   a: string
+         *   b: number
+         * }} The result
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /** @param {{a: string, b: number}} cfg The configuration */
+        function quux (cfg) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inconsistent linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'linebreak',
+        },
+      ],
+      output: `
+        /** @param {{
+         *   a: string
+         *   b: number
+         * }} cfg The configuration */
+        function quux (cfg) {}
+      `,
+    },
   ],
   valid: [
     {
