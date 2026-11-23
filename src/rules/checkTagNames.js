@@ -2,7 +2,6 @@ import iterateJsdoc from '../iterateJsdoc.js';
 import {
   stringify as stringifyComment,
 } from 'comment-parser';
-import escapeStringRegexp from 'escape-string-regexp';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
 const jsxTagNames = new Set([
@@ -672,14 +671,11 @@ export default iterateJsdoc(({
       }
 
       if (preferredTagName !== tagName) {
-        report(message, (fixer) => {
-          const replacement = sourceCode.getText(jsdocNode).replace(
-            new RegExp(`@${escapeStringRegexp(tagName)}\\b`, 'v'),
-            `@${preferredTagName}`,
-          );
-
-          return fixer.replaceText(jsdocNode, replacement);
-        }, jsdocTag);
+        // Rename the reported tag itself, not the first `@tag` text in the
+        //   comment, which may be in a description or another tag
+        utils.reportJSDoc(message, jsdocTag, () => {
+          jsdocTag.source[0].tokens.tag = `@${preferredTagName}`;
+        });
       }
     } else {
       report(`Invalid JSDoc tag name "${tagName}".`, null, jsdocTag);
