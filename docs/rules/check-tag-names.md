@@ -994,6 +994,13 @@ class A {
 }
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@readonly' is redundant when using a type system.
+
+/**
+ * Unlike @return, this documents the value.
+ * @return {string} The value.
+ */
+function quux () {}
+// Message: Invalid JSDoc tag (preference). Replace "return" JSDoc tag with "returns".
 ````
 
 
