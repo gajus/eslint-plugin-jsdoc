@@ -1226,6 +1226,10 @@ exports.parse = parse;
 function parse () {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export declare function quux(foo: string): void;
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
 ````
 
 
