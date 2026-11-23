@@ -273,7 +273,9 @@ export default iterateJsdoc(({
         case 'JsdocTypeGeneric': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (nde);
           if ('value' in typeNode.left && typeNode.left.value === 'Array') {
-            if (typeNode.meta.brackets !== arrayBrackets) {
+            // `closure` mode has no `type[]` syntax (and can only parse
+            //   `Array<type>` there)
+            if (typeNode.meta.brackets !== arrayBrackets && mode !== 'closure') {
               setArrayBrackets(typeNode, arrayBrackets);
               errorMessage = `Array bracket style should be ${arrayBrackets}`;
             }
@@ -521,7 +523,7 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           arrayBrackets: {
-            description: 'Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".',
+            description: 'Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square". Not applied in `closure` mode, which has no `type[]` syntax.',
             enum: [
               'angle',
               'square',

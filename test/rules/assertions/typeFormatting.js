@@ -1941,5 +1941,18 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param {Array<string>} foo The foo
+         */
+        function quux (foo) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
 };
