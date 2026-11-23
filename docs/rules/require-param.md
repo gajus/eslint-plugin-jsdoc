@@ -1004,6 +1004,23 @@ class TestClass {
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
+/**
+ * Draws a shape.
+ * @param canvas The canvas.
+ * @param callback Called when done.
+ */
+function quux (canvas, {color}, callback) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{color}`.
+
+/**
+ * Desc.
+ * @param opts Opts.
+ * @param a
+ */
+function quux (a, {b}) {}
+// "jsdoc/require-param": ["error"|"warn", {"enableRootFixer":false}]
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{b}`.
+
 class TestClass {
   /**
    * A class method.
