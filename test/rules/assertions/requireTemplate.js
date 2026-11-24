@@ -791,5 +791,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {string} Events
+         * @typedef {{[K in Events]: \`on\${K}\`}} Handlers
+         */
+      `,
+    },
   ],
 });
