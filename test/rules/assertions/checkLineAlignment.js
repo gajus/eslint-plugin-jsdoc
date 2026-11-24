@@ -3,6 +3,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * Desc.
+         * @param opts The options, for example:
+         * \`\`\`js
+         * {
+         *   retries: 3,
+         * }
+         * \`\`\`
+         *   and more.
+         */
+        function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 10,
+          message: 'Expected wrap indent',
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param opts The options, for example:
+         * \`\`\`js
+         * {
+         *   retries: 3,
+         * }
+         * \`\`\`
+         * and more.
+         */
+        function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+        /**
          * Function description.
          *
          * @param {string} lorem Description.
@@ -1878,6 +1912,77 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'always', {
           tags: [
             'template', 'param',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param opts The options, for example:
+         * \`\`\`js
+         * {
+         *   retries: 3,
+         * }
+         * \`\`\`
+         */
+        function quux (opts) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @example
+         * if (a) {
+         *   b();
+         * }
+         */
+        function quux () {}
+      `,
+      options: [
+        'never',
+        {
+          tags: [
+            '-any',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param opts The options, for example:
+         * \`\`\`js
+         * {
+         *   retries: 3,
+         * }
+         * \`\`\`
+         */
+        function quux (opts) {}
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @example
+         * if (a) {
+         *   b();
+         * }
+         */
+        function quux () {}
+      `,
+      options: [
+        'always',
+        {
+          tags: [
+            '-any',
           ],
         },
       ],

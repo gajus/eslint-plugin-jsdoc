@@ -244,6 +244,10 @@ const alignTransform = ({
   wrapIndent,
 }) => {
   let intoTags = false;
+  // Within the content of an `@example`
+  let inExample = false;
+  // Within fenced code (from a line starting with ``` to the next one)
+  let inFence = false;
   /** @type {Width} */
   let width;
 
@@ -340,6 +344,13 @@ const alignTransform = ({
 
     if (tokens.tag !== '') {
       intoTags = true;
+      inExample = tokens.tag === '@example';
+      inFence = false;
+    }
+
+    const isFence = tokens.tag === '' && tokens.description.startsWith('```');
+    if (isFence) {
+      inFence = !inFence;
     }
 
     const isEmpty =
@@ -379,6 +390,14 @@ const alignTransform = ({
         tokens.postDelimiter = ' ';
       }
 
+      return {
+        ...line,
+        tokens,
+      };
+    }
+
+    // Code keeps its own indentation
+    if (isFence || inFence || (inExample && tokens.tag === '')) {
       return {
         ...line,
         tokens,

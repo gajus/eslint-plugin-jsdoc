@@ -331,15 +331,24 @@ export default iterateJsdoc(({
   }
 
   for (const tag of foundTags) {
-    if (tag.source.length > 1) {
+    // The content of an example is code, which keeps its own indentation
+    if (tag.source.length > 1 && tag.tag !== 'example') {
       let idx = 0;
+      // As is fenced code (from a line starting with ``` to the next one)
+      let inFence = false;
       for (const {
         tokens,
       // Avoid the tag line
       } of tag.source.slice(1)) {
         idx++;
 
+        const isFence = tokens.description.startsWith('```');
+        if (isFence) {
+          inFence = !inFence;
+        }
+
         if (
+          isFence || inFence ||
           !tokens.description ||
           // Avoid first lines after multiline type
           tokens.type ||
