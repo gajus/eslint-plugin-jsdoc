@@ -233,12 +233,14 @@ export default iterateJsdoc(({
         const {
           tokens: {
             delimiter,
+            end,
             start,
           },
         } = jsdoc.source[1];
         utils.addLine(1, {
           ...line,
-          delimiter,
+          // The closing line of a block of two lines has no `*` to copy
+          delimiter: end ? '*' : delimiter,
           start,
         });
       };
@@ -378,11 +380,12 @@ export default iterateJsdoc(({
               },
             }) => {
               if (typ) {
-                obj.type = typ;
-              }
+                // The type may be on several lines
+                obj.type += obj.type ? ' ' + typ.trimStart() : typ;
 
-              if (tg && typ && nme) {
-                obj.postType = postType;
+                // Also separates the type from a name on the next line, or
+                //   from the closing delimiter
+                obj.postType = postType || ' ';
               }
 
               if (nme) {
