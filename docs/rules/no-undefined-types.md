@@ -480,6 +480,18 @@ function quux (obj, obj2) {}
  */
 function quux (a, b, c) {}
 // Message: The type 'y' is undefined.
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: Missing}} Broken
+ */
+// Message: The type 'Missing' is undefined.
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: T[K], other: K}} Leaky
+ */
+// Message: The type 'K' is undefined.
 ````
 
 
@@ -1487,5 +1499,21 @@ function quux (a, b, c, d, e, f, g) {}
  * @returns {void}
  */
 function quux (a, b, c, d, e) {}
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+ */
+
+/**
+ * @template {string} Events
+ * @typedef {{[K in Events]: `on${K}`}} Handlers
+ */
+
+/**
+ * @template T
+ * @param {{[K in keyof T]: K}} keys The keys.
+ */
+function quux (keys) {}
 ````
 
