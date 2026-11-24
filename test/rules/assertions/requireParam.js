@@ -7,6 +7,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
+        /**
+         * Handles it.
+         * @param this The context.
+         * @param options The options.
+         */
+        function quux (this: Window, {a}: Opts) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "options.a" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      output: `
+        /**
+         * Handles it.
+         * @param this The context.
+         * @param options The options.
+         * @param options.a
+         */
+        function quux (this: Window, {a}: Opts) {}
+      `,
+    },
+    {
+      code: `
           /**
            * Desc.
            */
@@ -4626,6 +4654,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
         sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         * Handles it.
+         * @param this The context.
+         * @param options The options.
+         * @param options.a A.
+         */
+        function quux (this: Window, {a}: Opts) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Handles it.
+         * @param this The context.
+         * @param root0 The options.
+         * @param root0.a A.
+         * @param root1 More options.
+         * @param root1.b B.
+         */
+        function quux (this: Window, {a}: Opts, {b}: More) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
       },
     },
   ],
