@@ -7,6 +7,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
+        /**
+         * @param opts The options.
+         * @param a The a.
+         */
+        function quux (a, {b}) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "a, opts". Got "opts, a".',
+        },
+      ],
+    },
+    {
+      code: `
           /**
            * @param {string} first - First value.
            * @param {string} third - Third value.
@@ -2745,6 +2760,25 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+        /**
+         * Draws a shape.
+         * @param canvas The canvas.
+         * @param callback Called when done.
+         */
+        function quux (canvas, {color}, callback) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param a The a.
+         * @param c The c.
+         */
+        function quux (a, {b}, c) {}
+      `,
     },
   ],
 });
