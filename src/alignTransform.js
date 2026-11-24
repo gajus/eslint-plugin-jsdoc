@@ -432,7 +432,11 @@ const alignTransform = ({
     return rewireSource({
       ...fields,
       source: source.map((line, index) => {
-        const indentTag = !disableWrapIndent && tagIndentMode && !line.tokens.tag && line.tokens.description;
+        const indentTag = !disableWrapIndent && tagIndentMode && !line.tokens.tag &&
+          // The line of a multiline type is left as it is (see `alignTokens`),
+          //   so adding to its indent would add to it on every fix
+          !line.tokens.type &&
+          line.tokens.description;
         const ret = update(line, index, source, typelessInfo, indentTag);
 
         if (!disableWrapIndent && line.tokens.tag) {
