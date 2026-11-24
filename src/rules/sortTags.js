@@ -239,6 +239,7 @@ export default iterateJsdoc(({
                 source: '',
                 tokens: utils.seedTokens({
                   delimiter: '*',
+                  lineEnd: utils.newLineEnd,
                   start: jsdoc.source[newIdx - 1].tokens.start,
                 }),
               };

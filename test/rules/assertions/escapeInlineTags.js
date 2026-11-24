@@ -1,6 +1,21 @@
 export default {
   invalid: [
     {
+      code: '/**\r\n * Supports @yearly and\r\n * more.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 2,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@yearly}, \\@yearly, or `@yearly`?',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: '/**\r\n * Supports \\@yearly and\r\n * more.\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
       code: `
         /**
          * @file Use @outside before \`npm init @eslint/config\`.

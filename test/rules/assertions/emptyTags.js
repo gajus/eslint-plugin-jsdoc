@@ -1,6 +1,16 @@
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: '/**\r\n * Desc.\r\n * @abstract foo\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 3,
+          message: '@abstract should be empty.',
+        },
+      ],
+      output: '/**\r\n * Desc.\r\n * @abstract\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
       code: `
           /**
            * @abstract extra text

@@ -74,6 +74,8 @@ export default {
 
     let reportingNonJsdoc = false;
 
+    const lineBreak = sourceCode.text.includes('\r\n') ? '\r\n' : '\n';
+
     /**
      * @param {string} messageId
      * @param {import('estree').Comment|Token} comment
@@ -282,19 +284,19 @@ export default {
         // When the comment's text already begins on its own line (e.g. a
         // multi-line block comment), there is no need for the fixer to add a
         // leading blank `*` line.
-        if ((/^[ \t]*\n/v).test(body)) {
-          return `/**${body.replace(/^[ \t]+/v, '')}\n${indent}`;
+        if ((/^[ \t]*\r?\n/v).test(body)) {
+          return `/**${body.replace(/^[ \t]+/v, '')}${lineBreak}${indent}`;
         }
 
         // Separate a leading slash from the JSDoc star to avoid creating `*/`.
-        return `/**\n${indent}*${body.replace(/^\//v, ' /')}\n${indent}`;
+        return `/**${lineBreak}${indent}*${body.replace(/^\//v, ' /')}${lineBreak}${indent}`;
       }
 
       const inner = comments.map((comment) => {
         return `${indent}*${comment.value.trimEnd().replace(/^\//v, ' /')}`;
-      }).join('\n');
+      }).join(lineBreak);
 
-      return `/**\n${inner}\n${indent}`;
+      return `/**${lineBreak}${inner}${lineBreak}${indent}`;
     };
 
     /**
@@ -324,7 +326,7 @@ export default {
       /** @type {AddComment} */
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
         const insertion = getCommentOpening(indent, commentGroup, inlineCommentBlock) +
-            `*/${'\n'.repeat((lines || 1) - 1)}`;
+            `*/${lineBreak.repeat((lines || 1) - 1)}`;
 
         return fixer.replaceTextRange(
           [
@@ -363,7 +365,7 @@ export default {
         const insertion = getCommentOpening(indent, [
           /** @type {Token} */ (commentToAdd),
         ], inlineCommentBlock) +
-            `*/${'\n'.repeat((lines || 1) - 1)}${lines ? `\n${indent.slice(1)}` : ' '}`;
+            `*/${lineBreak.repeat((lines || 1) - 1)}${lines ? `${lineBreak}${indent.slice(1)}` : ' '}`;
 
         return [
           fixer.remove(

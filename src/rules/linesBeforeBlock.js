@@ -85,11 +85,13 @@ export default iterateJsdoc(({
         }
       }
 
+      const lineBreak = sourceCode.text.includes('\r\n') ? '\r\n' : '\n';
+
       return fixer.insertTextAfter(
         /** @type {import('eslint').AST.Token} */
         (tokenBefore),
-        '\n'.repeat(lines) +
-        (sameLine ? '\n' + indent : ''),
+        lineBreak.repeat(lines) +
+        (sameLine ? lineBreak + indent : ''),
       );
     };
 
