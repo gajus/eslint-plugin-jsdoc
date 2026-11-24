@@ -788,6 +788,12 @@ const getExportAncestor = function (nde) {
       break;
     }
 
+    // What is declared within the body of a function, method, or block is
+    //   not exported along with it
+    if (node.type === 'BlockStatement' || node.type === 'StaticBlock') {
+      break;
+    }
+
     if (exportTypes.has(node.type)) {
       return node;
     }
