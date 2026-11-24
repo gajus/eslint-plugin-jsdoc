@@ -1002,7 +1002,7 @@ const getUtils = (
         info = {
           delimiter,
           // So that new lines keep CRLF line breaks
-          lineEnd: newLineEnd,
+          lineEnd: utils.newLineEnd,
           postDelimiter,
           start,
         };
@@ -1090,7 +1090,7 @@ const getUtils = (
         source: '',
         tokens: seedTokens({
           delimiter: '*',
-          lineEnd: newLineEnd,
+          lineEnd: utils.newLineEnd,
           postDelimiter: ' ',
           start: indent + ' ',
           tag: '@' + tag.tag,
