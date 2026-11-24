@@ -358,6 +358,34 @@ export function f() {}
 export function f() { return ""; }
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
 // Message: Should have no text on the final line (before the `*/`).
+
+/**
+ * @type {{a: string,
+ *   b: number}}
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
+
+/**
+ * @param {string}
+ *   a The a
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
+
+/**
+ * @type {string}
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
+
+/** Reported up here
+ */
+// Message: Should have no text on the "0th" line (after the `/**`).
+
+/** @param {string} a The a
+ */
+// Message: Should have no text on the "0th" line (after the `/**`).
 ````
 
 
