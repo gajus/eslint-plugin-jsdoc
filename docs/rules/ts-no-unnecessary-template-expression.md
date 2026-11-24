@@ -89,6 +89,36 @@ The following patterns are considered problems:
  * @type {`${B}` | number}
  */
 // Message: Found a lone template expression within a template.
+
+/**
+ * @type {`${A | B}` & C}
+ */
+// Message: Found a lone template expression within a template.
+
+/**
+ * @type {`${T extends U ? A : B}`[]}
+ */
+// Message: Found a lone template expression within a template.
+
+/**
+ * @type {`${T extends U ? A : B}` | C}
+ */
+// Message: Found a lone template expression within a template.
+
+/**
+ * @type {Record<`${A | B}`, string>}
+ */
+// Message: Found a lone template expression within a template.
+
+/**
+ * @type {`${A | B}` | C}
+ */
+// Message: Found a lone template expression within a template.
+
+/**
+ * @type {(`${A | B}`)}
+ */
+// Message: Found a lone template expression within a template.
 ````
 
 
@@ -116,5 +146,19 @@ The following patterns are not considered problems:
  * @param {`A${'B'}`} someName
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
+
+/**
+ * @typedef {object} NumericStrings
+ * @property {`${number}`} a
+ * @property {Record<`${bigint}`, string>} b
+ * @property {`${1}`} c
+ * @property {`${null}`} d
+ * @property {`${undefined}`} e
+ * @property {`${boolean}`} f
+ * @property {`${true}`} g
+ * @property {`${any}`} h
+ * @property {`${keyof T}`} i
+ * @property {`${number | B}`} j
+ */
 ````
 
