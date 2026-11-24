@@ -660,6 +660,20 @@ module.exports = function() {
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
+export function quux (input) {
+  const trimmed = input.trim();
+  return trimmed;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+export function quux (input) {
+  const trimmed = input.trim();
+  return trimmed;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration"],"publicOnly":{"ancestorsOnly":true}}]
+// Message: Missing JSDoc comment.
+
 export function someMethod() {
 
 }
@@ -2052,6 +2066,14 @@ export class UserSettingsState { }
 export class User {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["Decorator"],"require":{"FunctionDeclaration":false}}]
+
+export class Quux {
+  quux (input) {
+    const trimmed = input.trim();
+    return trimmed;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration"],"publicOnly":true}]
 
   function quux () {
   return 3;
