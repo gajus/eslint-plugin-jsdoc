@@ -12,35 +12,43 @@ export default iterateJsdoc(({
     innerIndent = 1,
   } = context.options[0] || {};
 
+  const text = sourceCode.getText(jsdocNode);
+
+  // Without the `\r` of CRLF line breaks, which is not indentation
+  const lines = text.split(/\r?\n/v);
+
   // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
   const indentLevel = indent.length + innerIndent;
-  const sourceLines = sourceCode.getText(jsdocNode).split('\n')
+  const sourceLines = lines
     .slice(1)
-    .filter((line) => {
-      return !ignoreEmptyLines || line.trim();
-    })
+    // Numbered before empty lines may be left out, so that the right line
+    //   is reported
     .map((line, number) => {
       return {
+        isEmpty: !line.trim(),
         line: line.split('*')[0],
         number,
       };
     })
     .filter(({
+      isEmpty,
       line,
     }) => {
-      return !line.trimStart().length;
+      return !(ignoreEmptyLines && isEmpty) && !line.trimStart().length;
     });
 
   /** @type {import('eslint').Rule.ReportFixer} */
   const fix = (fixer) => {
-    const replacement = sourceCode.getText(jsdocNode).split('\n')
+    const replacement = lines
       .map((line, index) => {
-        // Ignore the first line and all lines not starting with `*`
-        const ignored = !index || line.split('*')[0].trimStart().length;
+        // Ignore the first line, all lines not starting with `*`, and empty
+        //   lines if they are to be ignored
+        const ignored = !index || line.split('*')[0].trimStart().length ||
+          (ignoreEmptyLines && !line.trim());
 
         return ignored ? line : `${indent}${''.padStart(innerIndent, ' ')}${line.trimStart()}`;
       })
-      .join('\n');
+      .join(text.includes('\r\n') ? '\r\n' : '\n');
 
     return fixer.replaceText(jsdocNode, replacement);
   };
