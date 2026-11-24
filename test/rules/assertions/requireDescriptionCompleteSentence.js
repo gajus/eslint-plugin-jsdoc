@@ -1135,6 +1135,99 @@ export default /** @type {import('../index.js').TestCases} */ ({
           function quux () {}
       `,
     },
+    {
+      code: `
+        /**
+         * Desc.
+         * @returns {Foo} an instance of {@link Foo}.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @returns {Foo} An instance of {@link Foo}.
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * see {@link Foo} for details.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+        /**
+         * See {@link Foo} for details.
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc. use e.g. this one.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      options: [
+        {
+          abbreviations: [
+            'e.g.',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Desc. Use e.g. this one.
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param {number} x The x offset, in pixels.
+         * @param {number} y in pixels.
+         */
+        function quux (x, y) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+        /**
+         * Desc.
+         * @param {number} x The x offset, in pixels.
+         * @param {number} y In pixels.
+         */
+        function quux (x, y) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -1806,6 +1899,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /** {@inheritDoc SomeClass} */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Creates the store. {@link Store} does the rest.
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Desc.
+         * @param opts The options. {@link Options} lists them.
+         */
+        function quux (opts) {}
       `,
     },
   ],

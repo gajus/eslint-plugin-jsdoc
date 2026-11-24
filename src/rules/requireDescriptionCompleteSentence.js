@@ -24,8 +24,9 @@ const extractParagraphs = (text) => {
  */
 const extractSentences = (text, abbreviationsRegex) => {
   const txt = text
-    // Remove all {} tags.
-    .replaceAll(/(?<!^)\{[\s\S]*?\}\s*/gv, '')
+    // Remove all {} tags, except those starting a sentence (which may start
+    //   with one)
+    .replaceAll(/(?<!^|[.?!]\s+)\{[\s\S]*?\}\s*/gv, '')
 
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');
@@ -122,43 +123,51 @@ const validateDescription = (
     const sentences = extractSentences(paragraph, abbreviationsRegex);
 
     const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
-      let text = sourceCode.getText(jsdocNode);
+      // Only search from the line where this description starts, so that an
+      //   earlier line with the same text (e.g., in an `@example` or another
+      //   tag) is not changed
+      const lines = sourceCode.getText(jsdocNode).split('\n');
+      const before = lines.slice(0, fromLine).join('\n');
+      let after = lines.slice(fromLine).join('\n');
 
       // A block description keeps the space before a `*/` on its line
       const trimmedParagraph = paragraph.trimEnd();
       if (!/[.:?!]$/v.test(trimmedParagraph)) {
         const line = trimmedParagraph.split('\n').findLast(Boolean);
 
-        // Only search from the line where this description starts, so that an
-        //   earlier line ending in the same text (e.g., in an `@example`) is
-        //   not changed; the line may also end with the closing `*/`
-        const lines = text.split('\n');
-        const before = lines.slice(0, fromLine).join('\n');
-        const after = lines.slice(fromLine).join('\n');
-        text = (fromLine ? before + '\n' : '') + after.replace(new RegExp(`${escapeStringRegexp(
+        // The line may also end with the closing `*/`
+        after = after.replace(new RegExp(`${escapeStringRegexp(
           /** @type {string} */
           (line),
         )}(?=[ \\t]*(?:\\*\\/)?$)`, 'mv'), `${line}.`);
       }
 
-      for (const sentence of sentences.filter((sentence_) => {
-        return !(/^\s*$/v).test(sentence_) && !isCapitalized(sentence_) &&
-          !isTable(sentence_);
-      })) {
-        const beginning = sentence.split('\n')[0];
-
-        if ('tag' in tag && tag.tag) {
-          const reg = new RegExp(`(@${escapeStringRegexp(tag.tag)}.*)${escapeStringRegexp(beginning)}`, 'v');
-
-          text = text.replace(reg, (_$0, $1) => {
-            return $1 + capitalize(beginning);
-          });
-        } else {
-          text = text.replace(new RegExp('((?:[.?!]|\\*|\\})\\s*)' + escapeStringRegexp(beginning), 'v'), '$1' + capitalize(beginning));
+      for (const [
+        idx,
+        sentence,
+      ] of sentences.entries()) {
+        if ((/^\s*$/v).test(sentence) || isCapitalized(sentence) || isTable(sentence)) {
+          continue;
         }
+
+        // Only the first word, as the rest of the sentence may have lost
+        //   inline tags or abbreviations (see `extractSentences`)
+        const [
+          word,
+        ] = sentence.split(/\s/v);
+
+        // The first sentence of a tag follows the tag (and its type or name);
+        //   others follow the end of a sentence, a line's `*`, or a `}`
+        const start = 'tag' in tag && tag.tag && !parIdx && !idx ?
+          `@${escapeStringRegexp(tag.tag)}[^\\n]*?\\s` :
+          '(?:[.?!]|\\*|\\})\\s*';
+
+        after = after.replace(new RegExp(`(${start})${escapeStringRegexp(word)}(?![\\p{L}\\p{N}])`, 'v'), (_$0, $1) => {
+          return $1 + capitalize(word);
+        });
       }
 
-      return fixer.replaceText(jsdocNode, text);
+      return fixer.replaceText(jsdocNode, (fromLine ? before + '\n' : '') + after);
     };
 
     /**
