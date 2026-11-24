@@ -178,6 +178,46 @@ function quux (foo) {
  */
 // "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
 // Message: Expected JSDoc block to be aligned.
+
+class A {\r
+  /**\r
+   * Desc.\r
+\r
+   * More.\r
+   */\r
+  quux () {}\r
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**\r
+ * Desc.\r
+\r
+ * More.\r
+ */\r
+function quux () {}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * Desc.
+
+ * More.
+  * @param a The a.
+ */
+function quux (a) {}
+// "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * Desc.
+
+
+ * More.
+ * Other.
+  * @param a The a.
+ */
+function quux (a) {}
+// "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
+// Message: Expected JSDoc block to be aligned.
 ````
 
 
