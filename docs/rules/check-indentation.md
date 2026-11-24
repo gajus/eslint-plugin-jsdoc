@@ -263,6 +263,18 @@ function quux () {
  *@constant
  */
 // Message: There must be no indentation.
+
+/**\r
+ * Desc.\r
+ * @example\r
+ * anArray.filter((a) => {\r
+ *   return a.b;\r
+ * });\r
+ * @returns {string} The\r
+ *   thing.\r
+ */\r
+function quux () {}
+// Message: There must be no indentation.
 ````
 
 
@@ -463,5 +475,14 @@ function MyDecorator(options: { myOptions: number }) {
  *    - {@link Inner} (innermost): retries with exponential backoff.
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**\r
+ * Desc.\r
+ * @example\r
+ * anArray.filter((a) => {\r
+ *   return a.b;\r
+ * });\r
+ */\r
+function quux () {}
 ````
 
