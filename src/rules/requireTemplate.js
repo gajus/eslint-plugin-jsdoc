@@ -152,6 +152,12 @@ export default iterateJsdoc(({
         return;
       }
 
+      // The key of a mapped type (e.g., `{[K in keyof T]: Array<K>}`)
+      if (nde.type === 'JsdocTypeMappedType') {
+        templateNames.push(nde.key);
+        return;
+      }
+
       const {
         type,
         value,

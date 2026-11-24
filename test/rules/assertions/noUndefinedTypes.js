@@ -870,6 +870,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: Missing}} Broken
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'Missing\' is undefined.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: T[K], other: K}} Leaky
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'K\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -2590,6 +2618,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @returns {void}
          */
         function quux (a, b, c, d, e) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {string} Events
+         * @typedef {{[K in Events]: \`on\${K}\`}} Handlers
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @param {{[K in keyof T]: K}} keys The keys.
+         */
+        function quux (keys) {}
       `,
     },
   ],

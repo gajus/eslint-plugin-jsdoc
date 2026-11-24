@@ -944,6 +944,17 @@ export default iterateJsdoc(({
               return;
             }
 
+            // The key of a mapped type (e.g., `{[K in keyof T]: Array<K>}`)
+            //   is in scope within its field
+            if (
+              ancestor.type === 'JsdocTypeObjectField' &&
+              typeof ancestor.key === 'object' &&
+              ancestor.key.type === 'JsdocTypeMappedType' &&
+              ancestor.key.key === value
+            ) {
+              return;
+            }
+
             ancestor = ancestor._parent;
           }
 
