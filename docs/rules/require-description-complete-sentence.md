@@ -103,6 +103,12 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Supported values:
+ */
+function quux () {}
+// Message: Sentences must end with a period.
+
+/**
  * foo.
  */
 function quux () {
@@ -724,6 +730,24 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * Example:
+ * ```js
+ * foo();
+ * ```
+ */
+function quux () {}
+
+/**
+ * Usage:
+ *
+ * ```js
+ * foo();
+ * ```
+ * @returns {void}
+ */
+function quux () {}
 
 /**
  * Sorry, but this isn't a complete sentence Mr..
