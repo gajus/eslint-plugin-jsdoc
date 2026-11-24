@@ -2,6 +2,20 @@ export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
+        /**
+         * Supported values:
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences must end with a period.',
+        },
+      ],
+    },
+    {
+      code: `
           /**
            * foo.
            */
@@ -1472,6 +1486,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
           function quux () {
 
           }
+      `,
+    },
+    {
+      code: `
+        /**
+         * Example:
+         * \`\`\`js
+         * foo();
+         * \`\`\`
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Usage:
+         *
+         * \`\`\`js
+         * foo();
+         * \`\`\`
+         * @returns {void}
+         */
+        function quux () {}
       `,
     },
     {
