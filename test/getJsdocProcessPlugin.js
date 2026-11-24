@@ -744,9 +744,9 @@ describe('`getJsdocProcessorPlugin`', () => {
     );
     expect(postResults).to.deep.equal([
       {
-        column: 4,
-        endColumn: 14,
-        endLine: 4,
+        column: 13,
+        endColumn: 23,
+        endLine: 3,
         line: 3,
         message: '@example error (no-alert): Unexpected alert.',
         ruleId: 'no-alert',
@@ -802,9 +802,9 @@ describe('`getJsdocProcessorPlugin`', () => {
     );
     expect(postResults).to.deep.equal([
       {
-        column: 4,
-        endColumn: 14,
-        endLine: 4,
+        column: 13,
+        endColumn: 23,
+        endLine: 3,
         line: 3,
         message: '@example warning (no-alert): Unexpected alert.',
         ruleId: 'no-alert',
@@ -939,9 +939,9 @@ describe('`getJsdocProcessorPlugin`', () => {
     );
     expect(secondPostResults).to.deep.equal([
       {
-        column: 6,
-        endColumn: 16,
-        endLine: 7,
+        column: 15,
+        endColumn: 25,
+        endLine: 6,
         line: 6,
         message: '@example error (no-alert): Unexpected alert.',
         ruleId: 'no-alert',
@@ -966,9 +966,9 @@ describe('`getJsdocProcessorPlugin`', () => {
     );
     expect(firstPostResults).to.deep.equal([
       {
-        column: 4,
-        endColumn: 14,
-        endLine: 4,
+        column: 13,
+        endColumn: 23,
+        endLine: 3,
         line: 3,
         message: '@example error (no-alert): Unexpected alert.',
         ruleId: 'no-alert',
@@ -1043,9 +1043,9 @@ describe('`getJsdocProcessorPlugin`', () => {
       );
       expect(postResults).to.deep.equal([
         {
-          column: 4,
-          endColumn: 14,
-          endLine: 4,
+          column: 13,
+          endColumn: 23,
+          endLine: 3,
           line: 3,
           message: '@example error (no-alert): Unexpected alert.',
           ruleId: 'no-alert',
@@ -1170,9 +1170,9 @@ describe('`getJsdocProcessorPlugin`', () => {
     );
     expect(postResults).to.deep.equal([
       {
-        column: 4,
-        endColumn: 14,
-        endLine: 4,
+        column: 13,
+        endColumn: 23,
+        endLine: 3,
         line: 3,
         message: '@example error (no-alert): Unexpected alert.',
         ruleId: 'no-alert',
@@ -1275,5 +1275,291 @@ describe('`getJsdocProcessorPlugin`', () => {
       ],
       text,
     });
+  });
+
+  it('postprocesses a message over several lines', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example
+ * const x = 1;
+ * alert(
+ *   'a',
+ * );
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 1,
+            endColumn: 2,
+            endLine: 5,
+            line: 3,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 4,
+        endColumn: 5,
+        endLine: 7,
+        line: 5,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('postprocesses a message after a caption on the line of the tag', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example <caption>Title</caption> alert('a');
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 2,
+            endColumn: 12,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 38,
+        endColumn: 48,
+        endLine: 3,
+        line: 3,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('postprocesses a message with `paddedIndent`', () => {
+    const options = {
+      paddedIndent: 4,
+    };
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example
+ *     const x = 1;
+ *     alert('a');
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 1,
+            endColumn: 11,
+            endLine: 3,
+            line: 3,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 8,
+        endColumn: 18,
+        endLine: 5,
+        line: 5,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('postprocesses a message of a `@param` default', () => {
+    const options = {
+      checkParams: true,
+    };
+    const filename = 'something.js';
+    const text = `
+class A {
+  /**
+   * Desc.
+   *
+   * @param [a=alert('a')] First.
+   */
+  m (a) {}
+}
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 2,
+            endColumn: 12,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 16,
+        endColumn: 26,
+        endLine: 6,
+        line: 6,
+        message: '@param error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('postprocesses a message of a `@property` default', () => {
+    const options = {
+      checkProperties: true,
+    };
+    const filename = 'something.js';
+    const text = `
+/**
+ * @typedef {object} Opts
+ * @property {string} [b=alert('b')] Second.
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 2,
+            endColumn: 12,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 26,
+        endColumn: 36,
+        endLine: 4,
+        line: 4,
+        message: '@property error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('postprocesses a message of a `@default`', () => {
+    const options = {
+      checkDefaults: true,
+    };
+    const filename = 'something.js';
+    const text = `
+/**
+ * Desc.
+ * @default alert('a')
+ */
+const a = 1;
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    plugin.processors.examples.preprocess(text, filename);
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 2,
+            endColumn: 12,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 13,
+        endColumn: 23,
+        endLine: 4,
+        line: 4,
+        message: '@default error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
   });
 });
