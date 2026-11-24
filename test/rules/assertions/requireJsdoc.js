@@ -2010,6 +2010,70 @@ function quux (foo) {
     },
     {
       code: `
+        export function quux (input) {
+          const trimmed = input.trim();
+          return trimmed;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'VariableDeclaration',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        export function quux (input) {
+          const trimmed = input.trim();
+          return trimmed;
+        }
+      `,
+    },
+    {
+      code: `
+        export function quux (input) {
+          const trimmed = input.trim();
+          return trimmed;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'VariableDeclaration',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        export function quux (input) {
+          const trimmed = input.trim();
+          return trimmed;
+        }
+      `,
+    },
+    {
+      code: `
         export function someMethod() {
 
         }
@@ -6724,6 +6788,24 @@ function quux (foo) {
             FunctionExpression: true,
             MethodDefinition: true,
           },
+        },
+      ],
+    },
+    {
+      code: `
+        export class Quux {
+          quux (input) {
+            const trimmed = input.trim();
+            return trimmed;
+          }
+        }
+      `,
+      options: [
+        {
+          contexts: [
+            'VariableDeclaration',
+          ],
+          publicOnly: true,
         },
       ],
     },
