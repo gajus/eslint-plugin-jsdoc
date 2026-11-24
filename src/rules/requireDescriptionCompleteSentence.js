@@ -206,7 +206,13 @@ const validateDescription = (
     const paragraphNoAbbreviations = paragraph.replace(abbreviationsRegex, '');
 
     if (!/(?:[.?!\|]|```)\s*$/v.test(paragraphNoAbbreviations)) {
-      report('Sentences must end with a period.', fix, tag);
+      report(
+        'Sentences must end with a period.',
+        // A period after a colon (`Supported values:.`) would not end the
+        //   sentence either
+        /:\s*$/v.test(paragraph) ? null : fix,
+        tag,
+      );
       return true;
     }
 
@@ -283,11 +289,14 @@ export default iterateJsdoc(({
     };
   }).toReversed();
 
+  // The code is not checked, but a marker of it is kept, so that a paragraph
+  //   ending with fenced code (e.g., after `Example:`) ends as in a tag
+  //   description
   for (const {
     index,
     length,
   } of indices) {
-    description = description.slice(0, index) +
+    description = description.slice(0, index) + '```' +
       description.slice(/** @type {import('../iterateJsdoc.js').Integer} */ (
         index
       ) + length);
