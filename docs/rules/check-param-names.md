@@ -234,6 +234,13 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * @param opts The options.
+ * @param a The a.
+ */
+function quux (a, {b}) {}
+// Message: Expected @param names to be "a, opts". Got "opts, a".
+
+/**
  * @param {string} first - First value.
  * @param {string} third - Third value.
  *   More details about the third value.
@@ -1439,5 +1446,18 @@ export function fn(a: string, ...[type, arg]: FnArgs): void {}
  * @param arg Arg
  */
 export function fn({x}: Opts, ...[type, arg]: FnArgs): void {}
+
+/**
+ * Draws a shape.
+ * @param canvas The canvas.
+ * @param callback Called when done.
+ */
+function quux (canvas, {color}, callback) {}
+
+/**
+ * @param a The a.
+ * @param c The c.
+ */
+function quux (a, {b}, c) {}
 ````
 
