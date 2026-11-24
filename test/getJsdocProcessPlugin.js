@@ -1055,6 +1055,56 @@ describe('`getJsdocProcessorPlugin`', () => {
     }
   });
 
+  it('postprocesses a missing caption for its own file after processing an example file', () => {
+    const options = {
+      captionRequired: true,
+    };
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example
+ * foo();
+ * @example <caption>Second</caption>
+ * bar();
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function' ||
+      typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    const exampleFilename = 'something.md/*.js';
+    const exampleText = '\nbar();';
+    expect(plugin.processors.examples.preprocess(text, filename)).to.deep.equal([
+      text,
+      {
+        filename: exampleFilename,
+        text: exampleText,
+      },
+    ]);
+
+    // As ESLint does for an example file whose name the processor also matches
+    plugin.processors.examples.preprocess(exampleText, exampleFilename);
+    expect(plugin.processors.examples.postprocess([
+      [],
+    ], exampleFilename)).to.deep.equal([]);
+
+    const postResults = plugin.processors.examples.postprocess([
+      [], [],
+    ], filename);
+    expect(postResults).to.deep.equal([
+      {
+        column: 1,
+        line: 3,
+        message: '@example error - Caption is expected for examples.',
+        ruleId: 'jsdoc/example-missing-caption',
+        severity: 2,
+      },
+    ]);
+  });
+
   it('returns text and files and postprocesses without fixes or suggestions', () => {
     const options = {};
     const filename = 'something.js';

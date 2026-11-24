@@ -168,8 +168,12 @@ export const getJsdocProcessorPlugin = (options = {}) => {
    */
   const otherInfoByFilename = new Map();
 
-  /** @type {import('eslint').Linter.LintMessage[]} */
-  let extraMessages = [];
+  /**
+   * Messages of the file itself (e.g., of a missing caption), also by
+   *   filename, so that they are not returned with an example file's messages.
+   * @type {Map<string, import('eslint').Linter.LintMessage[]>}
+   */
+  const extraMessagesByFilename = new Map();
 
   /**
    * @param {JsdocBlockWithInline} jsdoc
@@ -385,7 +389,9 @@ export const getJsdocProcessorPlugin = (options = {}) => {
       const match = source.match(hasCaptionRegex);
 
       if (captionRequired && (!match || !match[1].trim())) {
-        extraMessages.push({
+        /** @type {import('eslint').Linter.LintMessage[]} */ (
+          extraMessagesByFilename.get(jsFileName)
+        ).push({
           column: commentLineCols[1] + 1,
           line: 1 + commentLineCols[0] + (tag.line ?? tag.source[0].number),
           message: `@${targetTagName} error - Caption is expected for examples.`,
@@ -601,11 +607,14 @@ export const getJsdocProcessorPlugin = (options = {}) => {
             }
           }
 
-          const ret = [
+          const extraMessages = /** @type {import('eslint').Linter.LintMessage[]} */ (
+            extraMessagesByFilename.get(filename)
+          );
+          extraMessagesByFilename.delete(filename);
+
+          return [
             ...jsMessages,
           ].concat(...messages, ...extraMessages);
-          extraMessages = [];
-          return ret;
         },
 
         /**
@@ -618,6 +627,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
             /** @type {OtherInfo[]} */
             const otherInfo = [];
             otherInfoByFilename.set(filename, otherInfo);
+            extraMessagesByFilename.set(filename, []);
 
             let ast;
 
