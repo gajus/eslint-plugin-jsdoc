@@ -172,6 +172,7 @@ import esquery from 'esquery';
  * @param {(
  *   info: {
  *     delimiter: string,
+ *     lineEnd: string,
  *     postDelimiter: string,
  *     start: string
  *   },
@@ -975,6 +976,7 @@ const getUtils = (
     /**
      * @type {undefined|{
      *   delimiter: string,
+     *   lineEnd: string,
      *   postDelimiter: string,
      *   start: string
      * }}
@@ -999,6 +1001,8 @@ const getUtils = (
         startIdx = idx;
         info = {
           delimiter,
+          // So that new lines keep CRLF line breaks
+          lineEnd: newLineEnd,
           postDelimiter,
           start,
         };
@@ -1023,6 +1027,7 @@ const getUtils = (
           /**
            * @type {{
            *   delimiter: string,
+           *   lineEnd: string,
            *   postDelimiter: string,
            *   start: string
            * }}
@@ -1085,6 +1090,7 @@ const getUtils = (
         source: '',
         tokens: seedTokens({
           delimiter: '*',
+          lineEnd: newLineEnd,
           postDelimiter: ' ',
           start: indent + ' ',
           tag: '@' + tag.tag,

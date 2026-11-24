@@ -97,6 +97,33 @@ const tagListUser = tagSequenceUser.flatMap((obj) => {
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: '/**\r\n * @param a A\r\n * @example quux(a);\r\n */\r\nfunction quux (a) {}\r\n',
+      errors: [
+        {
+          line: 2,
+          message: 'Tag groups do not have the expected whitespace',
+        },
+      ],
+      options: [
+        {
+          linesBetween: 1,
+          tagSequence: [
+            {
+              tags: [
+                'param',
+              ],
+            },
+            {
+              tags: [
+                'example',
+              ],
+            },
+          ],
+        },
+      ],
+      output: '/**\r\n * @param a A\r\n *\r\n * @example quux(a);\r\n */\r\nfunction quux (a) {}\r\n',
+    },
+    {
       code: `
         /**
          * @returns {string}

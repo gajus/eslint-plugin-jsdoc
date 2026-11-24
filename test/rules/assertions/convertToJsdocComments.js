@@ -7,6 +7,36 @@ import {
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: 'const a = 1; // The a\r\nconst b = 2;\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: '/**\r\n * The a\r\n */\r\nconst a = 1; \r\nconst b = 2;\r\n',
+    },
+    {
+      code: '/*\r\n * Does it.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Block comments should be JSDoc-style.',
+        },
+      ],
+      output: '/**\r\n * Does it.\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
+      code: '// Does it\r\n// in two lines\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: '/**\r\n * Does it\r\n * in two lines\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
       code: '/// Section\nfunction f () {}',
       errors: [
         {

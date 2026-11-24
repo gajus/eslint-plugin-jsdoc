@@ -5,6 +5,16 @@ import {
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: 'const a = 1;\r\n/**\r\n * Desc.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 2,
+          message: 'Required 1 line(s) before JSDoc block',
+        },
+      ],
+      output: 'const a = 1;\r\n\r\n/**\r\n * Desc.\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
       code: `
         someCode;
         /**
