@@ -1548,6 +1548,50 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux () {}
       `,
     },
+    {
+      code: `
+        /**
+         * @returns {string} The result
+         * @param a The a
+         *   more about a */
+        function quux (a) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tags are not in the prescribed order: ' + tagList.join(', '),
+        },
+      ],
+      output: `
+        /**
+         * @param a The a
+         *   more about a
+         * @returns {string} The result
+         */
+        function quux (a) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @returns {string} The result
+         * @param a The a */
+        function quux (a) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tags are not in the prescribed order: ' + tagList.join(', '),
+        },
+      ],
+      output: `
+        /**
+         * @param a The a
+         * @returns {string} The result
+         */
+        function quux (a) {}
+      `,
+    },
   ],
   valid: [
     {
