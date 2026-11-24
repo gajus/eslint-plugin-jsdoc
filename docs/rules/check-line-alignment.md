@@ -130,6 +130,19 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Desc.
+ * @param opts The options, for example:
+ * ```js
+ * {
+ *   retries: 3,
+ * }
+ * ```
+ *   and more.
+ */
+function quux (opts) {}
+// Message: Expected wrap indent
+
+/**
  * Function description.
  *
  * @param {string} lorem Description.
@@ -831,6 +844,49 @@ const config = {
  * @param    {{a: number, b: string, c}} lorem           Description.
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["template","param"]}]
+
+/**
+ * Desc.
+ * @param opts The options, for example:
+ * ```js
+ * {
+ *   retries: 3,
+ * }
+ * ```
+ */
+function quux (opts) {}
+
+/**
+ * Desc.
+ * @example
+ * if (a) {
+ *   b();
+ * }
+ */
+function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["-any"]}]
+
+/**
+ * Desc.
+ * @param opts The options, for example:
+ * ```js
+ * {
+ *   retries: 3,
+ * }
+ * ```
+ */
+function quux (opts) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Desc.
+ * @example
+ * if (a) {
+ *   b();
+ * }
+ */
+function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["-any"]}]
 
 /** @param {number} lorem */
 const fn = ( lorem ) => {}
