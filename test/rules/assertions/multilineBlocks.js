@@ -771,6 +771,108 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: '/**\r\n * Does it. @returns {string} x\r\n */\r\nexport function f() { return ""; }\r\n',
     },
+    {
+      code: `
+        /**
+         * @type {{a: string,
+         *   b: number}}
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline JSDoc blocks are prohibited by your configuration.',
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
+      output: `
+        /** @type {{a: string, b: number}} */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {string}
+         *   a The a
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline JSDoc blocks are prohibited by your configuration.',
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
+      output: `
+        /** @param {string} a The a */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline JSDoc blocks are prohibited by your configuration.',
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
+      output: `
+        /** @type {string} */
+      `,
+    },
+    {
+      code: `
+        /** Reported up here
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      output: `
+        /**
+         * Reported up here
+         */
+      `,
+    },
+    {
+      code: `
+        /** @param {string} a The a
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      output: `
+        /**
+         * @param {string} a The a
+         */
+      `,
+    },
   ],
   valid: [
     {

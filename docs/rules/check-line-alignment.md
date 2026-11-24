@@ -640,6 +640,15 @@ function quux () {}
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["-any"]}]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * @param {{a: Item,
+ *   b: number}} obj The obj
+ * @param   {string[]} foo The foo
+ */
+function quux (obj, foo) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+// Message: Expected JSDoc block lines to be aligned.
 ````
 
 
@@ -1174,6 +1183,13 @@ const fn = ( lorem, sit ) => {}
  *                       - On timeout, status is "timeout".
  */
 function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+
+/**
+ * @param {{a: string,
+ *   b: number}} obj The obj
+ */
+function quux (obj) {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
 ````
 
