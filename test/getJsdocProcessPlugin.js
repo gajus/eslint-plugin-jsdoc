@@ -1075,19 +1075,21 @@ describe('`getJsdocProcessorPlugin`', () => {
       throw new Error('No processors');
     }
 
-    const [
-      , exampleFile,
-    ] = plugin.processors.examples.preprocess(text, filename);
-    expect(exampleFile).to.deep.equal({
-      filename: 'something.md/*.js',
-      text: '\nbar();',
-    });
+    const exampleFilename = 'something.md/*.js';
+    const exampleText = '\nbar();';
+    expect(plugin.processors.examples.preprocess(text, filename)).to.deep.equal([
+      text,
+      {
+        filename: exampleFilename,
+        text: exampleText,
+      },
+    ]);
 
     // As ESLint does for an example file whose name the processor also matches
-    plugin.processors.examples.preprocess(exampleFile.text, exampleFile.filename);
+    plugin.processors.examples.preprocess(exampleText, exampleFilename);
     expect(plugin.processors.examples.postprocess([
       [],
-    ], exampleFile.filename)).to.deep.equal([]);
+    ], exampleFilename)).to.deep.equal([]);
 
     const postResults = plugin.processors.examples.postprocess([
       [], [],
