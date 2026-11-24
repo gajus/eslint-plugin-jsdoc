@@ -343,6 +343,13 @@ const validateParameterNames = (
         return false;
       }
 
+      // A tag at this position with the name of another (not destructured)
+      //   parameter documents that parameter (the tag of this one is
+      //   missing), as for `require-param`
+      if (functionParameterName[0] === undefined && functionParameterNames.includes(tag.name.trim())) {
+        return false;
+      }
+
       const [
         parameterName,
         {
@@ -483,12 +490,21 @@ const validateParameterNames = (
         return name.trim();
       });
 
+      // Tags with the name of no parameter, which may document destructured
+      //   parameters
+      const unmatchedNames = actualNames.filter((name) => {
+        return !functionParameterNames.includes(name);
+      });
+
       const expectedNames = functionParameterNames.map((item, idx) => {
         if (/**
              * @type {[string|undefined, (import('../jsdocUtils.js').FlattendRootInfo & {
              *   annotationParamName?: string,
               })]} */ (item)?.[1]?.names) {
-          return actualNames[idx];
+          // Not the tag at this position if it documents another parameter
+          return functionParameterNames.includes(actualNames[idx]) && unmatchedNames.length ?
+            unmatchedNames.shift() :
+            actualNames[idx];
         }
 
         return item;
@@ -577,8 +593,10 @@ const validateParameterNames = (
       };
 
       // A tag with the name of another parameter documents that parameter (an
-      //   earlier tag is missing), so it is not renamed
-      const canRename = !expectedParamNames.includes(oldName);
+      //   earlier tag is missing), so it is not renamed; nor is one to the
+      //   name of a parameter which has a tag (the tags are only out of order)
+      const canRename = !expectedParamNames.includes(oldName) &&
+        !actualNames.includes(String(funcParamName));
 
       utils.reportJSDoc(
         message,
