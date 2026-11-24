@@ -385,6 +385,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: '/**\r\n * Desc.\r\n * @example\r\n * anArray.filter((a) => {\r\n *   return a.b;\r\n * });\r\n * @returns {string} The\r\n *   thing.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 8,
+          message: 'There must be no indentation.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -707,6 +716,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           allowIndentedSections: true,
         },
       ],
+    },
+    {
+      code: '/**\r\n * Desc.\r\n * @example\r\n * anArray.filter((a) => {\r\n *   return a.b;\r\n * });\r\n */\r\nfunction quux () {}\r\n',
     },
   ],
 });

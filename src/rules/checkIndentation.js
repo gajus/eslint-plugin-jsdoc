@@ -6,7 +6,9 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * @returns {string}
  */
 const maskExcludedContent = (str, excludeTags) => {
-  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w\\|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gv');
+  // The tag may be followed by any whitespace (e.g., the `\r` of a CRLF line
+  //   break)
+  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=\\s)([\\w\\|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gv');
 
   return str.replace(regContent, (_match, margin, code) => {
     return (margin + '\n').repeat(code.match(/\n/gv).length);
