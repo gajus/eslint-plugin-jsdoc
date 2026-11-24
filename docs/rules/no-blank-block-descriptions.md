@@ -35,6 +35,14 @@ Strips empty lines in block descriptions.
 The following patterns are considered problems:
 
 ````ts
+/**\r
+ *\r
+ * Desc line one.\r
+ * Desc line two.\r
+ */\r
+function quux () {}
+// Message: There should be no extra blank lines in block descriptions not followed by tags.
+
 /**
  *
  * @param {number} x

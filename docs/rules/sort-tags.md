@@ -301,6 +301,14 @@ See description on `tagSequence`.
 The following patterns are considered problems:
 
 ````ts
+/**\r
+ * @param a A\r
+ * @example quux(a);\r
+ */\r
+function quux (a) {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["param"]},{"tags":["example"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
 /**
  * @returns {string}
  * @param b

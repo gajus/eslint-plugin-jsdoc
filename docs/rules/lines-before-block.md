@@ -62,6 +62,13 @@ The minimum number of lines to require. Defaults to 1.
 The following patterns are considered problems:
 
 ````ts
+const a = 1;\r
+/**\r
+ * Desc.\r
+ */\r
+function quux () {}
+// Message: Required 1 line(s) before JSDoc block
+
 someCode;
 /**
  *

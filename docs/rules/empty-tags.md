@@ -79,6 +79,13 @@ add them within this option.
 The following patterns are considered problems:
 
 ````ts
+/**\r
+ * Desc.\r
+ * @abstract foo\r
+ */\r
+function quux () {}
+// Message: @abstract should be empty.
+
 /**
  * @abstract extra text
  */
