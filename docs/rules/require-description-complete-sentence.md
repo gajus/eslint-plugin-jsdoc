@@ -484,6 +484,34 @@ function quux () {}
  */
 function quux () {}
 // Message: Sentences should start with an uppercase character.
+
+/**
+ * Desc.
+ * @returns {Foo} an instance of {@link Foo}.
+ */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * see {@link Foo} for details.
+ */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Desc. use e.g. this one.
+ */
+function quux () {}
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["e.g."]}]
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Desc.
+ * @param {number} x The x offset, in pixels.
+ * @param {number} y in pixels.
+ */
+function quux (x, y) {}
+// Message: Sentences should start with an uppercase character.
 ````
 
 
@@ -917,5 +945,16 @@ export class ClassExemple {
 }
 
 /** {@inheritDoc SomeClass} */
+
+/**
+ * Creates the store. {@link Store} does the rest.
+ */
+function quux () {}
+
+/**
+ * Desc.
+ * @param opts The options. {@link Options} lists them.
+ */
+function quux (opts) {}
 ````
 
