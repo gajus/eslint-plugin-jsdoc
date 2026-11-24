@@ -1145,6 +1145,22 @@ const getJSDocCommentBlocks = (sourceCode) => {
 };
 
 /**
+ * Whether a tag defines a name of the document (e.g., `@typedef`), unlike
+ *   `@param` and `@property`, which define names within their block.
+ * @param {string} tag
+ * @returns {boolean}
+ */
+const isDocumentNamepathDefiningTag = (tag) => {
+  return isNameOrNamepathDefiningTag(tag) && ![
+    'arg',
+    'argument',
+    'param',
+    'prop',
+    'property',
+  ].includes(tag);
+};
+
+/**
  * @param {import('eslint').SourceCode} sourceCode
  * @returns {import('comment-parser').Spec[]}
  */
@@ -1154,13 +1170,7 @@ const getDocumentNamepathDefiningTags = (sourceCode) => {
       return doc.tags.filter(({
         tag,
       }) => {
-        return isNameOrNamepathDefiningTag(tag) && ![
-          'arg',
-          'argument',
-          'param',
-          'prop',
-          'property',
-        ].includes(tag);
+        return isDocumentNamepathDefiningTag(tag);
       });
     });
 };
@@ -2346,6 +2356,7 @@ export {
 
   hasYieldValue,
   isConstructor,
+  isDocumentNamepathDefiningTag,
   isGetter,
   isNameOrNamepathDefiningTag,
   isNamepathOrUrlReferencingTag,

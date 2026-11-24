@@ -374,6 +374,56 @@ export const myVar = {/**
          */
       `,
     },
+    {
+      code: 'class A {\r\n  /**\r\n   * Desc.\r\n\r\n   * More.\r\n   */\r\n  quux () {}\r\n}\r\n',
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: 'class A {\r\n  /**\r\n   * Desc.\r\n   \r\n   * More.\r\n   */\r\n  quux () {}\r\n}\r\n',
+    },
+    {
+      code: '/**\r\n * Desc.\r\n\r\n * More.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: '/**\r\n * Desc.\r\n \r\n * More.\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
+      code: '/**\n * Desc.\n\n * More.\n  * @param a The a.\n */\nfunction quux (a) {}\n',
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          ignoreEmptyLines: true,
+        },
+      ],
+      output: '/**\n * Desc.\n\n * More.\n * @param a The a.\n */\nfunction quux (a) {}\n',
+    },
+    {
+      code: '/**\n * Desc.\n\n\n * More.\n * Other.\n  * @param a The a.\n */\nfunction quux (a) {}\n',
+      errors: [
+        {
+          line: 7,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          ignoreEmptyLines: true,
+        },
+      ],
+      output: '/**\n * Desc.\n\n\n * More.\n * Other.\n * @param a The a.\n */\nfunction quux (a) {}\n',
+    },
   ],
   valid: [
     {

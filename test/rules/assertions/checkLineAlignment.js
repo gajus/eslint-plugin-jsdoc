@@ -1561,6 +1561,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{a: Item,
+         *   b: number}} obj The obj
+         * @param   {string[]} foo The foo
+         */
+        function quux (obj, foo) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+        },
+      ],
+      options: [
+        'always',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: Item,
+         *   b: number}} obj The obj
+         * @param {string[]}    foo The foo
+         */
+        function quux (obj, foo) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -2431,6 +2461,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
          *                       - On timeout, status is "timeout".
          */
         function test() {}
+      `,
+      options: [
+        'always',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{a: string,
+         *   b: number}} obj The obj
+         */
+        function quux (obj) {}
       `,
       options: [
         'always',

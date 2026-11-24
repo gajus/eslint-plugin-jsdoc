@@ -8,6 +8,47 @@ export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
+        /** @typedef {{id: number}} User */
+
+        /**
+         * @param {number} n The n
+         */
+        export function quux (n) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'This typedef was not used within the file',
+        },
+      ],
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @typedef {string} Used */
+        /** @typedef {string} Unused */
+
+        /** @type {Used} */
+        export const quux = '';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'This typedef was not used within the file',
+        },
+      ],
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
+    },
+    {
+      code: `
        /**
         * @param {HerType} baz - Foo.
         */
@@ -870,6 +911,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: Missing}} Broken
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'Missing\' is undefined.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: T[K], other: K}} Leaky
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'K\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1595,6 +1664,60 @@ export default /** @type {import('../index.js').TestCases} */ ({
           mode: 'closure',
         },
       },
+    },
+    {
+      code: `
+        /** @typedef {{id: number}} User */
+
+        /**
+         * @param {User} user The user
+         * @returns {number} The id
+         */
+        export function quux (user) {
+          return user.id;
+        }
+      `,
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @typedef {{id: number}} User */
+
+        /**
+         * @param {User} user The user
+         */
+        export function quux (user) {}
+
+        /**
+         * @param {number} n The n
+         */
+        export function quux2 (n) {}
+      `,
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} Point
+         * @property {number} x The x
+         */
+
+        /** @type {Point} */
+        export const quux = {x: 0};
+      `,
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
     },
     {
       code: `
@@ -2590,6 +2713,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @returns {void}
          */
         function quux (a, b, c, d, e) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {string} Events
+         * @typedef {{[K in Events]: \`on\${K}\`}} Handlers
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @param {{[K in keyof T]: K}} keys The keys.
+         */
+        function quux (keys) {}
       `,
     },
   ],

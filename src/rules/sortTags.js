@@ -239,6 +239,7 @@ export default iterateJsdoc(({
                 source: '',
                 tokens: utils.seedTokens({
                   delimiter: '*',
+                  lineEnd: utils.newLineEnd,
                   start: jsdoc.source[newIdx - 1].tokens.start,
                 }),
               };
@@ -428,6 +429,21 @@ export default iterateJsdoc(({
   const firstLine = utils.getFirstLine();
 
   const fix = () => {
+    // Otherwise, text before the closing delimiter would not be moved with
+    //   its tag
+    utils.moveClosingDelimiterToOwnLine();
+
+    // Copied from the tags as they are now (with the closing delimiter on its
+    //   own line), as removing the tags below changes them
+    /** @type {import('comment-parser').Spec[]} */
+    const changedTags = JSON.parse(JSON.stringify(
+      sortedTags.slice(firstChangedTagIndex).map(({
+        originalIndex,
+      }) => {
+        return jsdoc.tags[originalIndex];
+      }),
+    ));
+
     // The closing line starts with the block's indentation plus one space
     const closingLineStart = jsdoc.source[jsdoc.source.length - 1].tokens.start;
 
@@ -474,7 +490,6 @@ export default iterateJsdoc(({
       );
     }
 
-    const changedTags = sortedTags.slice(firstChangedTagIndex);
     let extraTagCount = 0;
 
     for (const idx of itemsToMoveRange) {

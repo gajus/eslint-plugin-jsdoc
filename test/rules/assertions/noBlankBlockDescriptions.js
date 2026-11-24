@@ -1,6 +1,16 @@
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: '/**\r\n *\r\n * Desc line one.\r\n * Desc line two.\r\n */\r\nfunction quux () {}\r\n',
+      errors: [
+        {
+          line: 3,
+          message: 'There should be no extra blank lines in block descriptions not followed by tags.',
+        },
+      ],
+      output: '/**\r\n * Desc line one.\r\n * Desc line two.\r\n */\r\nfunction quux () {}\r\n',
+    },
+    {
       code: `
       /**
        *

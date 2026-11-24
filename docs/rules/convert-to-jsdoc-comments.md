@@ -116,6 +116,21 @@ Defaults to `both`.
 The following patterns are considered problems:
 
 ````ts
+const a = 1; // The a\r
+const b = 2;
+// Message: Line comments should be JSDoc-style.
+
+/*\r
+ * Does it.\r
+ */\r
+function quux () {}
+// Message: Block comments should be JSDoc-style.
+
+// Does it\r
+// in two lines\r
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
 /// Section
 function f () {}
 // Message: Line comments should be JSDoc-style.

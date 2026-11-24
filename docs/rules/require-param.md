@@ -549,6 +549,14 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Handles it.
+ * @param this The context.
+ * @param options The options.
+ */
+function quux (this: Window, {a}: Opts) {}
+// Message: Missing JSDoc @param "options.a" declaration.
+
+/**
  * Desc.
  */
 function quux ([first, ...others]) {}
@@ -2204,5 +2212,23 @@ export function fn(...[type, arg]: FnArgs): void {}
  * @param arg Arg
  */
 export function fn(a: string, ...[type, arg]: FnArgs): void {}
+
+/**
+ * Handles it.
+ * @param this The context.
+ * @param options The options.
+ * @param options.a A.
+ */
+function quux (this: Window, {a}: Opts) {}
+
+/**
+ * Handles it.
+ * @param this The context.
+ * @param root0 The options.
+ * @param root0.a A.
+ * @param root1 More options.
+ * @param root1.b B.
+ */
+function quux (this: Window, {a}: Opts, {b}: More) {}
 ````
 

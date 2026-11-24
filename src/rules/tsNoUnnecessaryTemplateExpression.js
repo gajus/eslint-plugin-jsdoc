@@ -10,6 +10,81 @@ import {
   parse as espree,
 } from 'espree';
 
+/**
+ * Names of types which a template literal turns into string types (e.g.,
+ *   `${number}` is the type of numeric strings, not `number`).
+ */
+const nonStringNames = new Set([
+  'any',
+  'bigint',
+  'boolean',
+  'false',
+  'number',
+  'true',
+]);
+
+/**
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
+ * @returns {boolean}
+ */
+const isNonString = (node) => {
+  switch (node.type) {
+    case 'JsdocTypeKeyof':
+    case 'JsdocTypeNull':
+    case 'JsdocTypeNumber':
+    case 'JsdocTypeUndefined':
+      return true;
+    case 'JsdocTypeName':
+      return nonStringNames.has(node.value);
+    case 'JsdocTypeUnion':
+      return node.elements.some(isNonString);
+    default:
+      return false;
+  }
+};
+
+/**
+ * Types which bind more loosely than some of the types around them.
+ */
+const looseTypes = new Set([
+  'JsdocTypeConditional',
+  'JsdocTypeIntersection',
+  'JsdocTypeUnion',
+]);
+
+/**
+ * Parents within which no type needs parentheses.
+ */
+const noParenthesesParents = new Set([
+  'JsdocTypeFunction',
+  'JsdocTypeKeyValue',
+  'JsdocTypeObjectField',
+  'JsdocTypeParenthesis',
+  'JsdocTypeTemplateLiteral',
+  'JsdocTypeTuple',
+]);
+
+/**
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} parentNode
+ * @returns {boolean}
+ */
+const needsParentheses = (node, parentNode) => {
+  if (!looseTypes.has(node.type)) {
+    return false;
+  }
+
+  switch (parentNode.type) {
+    case 'JsdocTypeGeneric':
+      // `(A | B)[]`, but `Record<A | B, string>`
+      return parentNode.meta.brackets === 'square';
+    case 'JsdocTypeUnion':
+      return node.type === 'JsdocTypeConditional';
+    default:
+      return !noParenthesesParents.has(parentNode.type);
+  }
+};
+
 export default iterateJsdoc(({
   context,
   indent,
@@ -72,7 +147,9 @@ export default iterateJsdoc(({
               } : null,
             );
           } else if (nde.literals.length === 2 && nde.literals[0] === '' &&
-            nde.literals[1] === ''
+            nde.literals[1] === '' &&
+            // Otherwise, the template is what makes the type a string type
+            !isNonString(nde.interpolations[0])
           ) {
             utils.reportJSDoc(
               'Found a lone template expression within a template.',
@@ -81,12 +158,18 @@ export default iterateJsdoc(({
                 const interpolation = nde.interpolations[0];
 
                 if (parentNode && property) {
+                  const replacement = needsParentheses(interpolation, parentNode) ?
+                    /** @type {import('jsdoc-type-pratt-parser').ParenthesisResult} */ ({
+                      element: interpolation,
+                      type: 'JsdocTypeParenthesis',
+                    }) :
+                    interpolation;
                   if (typeof index === 'number') {
                     // @ts-expect-error Safe
-                    parentNode[property][index] = interpolation;
+                    parentNode[property][index] = replacement;
                   } else {
                     // @ts-expect-error Safe
-                    parentNode[property] = interpolation;
+                    parentNode[property] = replacement;
                   }
                 } else {
                   parsedType = interpolation;

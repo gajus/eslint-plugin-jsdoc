@@ -336,7 +336,16 @@ export default iterateJsdoc(({
     ...unnamedRootBase,
   ], autoIncrementBase);
 
-  const thisOffset = functionParameterNames[0] === 'this' ? 1 : 0;
+  // A documented `this` has a tag of its own, so the tags then keep the
+  //   positions of the parameters
+  const thisOffset = functionParameterNames[0] === 'this' &&
+    !jsdocParameterNames.some(({
+      name,
+    }) => {
+      return name === 'this';
+    }) ?
+    1 :
+    0;
 
   for (const [
     functionParameterIdx,

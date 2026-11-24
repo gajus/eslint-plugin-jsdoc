@@ -4,6 +4,7 @@ import iterateJsdoc, {
 import {
   getDocumentNamepathDefiningTags,
   getJSDocCommentBlocks,
+  isDocumentNamepathDefiningTag,
 } from '../jsdocUtils.js';
 import {
   getJSDocComment,
@@ -247,8 +248,10 @@ export default iterateJsdoc(({
   state,
   utils,
 }) => {
-  /** @type {string[]} */
-  const foundTypedefValues = [];
+  // Shared by the blocks of the file (the state is per file), as any of
+  //   them may use a typedef
+  state.foundTypedefValues ??= [];
+  const foundTypedefValues = state.foundTypedefValues;
 
   const {
     scopeManager,
@@ -372,7 +375,6 @@ export default iterateJsdoc(({
 
   // Skip collecting defined types when there is nothing to check
   if (!tagsWithTypes.length) {
-    state.foundTypedefValues = foundTypedefValues;
     return;
   }
 
@@ -944,6 +946,17 @@ export default iterateJsdoc(({
               return;
             }
 
+            // The key of a mapped type (e.g., `{[K in keyof T]: Array<K>}`)
+            //   is in scope within its field
+            if (
+              ancestor.type === 'JsdocTypeObjectField' &&
+              typeof ancestor.key === 'object' &&
+              ancestor.key.type === 'JsdocTypeMappedType' &&
+              ancestor.key.key === value
+            ) {
+              return;
+            }
+
             ancestor = ancestor._parent;
           }
 
@@ -992,8 +1005,6 @@ export default iterateJsdoc(({
       }
     });
   }
-
-  state.foundTypedefValues = foundTypedefValues;
 }, {
   // We use this method rather than checking at end of handler above because
   //   in that case, it is invoked too many times and would thus report errors
@@ -1001,7 +1012,6 @@ export default iterateJsdoc(({
   exit ({
     context,
     state,
-    utils,
   }) {
     const {
       checkUsedTypedefs = false,
@@ -1022,29 +1032,29 @@ export default iterateJsdoc(({
           loc: commentNode.loc,
         };
       });
+    // The same tags as the typedefs which the blocks look for
     const typedefs = comments
       .flatMap(({
         doc,
         loc,
       }) => {
-        const tags = doc.tags.filter(({
+        return doc.tags.filter(({
           tag,
         }) => {
-          return utils.isNameOrNamepathDefiningTag(tag);
+          return isDocumentNamepathDefiningTag(tag);
+        }).map(({
+          name,
+        }) => {
+          return {
+            loc,
+            name,
+          };
         });
-        if (!tags.length) {
-          return [];
-        }
-
-        return {
-          loc,
-          tags,
-        };
       });
 
     for (const typedef of typedefs) {
       if (
-        !state.foundTypedefValues.includes(typedef.tags[0].name)
+        !state.foundTypedefValues.includes(typedef.name)
       ) {
         context.report({
           loc: /** @type {import('@eslint/core').SourceLocation} */ (typedef.loc),

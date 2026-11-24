@@ -60,6 +60,14 @@ Defaults to "backslash".
 The following patterns are considered problems:
 
 ````ts
+/**\r
+ * Supports @yearly and\r
+ * more.\r
+ */\r
+function quux () {}
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@yearly}, \@yearly, or `@yearly`?
+
 /**
  * @file Use @outside before `npm init @eslint/config`.
  */

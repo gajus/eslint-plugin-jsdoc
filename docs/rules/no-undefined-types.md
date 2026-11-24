@@ -123,6 +123,23 @@ importing types unless used in code.
 The following patterns are considered problems:
 
 ````ts
+/** @typedef {{id: number}} User */
+
+/**
+ * @param {number} n The n
+ */
+export function quux (n) {}
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+// Message: This typedef was not used within the file
+
+/** @typedef {string} Used */
+/** @typedef {string} Unused */
+
+/** @type {Used} */
+export const quux = '';
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+// Message: This typedef was not used within the file
+
 /**
  * @param {HerType} baz - Foo.
  */
@@ -480,6 +497,18 @@ function quux (obj, obj2) {}
  */
 function quux (a, b, c) {}
 // Message: The type 'y' is undefined.
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: Missing}} Broken
+ */
+// Message: The type 'Missing' is undefined.
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: T[K], other: K}} Leaky
+ */
+// Message: The type 'K' is undefined.
 ````
 
 
@@ -872,6 +901,39 @@ function example(arg) {
 function foo () {
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/** @typedef {{id: number}} User */
+
+/**
+ * @param {User} user The user
+ * @returns {number} The id
+ */
+export function quux (user) {
+  return user.id;
+}
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+
+/** @typedef {{id: number}} User */
+
+/**
+ * @param {User} user The user
+ */
+export function quux (user) {}
+
+/**
+ * @param {number} n The n
+ */
+export function quux2 (n) {}
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+
+/**
+ * @typedef {object} Point
+ * @property {number} x The x
+ */
+
+/** @type {Point} */
+export const quux = {x: 0};
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
 
 /**
  * @template T
@@ -1487,5 +1549,21 @@ function quux (a, b, c, d, e, f, g) {}
  * @returns {void}
  */
 function quux (a, b, c, d, e) {}
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+ */
+
+/**
+ * @template {string} Events
+ * @typedef {{[K in Events]: `on${K}`}} Handlers
+ */
+
+/**
+ * @template T
+ * @param {{[K in keyof T]: K}} keys The keys.
+ */
+function quux (keys) {}
 ````
 

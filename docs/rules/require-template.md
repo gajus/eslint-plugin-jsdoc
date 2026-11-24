@@ -451,5 +451,15 @@ export interface CodeGenerationResultData extends Omit<Map<string, any>, "get" |
 /**
  * @typedef {Omit<Map<string, EXPECTED_ANY>, "get" | "set" | "has" | "delete"> & CodeGenMapOverloads} CodeGenerationResultData
  */
+
+/**
+ * @template T
+ * @typedef {{[K in keyof T]: Array<K>}} KeyLists
+ */
+
+/**
+ * @template {string} Events
+ * @typedef {{[K in Events]: `on${K}`}} Handlers
+ */
 ````
 
