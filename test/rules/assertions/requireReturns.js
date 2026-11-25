@@ -6,6 +6,83 @@ export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): val is string;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): Promise<void>;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): Observable<void>;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): Lib.Promise<void>;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
           /**
            *
            */
@@ -3100,6 +3177,55 @@ export default /** @type {import('../index.js').TestCases} */ ({
           publicOnly: true,
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): asserts val is string;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): asserts val;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export function quux(val: unknown): asserts val is string;
+        export function quux(val: unknown) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Does it.
+         * @param val The value.
+         */
+        export declare function quux(val: unknown): Promise<void>;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
     },
   ],
 });

@@ -2780,5 +2780,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (a, {b}, c) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Handles it.
+         * @param a The a.
+         */
+        export function quux(this: {count: number}, a: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Handles it.
+         * @param this The context.
+         * @param a The a.
+         */
+        export function quux(this: {count: number}, a: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 });

@@ -249,6 +249,12 @@ const getFunctionParameterNames = (
    */
   const getParamName = (param, isProperty) => {
     /* eslint-enable complexity -- Temporary */
+    // A TypeScript `this` parameter, whatever its type (e.g., `this: {a: T}`),
+    //   whose properties are not parameters
+    if (param.type === 'Identifier' && param.name === 'this') {
+      return 'this';
+    }
+
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
@@ -711,6 +717,12 @@ const getPreferredTagNameSimple = (
     return aliases.includes(name);
   })?.[0];
   if (preferredTagName) {
+    // An alias is the same tag, so a preference for that tag (e.g., blocking
+    //   it) applies to the alias too
+    if (Object.hasOwn(tagPreferenceFixed, preferredTagName)) {
+      return tagPreferenceFixed[preferredTagName];
+    }
+
     return preferredTagName;
   }
 

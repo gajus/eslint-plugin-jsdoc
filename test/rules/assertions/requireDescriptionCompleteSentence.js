@@ -1149,13 +1149,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Sentences should start with an uppercase character.',
         },
       ],
-      output: `
-        /**
-         * Desc.
-         * @returns {Foo} An instance of {@link Foo}.
-         */
-        function quux () {}
-      `,
     },
     {
       code: `
@@ -1170,12 +1163,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Sentences should start with an uppercase character.',
         },
       ],
-      output: `
-        /**
-         * See {@link Foo} for details.
-         */
-        function quux () {}
-      `,
     },
     {
       code: `
@@ -1197,12 +1184,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      output: `
-        /**
-         * Desc. Use e.g. this one.
-         */
-        function quux () {}
-      `,
     },
     {
       code: `
@@ -1226,6 +1207,56 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @param {number} y In pixels.
          */
         function quux (x, y) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Runs the job.
+         * @param options options for the job.
+         * @param {string | number} value number or string to set.
+         */
+        function quux (options, value) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Sentences should start with an uppercase character.',
+        },
+        {
+          line: 5,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+        /**
+         * Runs the job.
+         * @param options Options for the job.
+         * @param {string | number} value number or string to set.
+         */
+        function quux (options, value) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Gets the name of
+         * the user. the name is cached.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentences should start with an uppercase character.',
+        },
+      ],
+      output: `
+        /**
+         * Gets the name of
+         * the user. The name is cached.
+         */
+        function quux () {}
       `,
     },
   ],

@@ -512,6 +512,21 @@ function quux () {}
  */
 function quux (x, y) {}
 // Message: Sentences should start with an uppercase character.
+
+/**
+ * Runs the job.
+ * @param options options for the job.
+ * @param {string | number} value number or string to set.
+ */
+function quux (options, value) {}
+// Message: Sentences should start with an uppercase character.
+
+/**
+ * Gets the name of
+ * the user. the name is cached.
+ */
+function quux () {}
+// Message: Sentences should start with an uppercase character.
 ````
 
 
