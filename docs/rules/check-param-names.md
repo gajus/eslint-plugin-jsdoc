@@ -1459,5 +1459,18 @@ function quux (canvas, {color}, callback) {}
  * @param c The c.
  */
 function quux (a, {b}, c) {}
+
+/**
+ * Handles it.
+ * @param a The a.
+ */
+export function quux(this: {count: number}, a: string) {}
+
+/**
+ * Handles it.
+ * @param this The context.
+ * @param a The a.
+ */
+export function quux(this: {count: number}, a: string) {}
 ````
 
