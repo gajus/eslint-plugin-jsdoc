@@ -33,6 +33,39 @@ const undefinedKeywords = new Set([
 ]);
 
 /**
+ * Checks if the return type of a function signature declares a value.
+ * @param {import('@typescript-eslint/types').TSESTree.TSDeclareFunction|
+ *   import('@typescript-eslint/types').TSESTree.TSFunctionType|
+ *   import('@typescript-eslint/types').TSESTree.TSMethodSignature} node
+ * @param {PromiseFilter} [promFilter]
+ * @returns {boolean}
+ */
+const hasDeclaredReturnValue = (node, promFilter) => {
+  const typeAnnotation = node.returnType?.typeAnnotation;
+  if (!typeAnnotation || undefinedKeywords.has(typeAnnotation.type)) {
+    return false;
+  }
+
+  // An assertion function (`asserts x is T`) returns nothing
+  if (typeAnnotation.type === 'TSTypePredicate' && typeAnnotation.asserts) {
+    return false;
+  }
+
+  // Nor does a `Promise<void>`, unless any promise counts (as with
+  //   `forceReturnsWithAsync`)
+  if (
+    typeAnnotation.type === 'TSTypeReference' &&
+    typeAnnotation.typeName.type === 'Identifier' &&
+    typeAnnotation.typeName.name === 'Promise' &&
+    isVoidPromise(typeAnnotation)
+  ) {
+    return Boolean(promFilter?.(typeAnnotation));
+  }
+
+  return true;
+};
+
+/**
  * Checks if a node has a return statement. Void return does not count.
  * @param {ESTreeOrTypeScriptNode|undefined|null} node
  * @param {boolean} [throwOnNullReturn]
@@ -120,8 +153,7 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
     case 'TSFunctionType':
 
     case 'TSMethodSignature': {
-      const type = node?.returnType?.typeAnnotation?.type;
-      return type && !undefinedKeywords.has(type);
+      return hasDeclaredReturnValue(node, promFilter);
     }
 
     default: {
@@ -298,8 +330,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
     case 'TSFunctionType':
 
     case 'TSMethodSignature': {
-      const type = node?.returnType?.typeAnnotation?.type;
-      return type && !undefinedKeywords.has(type);
+      return hasDeclaredReturnValue(node, promFilter);
     }
 
     default: {
