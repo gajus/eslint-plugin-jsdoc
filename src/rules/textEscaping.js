@@ -117,15 +117,18 @@ export default iterateJsdoc(({
 
     /** @type {import('comment-parser').Line[]} */
     const blockDescriptionLines = [];
-    for (const [
-      idx,
-      line,
-    ] of jsdoc.source.entries()) {
-      if (idx && (line.tokens.tag || line.tokens.end)) {
+    for (const line of jsdoc.source) {
+      // A tag ends the block description, also on the opening line
+      if (line.tokens.tag) {
         break;
       }
 
       blockDescriptionLines.push(line);
+
+      // Text before the closing delimiter is still part of it
+      if (line.tokens.end) {
+        break;
+      }
     }
 
     const blockLine = escapeFirstLine(blockDescriptionLines);
