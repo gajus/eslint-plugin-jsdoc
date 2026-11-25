@@ -711,6 +711,12 @@ const getPreferredTagNameSimple = (
     return aliases.includes(name);
   })?.[0];
   if (preferredTagName) {
+    // An alias is the same tag, so a preference for that tag (e.g., blocking
+    //   it) applies to the alias too
+    if (Object.hasOwn(tagPreferenceFixed, preferredTagName)) {
+      return tagPreferenceFixed[preferredTagName];
+    }
+
     return preferredTagName;
   }
 

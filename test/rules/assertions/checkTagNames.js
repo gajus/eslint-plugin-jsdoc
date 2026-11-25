@@ -40,6 +40,74 @@ const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
+      code: `
+        /**
+         * @desc Does a thing.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Blacklisted tag found (`@desc`)',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false,
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /** @fileoverview Module. */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'No file overviews here.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            file: {
+              message: 'No file overviews here.',
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @desc Does a thing.
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "desc" JSDoc tag with "summary".',
+        },
+      ],
+      output: `
+        /**
+         * @summary Does a thing.
+         */
+        function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: 'summary',
+          },
+        },
+      },
+    },
+    {
       code: `/** @type {string} */let a;
       `,
       errors: [
