@@ -509,7 +509,9 @@ const getOptions = (context, settings) => {
 const isFunctionWithOverload = (node) => {
   // The implementation of a method, after a signature of the same method
   if (node.type === 'FunctionExpression' && node.parent?.type === 'MethodDefinition') {
-    const method = node.parent;
+    const method = /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+      node.parent
+    );
     const members = method.parent.body;
     const prevMember = members[members.indexOf(method) - 1];
 
@@ -547,7 +549,6 @@ const isFunctionWithOverload = (node) => {
     prevSibling;
 
   return prevDeclaration?.type === 'TSDeclareFunction' &&
-    // @ts-expect-error Should be ok
     prevDeclaration.id?.name === node.id?.name;
 };
 
