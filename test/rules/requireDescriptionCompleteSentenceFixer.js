@@ -25,17 +25,19 @@ describe('`require-description-complete-sentence` fixer', () => {
     },
   };
 
-  for (const [
-    title,
-    code,
-  ] of [
+  const cases = [
     [
       'an abbreviation', '/**\n * Handles a, b, etc.\n */\nfunction quux () {}\n',
     ],
     [
       'a colon', '/**\n * Supported values:\n */\nfunction quux () {}\n',
     ],
-  ]) {
+  ];
+
+  for (const [
+    title,
+    code,
+  ] of cases) {
     it(`offers no fix for a sentence ending with ${title}`, () => {
       const messages = new Linter().verify(code, config);
       expect(messages).to.have.length(1);
