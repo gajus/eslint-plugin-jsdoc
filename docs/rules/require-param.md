@@ -2230,5 +2230,18 @@ function quux (this: Window, {a}: Opts) {}
  * @param root1.b B.
  */
 function quux (this: Window, {a}: Opts, {b}: More) {}
+
+/**
+ * Handles it.
+ * @param a The a.
+ */
+export function quux(this: {count: number}, a: string) {}
+
+/**
+ * Handles it.
+ * @param this The context.
+ * @param a The a.
+ */
+export function quux(this: {count: number}, a: string) {}
 ````
 
