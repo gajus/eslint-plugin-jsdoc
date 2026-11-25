@@ -214,9 +214,10 @@ const validateDescription = (
     if (!/(?:[.?!\|]|```)\s*$/v.test(paragraphNoAbbreviations)) {
       report(
         'Sentences must end with a period.',
-        // A period after a colon (`Supported values:.`) would not end the
-        //   sentence either
-        /:\s*$/v.test(paragraph) ? null : fix,
+        // The fix adds no period after a colon (`Supported values:.` would not
+        //   end the sentence either), nor after the period of an
+        //   abbreviation (`etc.`), which is for the user to finish
+        /[.:?!]\s*$/v.test(paragraph) ? null : fix,
         tag,
       );
       return true;
