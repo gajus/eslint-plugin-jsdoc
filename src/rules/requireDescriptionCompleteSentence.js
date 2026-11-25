@@ -142,29 +142,26 @@ const validateDescription = (
         )}(?=[ \\t]*(?:\\*\\/)?$)`, 'mv'), `${line}.`);
       }
 
-      for (const [
-        idx,
-        sentence,
-      ] of sentences.entries()) {
-        if ((/^\s*$/v).test(sentence) || isCapitalized(sentence) || isTable(sentence)) {
-          continue;
+      for (const sentence of sentences.filter((sentence_) => {
+        return !(/^\s*$/v).test(sentence_) && !isCapitalized(sentence_) &&
+          !isTable(sentence_);
+      })) {
+        // The whole first line of the sentence, which is only found at the
+        //   sentence (a single word may also be a tag's name or type, or
+        //   start a wrapped line of another sentence)
+        const beginning = sentence.split('\n')[0];
+
+        if ('tag' in tag && tag.tag) {
+          const reg = new RegExp(`(@${escapeStringRegexp(tag.tag)}.*)${escapeStringRegexp(beginning)}`, 'v');
+
+          after = after.replace(reg, (_$0, $1) => {
+            return $1 + capitalize(beginning);
+          });
+        } else {
+          after = after.replace(new RegExp('((?:[.?!]|\\*|\\})\\s*)' + escapeStringRegexp(beginning), 'v'), (_$0, $1) => {
+            return $1 + capitalize(beginning);
+          });
         }
-
-        // Only the first word, as the rest of the sentence may have lost
-        //   inline tags or abbreviations (see `extractSentences`)
-        const [
-          word,
-        ] = sentence.split(/\s/v);
-
-        // The first sentence of a tag follows the tag (and its type or name);
-        //   others follow the end of a sentence, a line's `*`, or a `}`
-        const start = 'tag' in tag && tag.tag && !parIdx && !idx ?
-          `@${escapeStringRegexp(tag.tag)}[^\\n]*?\\s` :
-          '(?:[.?!]|\\*|\\})\\s*';
-
-        after = after.replace(new RegExp(`(${start})${escapeStringRegexp(word)}(?![\\p{L}\\p{N}])`, 'v'), (_$0, $1) => {
-          return $1 + capitalize(word);
-        });
       }
 
       return fixer.replaceText(jsdocNode, (fromLine ? before + '\n' : '') + after);
