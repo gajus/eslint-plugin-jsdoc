@@ -372,6 +372,24 @@ this
 The following patterns are considered problems:
 
 ````ts
+/**
+ * @desc Does a thing.
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Message: Blacklisted tag found (`@desc`)
+
+/** @fileoverview Module. */
+// Settings: {"jsdoc":{"tagNamePreference":{"file":{"message":"No file overviews here."}}}}
+// Message: No file overviews here.
+
+/**
+ * @desc Does a thing.
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":"summary"}}}
+// Message: Invalid JSDoc tag (preference). Replace "desc" JSDoc tag with "summary".
+
 /** @type {string} */let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@type' is redundant when using a type system.
