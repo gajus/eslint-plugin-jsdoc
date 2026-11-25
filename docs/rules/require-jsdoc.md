@@ -1252,6 +1252,59 @@ export const value = 1;
 export namespace Helpers {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSModuleDeclaration"]}]
 // Message: Missing JSDoc comment.
+
+export class Quux {
+  parse(input: string): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+export class Quux {
+  count = 0;
+  parse(input: string): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+export class Quux {
+  /**
+   * Other.
+   */
+  other(): void {}
+  parse(input: string): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+export class Quux {
+  /**
+   * Parses.
+   */
+  static parse(input: string): Node;
+  parse(input: string): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+export class Quux {
+  /**
+   * Other.
+   */
+  other(input: string): Node;
+  parse(input: string): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
 ````
 
 
@@ -2313,5 +2366,44 @@ export const value = 1;
 /** Helpers. */
 export namespace Helpers {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSModuleDeclaration"]}]
+
+export class Quux {
+  /**
+   * Parses a string.
+   */
+  parse(input: string): Node;
+  /**
+   * Parses a buffer.
+   */
+  parse(input: Buffer): Node;
+  parse(input: string | Buffer): Node {
+    return null as any;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"MethodDefinition":true},"skipInterveningOverloadedDeclarations":false}]
+
+export namespace Quux {
+  /**
+   * A.
+   */
+  export function f(a: string): void;
+  /**
+   * B.
+   */
+  export function f(a: number): void;
+  export function f(a: string | number) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
+
+/**
+ * A.
+ */
+export default function quux(a: string): void;
+/**
+ * B.
+ */
+export default function quux(a: number): void;
+export default function quux(a: string | number) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
 ````
 
