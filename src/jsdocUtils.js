@@ -249,6 +249,12 @@ const getFunctionParameterNames = (
    */
   const getParamName = (param, isProperty) => {
     /* eslint-enable complexity -- Temporary */
+    // A TypeScript `this` parameter, whatever its type (e.g., `this: {a: T}`),
+    //   whose properties are not parameters
+    if (param.type === 'Identifier' && param.name === 'this') {
+      return 'this';
+    }
+
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
