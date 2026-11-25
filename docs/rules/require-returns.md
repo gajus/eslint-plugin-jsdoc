@@ -147,6 +147,35 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): val is string;
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): Promise<void>;
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): Observable<void>;
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): Lib.Promise<void>;
+// Message: Missing JSDoc @returns declaration.
+
+/**
  *
  */
 function quux (foo) {
@@ -1387,5 +1416,30 @@ function quux (foo) {
   return foo;
 }
 // "jsdoc/require-returns": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): asserts val is string;
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): asserts val;
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export function quux(val: unknown): asserts val is string;
+export function quux(val: unknown) {}
+
+/**
+ * Does it.
+ * @param val The value.
+ */
+export declare function quux(val: unknown): Promise<void>;
 ````
 
