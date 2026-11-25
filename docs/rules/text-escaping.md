@@ -143,6 +143,17 @@ function quux () {}
 function quux () {}
 // "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
 // Message: You have unescaped HTML characters < or &
+
+/**
+ * Text with <b>bold</b> */
+function quux () {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+// Message: You have unescaped HTML characters < or &
+
+/** @param x a <b> value */
+function quux (x) {}
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+// Message: You have unescaped HTML characters < or & in a tag
 ````
 
 
