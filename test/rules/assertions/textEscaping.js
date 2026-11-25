@@ -261,6 +261,50 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux () {}
       `,
     },
+    {
+      code: `
+        /**
+         * Text with <b>bold</b> */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'You have unescaped HTML characters < or &',
+        },
+      ],
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+      output: `
+        /**
+         * Text with &lt;b>bold&lt;/b> */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /** @param x a <b> value */
+        function quux (x) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'You have unescaped HTML characters < or & in a tag',
+        },
+      ],
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ],
+      output: `
+        /** @param x a &lt;b> value */
+        function quux (x) {}
+      `,
+    },
   ],
   valid: [
     {
