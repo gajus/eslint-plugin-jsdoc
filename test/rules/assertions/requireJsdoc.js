@@ -4878,6 +4878,217 @@ function quux (foo) {
       export namespace Helpers {}
       `,
     },
+    {
+      code: `
+        export class Quux {
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        export class Quux {
+          /**
+           *
+           */
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+    },
+    {
+      code: `
+        export class Quux {
+          count = 0;
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        export class Quux {
+          count = 0;
+          /**
+           *
+           */
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+    },
+    {
+      code: `
+        export class Quux {
+          /**
+           * Other.
+           */
+          other(): void {}
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        export class Quux {
+          /**
+           * Other.
+           */
+          other(): void {}
+          /**
+           *
+           */
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+    },
+    {
+      code: `
+        export class Quux {
+          /**
+           * Parses.
+           */
+          static parse(input: string): Node;
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        export class Quux {
+          /**
+           * Parses.
+           */
+          static parse(input: string): Node;
+          /**
+           *
+           */
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+    },
+    {
+      code: `
+        export class Quux {
+          /**
+           * Other.
+           */
+          other(input: string): Node;
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        export class Quux {
+          /**
+           * Other.
+           */
+          other(input: string): Node;
+          /**
+           *
+           */
+          parse(input: string): Node {
+            return null as any;
+          }
+        }
+      `,
+    },
   ],
   valid: [
     {
@@ -7364,6 +7575,81 @@ function quux (foo) {
           contexts: [
             'TSModuleDeclaration',
           ],
+        },
+      ],
+    },
+    {
+      code: `
+        export class Quux {
+          /**
+           * Parses a string.
+           */
+          parse(input: string): Node;
+          /**
+           * Parses a buffer.
+           */
+          parse(input: Buffer): Node;
+          parse(input: string | Buffer): Node {
+            return null as any;
+          }
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            MethodDefinition: true,
+          },
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        export namespace Quux {
+          /**
+           * A.
+           */
+          export function f(a: string): void;
+          /**
+           * B.
+           */
+          export function f(a: number): void;
+          export function f(a: string | number) {}
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * A.
+         */
+        export default function quux(a: string): void;
+        /**
+         * B.
+         */
+        export default function quux(a: number): void;
+        export default function quux(a: string | number) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
         },
       ],
     },

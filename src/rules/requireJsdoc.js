@@ -507,42 +507,48 @@ const getOptions = (context, settings) => {
  * @param {ESLintOrTSNode} node
  */
 const isFunctionWithOverload = (node) => {
+  // The implementation of a method, after a signature of the same method
+  if (node.type === 'FunctionExpression' && node.parent?.type === 'MethodDefinition') {
+    const method = node.parent;
+    const members = method.parent.body;
+    const prevMember = members[members.indexOf(method) - 1];
+
+    return prevMember?.type === 'MethodDefinition' &&
+      prevMember.value.type === 'TSEmptyBodyFunctionExpression' &&
+      prevMember.static === method.static &&
+      // @ts-expect-error Should be ok
+      prevMember.key.name === method.key.name;
+  }
+
   if (node.type !== 'FunctionDeclaration') {
     return false;
   }
 
-  let parent;
-  let child;
+  // The statement of the function, or its export, within a program, a
+  //   namespace, or a block
+  const statement = node.parent?.type === 'ExportNamedDeclaration' ||
+    node.parent?.type === 'ExportDefaultDeclaration' ?
+    node.parent :
+    node;
+  const statements = /** @type {ESLintOrTSNode[]|undefined} */ (
+    // @ts-expect-error Should be ok
+    statement.parent?.body
+  );
 
-  if (node.parent?.type === 'Program') {
-    parent = node.parent;
-    child = node;
-  } else if (node.parent?.type === 'ExportNamedDeclaration' &&
-      node.parent?.parent.type === 'Program') {
-    parent = node.parent?.parent;
-    child = node.parent;
-  }
-
-  if (!child || !parent) {
+  /* c8 ignore next 3 -- In a statement position (`label: function f () {}`) */
+  if (!Array.isArray(statements)) {
     return false;
   }
 
-  const functionName = node.id?.name;
+  const prevSibling = statements[statements.indexOf(statement) - 1];
+  const prevDeclaration = prevSibling?.type === 'ExportNamedDeclaration' ||
+    prevSibling?.type === 'ExportDefaultDeclaration' ?
+    prevSibling.declaration :
+    prevSibling;
 
-  const idx = parent.body.indexOf(child);
-  const prevSibling = parent.body[idx - 1];
-
-  return (
+  return prevDeclaration?.type === 'TSDeclareFunction' &&
     // @ts-expect-error Should be ok
-    (prevSibling?.type === 'TSDeclareFunction' &&
-      // @ts-expect-error Should be ok
-      functionName === prevSibling.id.name) ||
-    (prevSibling?.type === 'ExportNamedDeclaration' &&
-      // @ts-expect-error Should be ok
-      prevSibling.declaration?.type === 'TSDeclareFunction' &&
-      // @ts-expect-error Should be ok
-      prevSibling.declaration?.id?.name === functionName)
-  );
+    prevDeclaration.id?.name === node.id?.name;
 };
 
 /** @type {import('eslint').Rule.RuleModule} */
