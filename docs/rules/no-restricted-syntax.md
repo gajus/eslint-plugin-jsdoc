@@ -246,10 +246,10 @@ let test: () => string;
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]:has(JsdocDescriptionLine)))","context":"VariableDeclaration:has(*[typeAnnotation.typeAnnotation.type=/TSFunctionType/][typeAnnotation.typeAnnotation.returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/])","message":"FunctionType's with non-void return types must have a @returns tag with a description"}]}]
 // Message: FunctionType's with non-void return types must have a @returns tag with a description
 
-/**
- *
- */
 class Test {
+  /**
+   *
+   */
   abstract Test(): string;
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
