@@ -2,6 +2,9 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
+  rewireByParsedType,
+} from '../jsdocUtils.js';
+import {
   generate,
 } from '@es-joy/escodegen';
 import {
@@ -288,12 +291,8 @@ export default iterateJsdoc(({
             newNode.value = matchingName;
           }
 
-          for (const src of tag.source) {
-            if (src.tokens.type) {
-              src.tokens.type = `{${stringify(parsedType, generate)}}`;
-              break;
-            }
-          }
+          // Over all the lines of the type, which may be several
+          rewireByParsedType(jsdoc, tag, parsedType, indent);
         };
       };
 

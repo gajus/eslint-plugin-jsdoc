@@ -1151,6 +1151,59 @@ let linter;
         let x;
       `,
     },
+    {
+      code: `
+        /**
+         * @param {import('./shapes.js').Circle |
+         *   import('./shapes.js').Square} shape The shape.
+         */
+        export function quux (shape) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as $k$$l$shapes$k$js from './shapes.js'; */
+        /**
+         * @param {$k$$l$shapes$k$js.Circle | import('./shapes.js').Square} shape The shape.
+         */
+        export function quux (shape) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   circle: import('./shapes.js').Circle,
+         *   label: string,
+         * }} options The options.
+         */
+        export function quux (options) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as $k$$l$shapes$k$js from './shapes.js'; */
+        /**
+         * @param {{
+         *   circle: $k$$l$shapes$k$js.Circle,
+         *   label: string
+         * }} options The options.
+         */
+        export function quux (options) {}
+      `,
+    },
   ],
   valid: [
     {
