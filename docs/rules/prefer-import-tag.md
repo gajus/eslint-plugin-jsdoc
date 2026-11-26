@@ -383,6 +383,22 @@ const LINTER = getLinter();
 /** @type {import('eslint').Linter} */
 let x;
 // Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @param {import('./shapes.js').Circle |
+ *   import('./shapes.js').Square} shape The shape.
+ */
+export function quux (shape) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @param {{
+ *   circle: import('./shapes.js').Circle,
+ *   label: string,
+ * }} options The options.
+ */
+export function quux (options) {}
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 
