@@ -344,6 +344,26 @@ describe('flat config names', () => {
   });
 });
 
+describe('`no-types` in configs', () => {
+  it('is not turned on by the `typescript-flavor` configs, whose types are in the JSDoc', () => {
+    for (const [
+      configName,
+      config,
+    ] of Object.entries(configs)) {
+      if (!configName.includes('typescript-flavor') || Array.isArray(config)) {
+        continue;
+      }
+
+      expect(config.rules?.['jsdoc/no-types'] ?? 'off', configName).to.equal('off');
+    }
+  });
+
+  it('is turned on by `flat/logical-typescript`', () => {
+    const config = /** @type {import('eslint').Linter.Config} */ (configs['flat/logical-typescript']);
+    expect(config.rules?.['jsdoc/no-types']).to.equal('warn');
+  });
+});
+
 describe('buildForbidRuleDefinition', () => {
   it('Falls back in description when `description` and `contextName` are missing', () => {
     const rule = buildForbidRuleDefinition({
