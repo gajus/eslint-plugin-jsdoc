@@ -592,7 +592,11 @@ const logicalRules = [
 
 const createLogicalTypescriptRuleset = createStandaloneRulesetFactory(logicalRules);
 
-const createLogicalTypescriptFlavorRuleset = createStandaloneRulesetFactory(logicalRules);
+// Without `no-types`: JavaScript files with TypeScript-flavored JSDoc have
+//   their types only in the JSDoc (as `recommended-typescript-flavor`)
+const createLogicalTypescriptFlavorRuleset = createStandaloneRulesetFactory(logicalRules.filter((ruleName) => {
+  return ruleName !== 'jsdoc/no-types';
+}));
 
 const requirementsRules = [
   'jsdoc/require-example',
