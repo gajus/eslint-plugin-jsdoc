@@ -2573,6 +2573,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @param {readonly string[][]} names The names.
+         */
+        function quux (names) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "names" type "[]"; prefer: "Array<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {readonly Array<string>[]} names The names.
+         */
+        function quux (names) {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            '[]': 'Array<>',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -3295,6 +3322,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
               replacement: 'object',
               unifyParentAndChildTypeChecks: true,
             },
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {readonly string[]} names The names.
+         */
+        function quux (names) {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            '[]': 'Array<>',
           },
         },
       },

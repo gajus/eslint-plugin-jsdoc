@@ -1529,6 +1529,31 @@ export default {
         function quux (cfg) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @param {readonly string[][]} names The names.
+         */
+        function quux (names) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Array bracket style should be angle',
+        },
+      ],
+      options: [
+        {
+          arrayBrackets: 'angle',
+        },
+      ],
+      output: `
+        /**
+         * @param {readonly Array<string>[]} names The names.
+         */
+        function quux (names) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -2036,6 +2061,19 @@ export default {
           mode: 'closure',
         },
       },
+    },
+    {
+      code: `
+        /**
+         * @param {readonly string[]} names The names.
+         */
+        function quux (names) {}
+      `,
+      options: [
+        {
+          arrayBrackets: 'angle',
+        },
+      ],
     },
   ],
 };
