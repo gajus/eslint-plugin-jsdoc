@@ -6,11 +6,11 @@
   },
   "dependencies": {
     "@es-joy/escodegen": "^5.0.1",
-    "@es-joy/jsdoccomment": "~1.2.1",
+    "@es-joy/jsdoccomment": "~1.2.2",
     "@es-joy/resolve.exports": "1.2.0",
-    "@typescript-eslint/utils": "^8.72.2",
+    "@typescript-eslint/utils": "^8.74.0",
     "are-docs-informative": "^0.1.1",
-    "comment-parser": "1.4.10",
+    "comment-parser": "1.4.11",
     "debug": "^4.4.3",
     "escape-string-regexp": "^5.0.0",
     "espree": "^11.2.0",
@@ -38,13 +38,13 @@
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.13",
     "@types/esquery": "^1.5.4",
-    "@types/estree": "^1.0.10",
+    "@types/estree": "^1.0.11",
     "@types/json-schema": "^7.0.15",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.6.6",
     "@types/semver": "^7.8.0",
     "@types/spdx-expression-parse": "^4.0.0",
-    "@typescript-eslint/types": "8.72.2",
+    "@typescript-eslint/types": "8.74.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-transform-import-meta": "^3.1.0",
     "c8": "^12.0.0",
@@ -71,7 +71,7 @@
     "sinon": "^22.1.0",
     "ts-api-utils": "^2.5.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.72.2"
+    "typescript-eslint": "8.74.0"
   },
   "engines": {
     "node": "^22.22.2 || >=24.15.0"
