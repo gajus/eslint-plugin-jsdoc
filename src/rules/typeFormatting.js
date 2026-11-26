@@ -96,7 +96,7 @@ export default iterateJsdoc(({
     }
 
     // eslint-disable-next-line complexity -- Todo
-    traverse(parsedType, (nde) => {
+    traverse(parsedType, (nde, parentNode) => {
       let errorMessage = '';
 
       /**
@@ -274,8 +274,10 @@ export default iterateJsdoc(({
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (nde);
           if ('value' in typeNode.left && typeNode.left.value === 'Array') {
             // `closure` mode has no `type[]` syntax (and can only parse
-            //   `Array<type>` there)
-            if (typeNode.meta.brackets !== arrayBrackets && mode !== 'closure') {
+            //   `Array<type>` there), and `readonly type[]` cannot have angle
+            //   brackets (`readonly Array<type>` is invalid)
+            if (typeNode.meta.brackets !== arrayBrackets && mode !== 'closure' &&
+              parentNode?.type !== 'JsdocTypeReadonlyArray') {
               setArrayBrackets(typeNode, arrayBrackets);
               errorMessage = `Array bracket style should be ${arrayBrackets}`;
             }

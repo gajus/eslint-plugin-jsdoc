@@ -408,6 +408,16 @@ export const buildRejectOrPreferRuleDefinition = ({
           tag: tagName,
         } = jsdocTag;
 
+        // The arrays of `readonly T[]`, which cannot have angle brackets
+        //   (`readonly Array<T>` is invalid)
+        /** @type {Set<import('jsdoc-type-pratt-parser').NonRootResult>} */
+        const readonlyArrays = new Set();
+        traverse(typeAst, (node) => {
+          if (node.type === 'JsdocTypeReadonlyArray') {
+            readonlyArrays.add(node.element);
+          }
+        });
+
         traverse(typeAst, (node, parentNode, property) => {
           const {
             type,
@@ -418,7 +428,11 @@ export const buildRejectOrPreferRuleDefinition = ({
              */ (node);
           if (![
             'JsdocTypeAny', 'JsdocTypeName',
-          ].includes(type)) {
+          ].includes(type) || (
+            // The `Array` of such an array, whose brackets are kept
+            property === 'left' &&
+            readonlyArrays.has(/** @type {import('jsdoc-type-pratt-parser').NonRootResult} */ (parentNode))
+          )) {
             return;
           }
 
