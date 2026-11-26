@@ -614,6 +614,13 @@ function quux () {}
 function quux (cfg) {}
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
 // Message: Inconsistent linebreak separator usage
+
+/**
+ * @param {readonly string[][]} names The names.
+ */
+function quux (names) {}
+// "jsdoc/type-formatting": ["error"|"warn", {"arrayBrackets":"angle"}]
+// Message: Array bracket style should be angle
 ````
 
 
@@ -829,5 +836,11 @@ The following patterns are not considered problems:
  */
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @param {readonly string[]} names The names.
+ */
+function quux (names) {}
+// "jsdoc/type-formatting": ["error"|"warn", {"arrayBrackets":"angle"}]
 ````
 

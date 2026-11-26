@@ -902,6 +902,13 @@ function quux (value) {}
 function quux (foo) {}
 // Settings: {"jsdoc":{"preferredTypes":{"Array<>":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
+
+/**
+ * @param {readonly string[][]} names The names.
+ */
+function quux (names) {}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"Array<>"}}}
+// Message: Invalid JSDoc @param "names" type "[]"; prefer: "Array<>".
 ````
 
 
@@ -1247,5 +1254,11 @@ function quux () {}
  */
 function a () {}
 // Settings: {"jsdoc":{"preferredTypes":{"Object":{"replacement":"object","unifyParentAndChildTypeChecks":true}}}}
+
+/**
+ * @param {readonly string[]} names The names.
+ */
+function quux (names) {}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"Array<>"}}}
 ````
 
