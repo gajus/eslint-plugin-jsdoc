@@ -1064,8 +1064,20 @@ const getPublicOnlyOptions = (publicOnly) => {
  * @returns {boolean}
  */
 const isSkippedAsNotPublic = (publicOnly, node, sourceCode, settings) => {
-  return Boolean(publicOnly && node) && !isUncommentedExport(
-    /** @type {import('eslint').Rule.Node} */ (node),
+  if (!publicOnly || !node) {
+    return false;
+  }
+
+  // With `contexts: ['any']`, a comment may come with the export itself
+  //   (`export class A {}`), which is public
+  if (exportTypes.has(node.type)) {
+    return false;
+  }
+
+  return !isUncommentedExport(
+    // A method, as its function (as with the default contexts), so that one
+    //   of an exported class is public, unless it is private
+    node.type === 'MethodDefinition' ? /** @type {import('eslint').Rule.Node} */ (node.value) : node,
     sourceCode,
     getPublicOnlyOptions(publicOnly),
     settings,

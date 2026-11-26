@@ -211,6 +211,61 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @callback SomeCallback
+         * @param {string} value
+         * @returns {string}
+         */
+
+        /**
+         *
+         */
+        export class ExportedClass {
+          /**
+           * @param {string} value
+           * @returns {string}
+           */
+          method(value) {
+            return value;
+          }
+        }
+
+        /**
+         * @param {string} value
+         * @returns {string}
+         */
+        export function exportedFunction(value) {
+          return value;
+        }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Missing JSDoc @returns description.',
+        },
+        {
+          line: 14,
+          message: 'Missing JSDoc @returns description.',
+        },
+        {
+          line: 23,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          publicOnly: {
+            cjs: false,
+            esm: true,
+          },
+        },
+      ],
+    },
   ],
   valid: [
     {

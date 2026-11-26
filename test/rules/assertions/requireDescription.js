@@ -811,6 +811,92 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @callback SomeCallback
+         * @param {string} value
+         * @returns {string}
+         */
+
+        /**
+         *
+         */
+        export class ExportedClass {
+          /**
+           * @param {string} value
+           * @returns {string}
+           */
+          method(value) {
+            return value;
+          }
+        }
+
+        /**
+         * @param {string} value
+         * @returns {string}
+         */
+        export function exportedFunction(value) {
+          return value;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+        {
+          line: 8,
+          message: 'Missing JSDoc block description.',
+        },
+        {
+          line: 12,
+          message: 'Missing JSDoc block description.',
+        },
+        {
+          line: 21,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          publicOnly: {
+            cjs: false,
+            esm: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Exported.
+         */
+        export class Quux {
+          /**
+           *
+           */
+          method () {}
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+          publicOnly: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1286,6 +1372,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
           publicOnly: {
             cjs: false,
           },
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Exported.
+         */
+        export class Quux {
+          /**
+           *
+           */
+          #priv () {}
+        }
+
+        /**
+         *
+         */
+        class Local {
+          /**
+           *
+           */
+          method () {}
+        }
+      `,
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          publicOnly: true,
         },
       ],
     },

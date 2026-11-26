@@ -311,6 +311,61 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @callback SomeCallback
+         * @param {string} value
+         * @returns {string}
+         */
+
+        /**
+         *
+         */
+        export class ExportedClass {
+          /**
+           * @param {string} value
+           * @returns {string}
+           */
+          method(value) {
+            return value;
+          }
+        }
+
+        /**
+         * @param {string} value
+         * @returns {string}
+         */
+        export function exportedFunction(value) {
+          return value;
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "value" description.',
+        },
+        {
+          line: 13,
+          message: 'Missing JSDoc @param "value" description.',
+        },
+        {
+          line: 22,
+          message: 'Missing JSDoc @param "value" description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          publicOnly: {
+            cjs: false,
+            esm: true,
+          },
+        },
+      ],
+    },
   ],
   valid: [
     {
