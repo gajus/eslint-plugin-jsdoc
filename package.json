@@ -10,7 +10,7 @@
     "@es-joy/resolve.exports": "1.2.0",
     "@typescript-eslint/utils": "^8.72.2",
     "are-docs-informative": "^0.1.1",
-    "comment-parser": "1.4.9",
+    "comment-parser": "1.4.10",
     "debug": "^4.4.3",
     "escape-string-regexp": "^5.0.0",
     "espree": "^11.2.0",

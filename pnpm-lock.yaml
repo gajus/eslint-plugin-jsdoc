@@ -27,8 +27,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       comment-parser:
-        specifier: 1.4.9
-        version: 1.4.9
+        specifier: 1.4.10
+        version: 1.4.10
       debug:
         specifier: ^4.4.3
         version: 4.4.3(supports-color@8.1.1)
@@ -1931,6 +1931,10 @@ packages:
 
   comment-parser@1.4.1:
     resolution: {integrity: sha512-buhp5kePrmda3vhc5B9t7pUQXAb2Tnd0qgpkIhPhkHXxJpiPJ11H0ZEU0oBpJ2QztSbzG/ZxMj/CHsYJqRHmyg==}
+    engines: {node: '>= 12.0.0'}
+
+  comment-parser@1.4.10:
+    resolution: {integrity: sha512-qN5/9lBWFYHsHLflPH/3iyu5khw7tKs75V6NH26H0P6Cp1j2JqdZZch7hyplkz6ATok3WOoZxO+IzB9s3mnTBA==}
     engines: {node: '>= 12.0.0'}
 
   comment-parser@1.4.8:
@@ -7066,6 +7070,8 @@ snapshots:
   commander@10.0.1: {}
 
   comment-parser@1.4.1: {}
+
+  comment-parser@1.4.10: {}
 
   comment-parser@1.4.8: {}
 
