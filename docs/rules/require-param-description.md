@@ -221,6 +221,35 @@ function quux (foo) {
 export {quux};
 // "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
 // Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @callback SomeCallback
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ *
+ */
+export class ExportedClass {
+  /**
+   * @param {string} value
+   * @returns {string}
+   */
+  method(value) {
+    return value;
+  }
+}
+
+/**
+ * @param {string} value
+ * @returns {string}
+ */
+export function exportedFunction(value) {
+  return value;
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"],"publicOnly":{"cjs":false,"esm":true}}]
+// Message: Missing JSDoc @param "value" description.
 ````
 
 

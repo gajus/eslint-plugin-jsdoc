@@ -444,6 +444,47 @@ function quux (foo) {
 export {quux};
 // "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
 // Message: Missing JSDoc block description.
+
+/**
+ * @callback SomeCallback
+ * @param {string} value
+ * @returns {string}
+ */
+
+/**
+ *
+ */
+export class ExportedClass {
+  /**
+   * @param {string} value
+   * @returns {string}
+   */
+  method(value) {
+    return value;
+  }
+}
+
+/**
+ * @param {string} value
+ * @returns {string}
+ */
+export function exportedFunction(value) {
+  return value;
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["any"],"publicOnly":{"cjs":false,"esm":true}}]
+// Message: Missing JSDoc block description.
+
+/**
+ * Exported.
+ */
+export class Quux {
+  /**
+   *
+   */
+  method () {}
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["MethodDefinition"],"publicOnly":true}]
+// Message: Missing JSDoc block description.
 ````
 
 
@@ -697,5 +738,26 @@ function quux (foo) {
 }
 module.exports = quux;
 // "jsdoc/require-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
+
+/**
+ * Exported.
+ */
+export class Quux {
+  /**
+   *
+   */
+  #priv () {}
+}
+
+/**
+ *
+ */
+class Local {
+  /**
+   *
+   */
+  method () {}
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["any"],"publicOnly":true}]
 ````
 
