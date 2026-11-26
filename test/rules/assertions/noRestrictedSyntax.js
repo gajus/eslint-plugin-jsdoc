@@ -670,16 +670,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
-      /**
-       *
-       */
       class Test {
+        /**
+         *
+         */
         abstract Test(): string;
       }
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'methods with non-void return types must have a @returns tag',
         },
       ],
