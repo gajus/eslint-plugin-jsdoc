@@ -22,6 +22,17 @@ const getSimpleParameterName = (parameter) => {
   return parameter.name;
 };
 
+/**
+ * Whether a tag name is that of a property of `root`, for an object
+ *   (`root.prop`) or for the items of an array (`root[].prop`).
+ * @param {string} name
+ * @param {string} root
+ * @returns {boolean}
+ */
+const isPropertyOf = (name, root) => {
+  return name.startsWith(`${root}.`) || name.startsWith(`${root}[].`);
+};
+
 const contentKeys = /** @type {const} */ ([
   'description',
   'postName',
@@ -282,10 +293,10 @@ const validateParameterNames = (
       }
 
       const removeExtraParam = () => {
-        // With the tags of its properties (`b.c`), from the last one so that
-        //   the indexes of the others stay the same
+        // With the tags of its properties (`b.c`, `b[].c`), from the last one
+        //   so that the indexes of the others stay the same
         const tagIndexes = jsdoc.tags.flatMap((tg, tgIndex) => {
-          return tg === tag || (tg.tag === tag.tag && tg.name.startsWith(`${tag.name}.`)) ?
+          return tg === tag || (tg.tag === tag.tag && isPropertyOf(tg.name, tag.name)) ?
             [
               tgIndex,
             ] :
@@ -581,10 +592,11 @@ const validateParameterNames = (
 
       const oldName = tag.name.trim();
       const renameBadParam = () => {
-        // Also the tags of its properties (`old.prop`); replacing only the
-        //   name keeps the optional and default syntax (`[name=default]`)
+        // Also the tags of its properties (`old.prop`, `old[].prop`); replacing
+        //   only the name keeps the optional and default syntax
+        //   (`[name=default]`)
         for (const renamedTag of jsdoc.tags) {
-          if (renamedTag === tag || (renamedTag.tag === tag.tag && renamedTag.name.startsWith(`${oldName}.`))) {
+          if (renamedTag === tag || (renamedTag.tag === tag.tag && isPropertyOf(renamedTag.name, oldName))) {
             renamedTag.source[0].tokens.name = renamedTag.source[0].tokens.name.replace(
               oldName, String(funcParamName),
             );
