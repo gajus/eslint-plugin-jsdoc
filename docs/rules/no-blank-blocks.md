@@ -78,6 +78,20 @@ The following patterns are considered problems:
  *
  */
 // Message: No empty blocks
+
+const a = 1
+/** */ let b = 2
+use(a, b)
+// "jsdoc/no-blank-blocks": ["error"|"warn", {"enableFixer":true}]
+// Message: No empty blocks
+
+const a = 1;\r
+/**\r
+ *\r
+ */\r
+function quux () {}
+// "jsdoc/no-blank-blocks": ["error"|"warn", {"enableFixer":true}]
+// Message: No empty blocks
 ````
 
 
