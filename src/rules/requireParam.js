@@ -142,10 +142,10 @@ export default iterateJsdoc(({
   /**
    * @type {{
    *   destructuredText?: string,
+   *   emptyTag?: import('@es-joy/jsdoccomment').JsdocTagWithInline,
    *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
    *   functionParameterName: string,
    *   inc: boolean|undefined,
-   *   remove?: true,
    *   type?: string|undefined
    * }[]}
    */
@@ -456,19 +456,27 @@ export default iterateJsdoc(({
         }) => {
           return fpn === rootName;
         })) {
-          const emptyParamIdx = jsdocParameterNames.findIndex(({
-            name,
+          // An empty tag (`@param` with no name) not yet taken by an earlier
+          //   root is filled with this root's name
+          const emptyTag = jsdocParameterNames.map(({
+            idx: tagIdx,
           }) => {
-            return !name;
+            return jsdoc.tags[tagIdx];
+          }).find((tag) => {
+            return !tag.name && !missingTags.some(({
+              emptyTag: claimedTag,
+            }) => {
+              return claimedTag === tag;
+            });
           });
 
-          if (emptyParamIdx > -1) {
+          if (emptyTag) {
             missingTags.push({
               destructuredText: getDestructuredText(functionParameterIdx),
-              functionParameterIdx: emptyParamIdx,
+              emptyTag,
+              functionParameterIdx,
               functionParameterName: rootName,
               inc,
-              remove: true,
             });
           } else {
             missingTags.push({
@@ -580,18 +588,18 @@ export default iterateJsdoc(({
   /**
    *
    * @param {{
+   *   emptyTag?: import('@es-joy/jsdoccomment').JsdocTagWithInline,
    *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
    *   functionParameterName: string,
-   *   remove?: true,
    *   inc?: boolean,
    *   type?: string
    * }} cfg
    */
   const fix = ({
+    emptyTag,
     functionParameterIdx,
     functionParameterName,
     inc,
-    remove,
     type,
   }) => {
     if (inc && !enableRootFixer) {
@@ -662,8 +670,14 @@ export default iterateJsdoc(({
     }) => {
       return tag || end;
     });
-    if (remove) {
-      createTokens(functionParameterIdx, offset + functionParameterIdx, 1);
+    if (emptyTag) {
+      // Replace the empty tag and its own line, wherever other tags (or
+      //   descriptions over several lines) put them
+      createTokens(
+        jsdoc.tags.indexOf(emptyTag),
+        jsdoc.source.indexOf(emptyTag.source[0]),
+        1,
+      );
     } else {
       const {
         foundIndex,
