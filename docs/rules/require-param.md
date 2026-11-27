@@ -1479,6 +1479,28 @@ function quux ({path}, {path: dest}) {}
  */
 function join (a, b) {}
 // Message: Missing JSDoc @param "b" declaration.
+
+/**
+ * @since 1.2.0
+ * @param
+ */
+function quux ({a}) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.
+
+/**
+ * @param {string} name The name,
+ *   which may be long.
+ * @param
+ */
+function quux (name, {a}) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.
+
+/**
+ * @param
+ * @param
+ */
+function quux ({a}, {b}) {}
+// Message: Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.
 ````
 
 
