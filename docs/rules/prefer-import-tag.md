@@ -399,6 +399,95 @@ export function quux (shape) {}
  */
 export function quux (options) {}
 // Message: Inline `import()` found; prefer `@import`
+
+import path from 'path';
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+const path = require('path');
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+class User {}
+
+/**
+ * @param {import('./db.js').User} row The row.
+ */
+export function idOf (row) {}
+// "jsdoc/prefer-import-tag": ["error"|"warn", {"outputType":"named-import"}]
+// Message: Inline `import()` found; prefer `@import`
+
+import fs from 'fs';
+
+/**
+ * @type {import('fs')}
+ */
+let mod;
+// Message: Inline `import()` found; prefer `@import`
+
+import fs from 'fs';
+
+/**
+ * @type {import('fs').default}
+ */
+let mod;
+// Message: Inline `import()` found; prefer `@import`
+
+type path = string;
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @typedef {string} path
+ */
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/** @import * as path from 'pathe'; */
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/** @import { path } from 'pathe'; */
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/** @import path from 'pathe'; */
+
+/**
+ * @param {import('path').ParsedPath} p The parts.
+ */
+export function join (p) {}
+// Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @param {import('process').Process} p The process.
+ */
+export function run (p) {}
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 
