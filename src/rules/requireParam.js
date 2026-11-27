@@ -86,14 +86,43 @@ export default iterateJsdoc(({
     return;
   }
 
-  const jsdocParameterNames =
-    /**
-     * @type {{
-     *   idx: import('../iterateJsdoc.js').Integer;
-     *   name: string;
-     *   type: string;
-     * }[]}
-     */ (utils.getJsdocTagsDeep(preferredTagName));
+  /**
+   * A tag written with an alias of the preferred tag (`@arg`, `@argument`)
+   *   documents a parameter too; `check-tag-names` reports the alias.
+   * @param {string} tagName
+   * @returns {boolean}
+   */
+  const isParamTag = (tagName) => {
+    const preferred = utils.getPreferredTagNameObject({
+      tagName,
+    });
+    return (typeof preferred === 'object' ?
+      /** @type {{replacement?: string}} */ (preferred).replacement :
+      preferred) === preferredTagName;
+  };
+
+  /**
+   * @type {{
+   *   idx: import('../iterateJsdoc.js').Integer;
+   *   name: string;
+   *   type: string;
+   * }[]}
+   */
+  const jsdocParameterNames = jsdoc.tags.flatMap(({
+    name,
+    tag,
+    type,
+  }, idx) => {
+    return isParamTag(tag) ?
+      [
+        {
+          idx,
+          name,
+          type,
+        },
+      ] :
+      [];
+  });
 
   if (ignoreWhenAllParamsMissing && !jsdocParameterNames.length) {
     return;
@@ -256,7 +285,7 @@ export default iterateJsdoc(({
       jsdocTags.filter(({
         tag,
       }) => {
-        return tag === preferredTagName;
+        return isParamTag(tag);
       });
 
     let tagLineCount = 0;
@@ -645,7 +674,7 @@ export default iterateJsdoc(({
       const firstParamLine = jsdoc.source.findIndex(({
         tokens,
       }) => {
-        return tokens.tag === `@${preferredTagName}`;
+        return tokens.tag !== '' && isParamTag(tokens.tag.slice(1));
       });
       const baseOffset = foundIndex > -1 || firstParamLine === -1 ?
         offset :

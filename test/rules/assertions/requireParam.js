@@ -766,8 +766,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: `
           /**
-           * @arg foo
            * @param
+           * @arg foo
            */
           function quux (foo) {
 
@@ -3403,6 +3403,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
           function quux ({path}, {path: dest}) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Joins two values.
+         * @arg {string} a The first.
+         * @returns {string} The joined value.
+         */
+        function join (a, b) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "b" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * Joins two values.
+         * @arg {string} a The first.
+         * @param b
+         * @returns {string} The joined value.
+         */
+        function join (a, b) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -4709,6 +4734,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       languageOptions: {
         parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * Joins two values.
+         * @arg {string} a The first.
+         * @argument {string} b The second.
+         */
+        function join (a, b) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Joins two values.
+         * @param {string} a The first.
+         */
+        function join (a) {}
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: 'arg',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * Joins two values.
+         * @arg {string} a The first.
+         */
+        function join (a) {}
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            arg: {
+              message: 'Use `@param` for parameters.',
+              replacement: 'param',
+            },
+          },
+        },
       },
     },
   ],

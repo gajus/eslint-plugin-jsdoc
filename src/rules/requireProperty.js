@@ -36,9 +36,20 @@ export default iterateJsdoc(({
     return;
   }
 
+  // A tag written with an alias (`@prop`) is a property too;
+  //   `check-tag-names` reports the alias
   if (utils.hasATag([
     targetTagName,
-  ])) {
+  ]) || utils.filterTags(({
+    tag,
+  }) => {
+    const preferred = utils.getPreferredTagNameObject({
+      tagName: tag,
+    });
+    return (typeof preferred === 'object' ?
+      /** @type {{replacement?: string}} */ (preferred).replacement :
+      preferred) === targetTagName;
+  }).length) {
     return;
   }
 
