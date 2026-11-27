@@ -834,8 +834,13 @@ const getUtils = (
           const text = sourceCode.getText();
           const lastLineBreakPos = text.slice(
             0, jsdocNode.range[0],
-          ).search(/\n[ \t]*$/v);
-          if (lastLineBreakPos > -1) {
+          ).search(/\r?\n[ \t]*$/v);
+          // The whole line goes only if the block is alone on it; code after
+          //   the block (`/** @type {number} */ let x = 5`) keeps its line
+          const isAloneOnLine = (/^[ \t]*(?:\r?\n|$)/v).test(
+            text.slice(jsdocNode.range[1]),
+          );
+          if (lastLineBreakPos > -1 && isAloneOnLine) {
             return [
               fixer.removeRange([
                 lastLineBreakPos, jsdocNode.range[1],
