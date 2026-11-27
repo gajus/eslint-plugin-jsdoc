@@ -286,5 +286,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef {object} Pt
+         * @prop {number} x The x.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} Pt
+         * @prop {number} x The x.
+         */
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            prop: {
+              message: 'Use `@property` for properties.',
+              replacement: 'property',
+            },
+          },
+        },
+      },
+    },
   ],
 });

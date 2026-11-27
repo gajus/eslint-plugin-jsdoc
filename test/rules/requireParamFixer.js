@@ -62,3 +62,37 @@ function foo(a, b, c) {}
     expect(output).to.equal(expected);
   });
 });
+
+describe('`require-param` with `check-tag-names`', () => {
+  it('leaves parameters written with an alias to `check-tag-names`', () => {
+    const code = `
+/**
+ * Joins two values.
+ * @arg {string} a The first.
+ * @argument {string} b The second.
+ */
+function join(a, b) {}
+`;
+    const {
+      messages,
+      output,
+    } = new Linter().verifyAndFix(code, {
+      plugins: {
+        jsdoc: index,
+      },
+      rules: {
+        'jsdoc/check-tag-names': 'error',
+        'jsdoc/require-param': 'error',
+      },
+    });
+    expect(messages).to.have.length(0);
+    expect(output).to.equal(`
+/**
+ * Joins two values.
+ * @param {string} a The first.
+ * @param {string} b The second.
+ */
+function join(a, b) {}
+`);
+  });
+});
