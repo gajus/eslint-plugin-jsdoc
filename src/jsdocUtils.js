@@ -1377,6 +1377,8 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
     case 'AssignmentPattern':
       return hasNonFunctionYield(node.right, checkYieldReturnValue);
+    case 'AwaitExpression':
+      return hasNonFunctionYield(node.argument, checkYieldReturnValue);
     case 'BlockStatement': {
       return node.body.some((bodyNode) => {
         return ![
@@ -1391,13 +1393,21 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
     /* c8 ignore next 2 -- In Babel? */
     case 'CallExpression':
+    case 'NewExpression':
     // @ts-expect-error In Babel?
     case 'OptionalCallExpression':
-      return node.arguments.some((element) => {
-        return hasNonFunctionYield(element, checkYieldReturnValue);
-      });
+      // The callee too: `(yield getHandler())(event)`
+      return hasNonFunctionYield(node.callee, checkYieldReturnValue) ||
+        node.arguments.some((element) => {
+          return hasNonFunctionYield(element, checkYieldReturnValue);
+        });
     case 'ChainExpression':
-    case 'ExpressionStatement': {
+    case 'ExpressionStatement':
+    // A type around the value: `(yield call()) as User`
+    case 'TSAsExpression':
+    case 'TSNonNullExpression':
+    case 'TSSatisfiesExpression':
+    case 'TSTypeAssertion': {
       return hasNonFunctionYield(node.expression, checkYieldReturnValue);
     }
 
@@ -1424,16 +1434,22 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     }
 
     case 'DoWhileStatement':
+    case 'WhileStatement': {
+      return hasNonFunctionYield(node.test, checkYieldReturnValue) ||
+        hasNonFunctionYield(node.body, checkYieldReturnValue);
+    }
+
     case 'ForInStatement':
+    case 'ForOfStatement': {
+      return hasNonFunctionYield(node.right, checkYieldReturnValue) ||
+        hasNonFunctionYield(node.body, checkYieldReturnValue);
+    }
 
-    case 'ForOfStatement':
-
-    case 'ForStatement':
-
-    case 'LabeledStatement':
-    case 'WhileStatement':
-    case 'WithStatement': {
-      return hasNonFunctionYield(node.body, checkYieldReturnValue);
+    case 'ForStatement': {
+      return hasNonFunctionYield(node.init, checkYieldReturnValue) ||
+        hasNonFunctionYield(node.test, checkYieldReturnValue) ||
+        hasNonFunctionYield(node.update, checkYieldReturnValue) ||
+        hasNonFunctionYield(node.body, checkYieldReturnValue);
     }
 
     /* c8 ignore next 2 -- In Babel? */
@@ -1442,8 +1458,13 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     case 'ImportExpression':
       return hasNonFunctionYield(node.source, checkYieldReturnValue);
 
+    case 'LabeledStatement':
+    case 'WithStatement': {
+      return hasNonFunctionYield(node.body, checkYieldReturnValue);
+    }
+
     // ?.
-      /* c8 ignore next 2 -- In Babel? */
+    /* c8 ignore next 2 -- In Babel? */
     case 'MemberExpression':
     // @ts-expect-error In Babel?
     case 'OptionalMemberExpression':
@@ -1481,18 +1502,17 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
         return hasNonFunctionYield(subExpression, checkYieldReturnValue);
       });
     case 'SpreadElement':
-
+    case 'ThrowStatement':
     case 'UnaryExpression':
       return hasNonFunctionYield(node.argument, checkYieldReturnValue);
 
     case 'SwitchStatement': {
-      return node.cases.some(
-        (someCase) => {
+      return hasNonFunctionYield(node.discriminant, checkYieldReturnValue) ||
+        node.cases.some((someCase) => {
           return someCase.consequent.some((nde) => {
             return hasNonFunctionYield(nde, checkYieldReturnValue);
           });
-        },
-      );
+        });
     }
 
     case 'TaggedTemplateExpression':
