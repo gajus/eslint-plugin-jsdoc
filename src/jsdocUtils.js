@@ -2286,7 +2286,23 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
   ];
 
   if (initialEndSource && !jsdoc.source.at(-1)?.tokens?.end) {
-    jsdoc.source.push(initialEndSource);
+    // The type was rewritten above, so the closing line keeps only the `*/`,
+    //   not the end of the old type which may be on it (`* }} */`)
+    jsdoc.source.push({
+      ...initialEndSource,
+      tokens: {
+        ...initialEndSource.tokens,
+        delimiter: '',
+        description: '',
+        name: '',
+        postDelimiter: '',
+        postName: '',
+        postTag: '',
+        postType: '',
+        tag: '',
+        type: '',
+      },
+    });
   }
 };
 

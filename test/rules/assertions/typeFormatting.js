@@ -1554,6 +1554,36 @@ export default {
         function quux (names) {}
       `,
     },
+    {
+      code: '/** @type {{\n *   a: string;\n * }} */\nlet x;\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Inconsistent comma separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'comma',
+        },
+      ],
+      output: '/** @type {{a: string}}\n */\nlet x;\n',
+    },
+    {
+      code: '/** @type {{\r\n *   a: string;\r\n * }} */\r\nlet x;\r\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Inconsistent comma separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'comma',
+        },
+      ],
+      output: '/** @type {{a: string}}\r\n */\r\nlet x;\r\n',
+    },
   ],
   valid: [
     {
