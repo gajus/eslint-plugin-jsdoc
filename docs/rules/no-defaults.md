@@ -171,6 +171,27 @@ class Filter {
   }
 }
 // Message: Defaults are not permitted on @param.
+
+/**
+ * Creates the store.
+ * @param {{
+ *   a: string,
+ *   b: number
+ * }} [opts={}] The options.
+ */
+function create (opts = {}) {}
+// Message: Defaults are not permitted on @param.
+
+/**
+ * Creates the store.
+ * @param {{
+ *   a: string,
+ *   b: number
+ * }} [opts={}] The options.
+ */
+function create (opts = {}) {}
+// "jsdoc/no-defaults": ["error"|"warn", {"noOptionalParamNames":true}]
+// Message: Optional param names are not permitted on @param.
 ````
 
 
