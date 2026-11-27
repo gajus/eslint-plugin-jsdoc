@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@es-joy/escodegen": "^5.0.1",
-    "@es-joy/jsdoccomment": "~1.2.2",
+    "@es-joy/jsdoccomment": "~1.2.3",
     "@es-joy/resolve.exports": "1.2.0",
     "@typescript-eslint/utils": "^8.74.0",
     "are-docs-informative": "^0.1.1",
