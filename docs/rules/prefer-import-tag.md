@@ -488,6 +488,12 @@ export function join (p) {}
  */
 export function run (p) {}
 // Message: Inline `import()` found; prefer `@import`
+
+/** @type {{
+ *   a: import('foo').Bar,
+ * }} */
+let x;
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 
