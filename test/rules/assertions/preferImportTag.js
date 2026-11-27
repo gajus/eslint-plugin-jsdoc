@@ -1,3 +1,7 @@
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
 export default {
   invalid: [
     {
@@ -1202,6 +1206,215 @@ let linter;
          * }} options The options.
          */
         export function quux (options) {}
+      `,
+    },
+    {
+      code: `
+        import path from 'path';
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        const path = require('path');
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      languageOptions: {
+        sourceType: 'commonjs',
+      },
+      output: null,
+    },
+    {
+      code: `
+        class User {}
+
+        /**
+         * @param {import('./db.js').User} row The row.
+         */
+        export function idOf (row) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      options: [
+        {
+          outputType: 'named-import',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        import fs from 'fs';
+
+        /**
+         * @type {import('fs')}
+         */
+        let mod;
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        import fs from 'fs';
+
+        /**
+         * @type {import('fs').default}
+         */
+        let mod;
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        type path = string;
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      output: null,
+    },
+    {
+      code: `
+        /**
+         * @typedef {string} path
+         */
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /** @import * as path from 'pathe'; */
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /** @import { path } from 'pathe'; */
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /** @import path from 'pathe'; */
+
+        /**
+         * @param {import('path').ParsedPath} p The parts.
+         */
+        export function join (p) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+        /**
+         * @param {import('process').Process} p The process.
+         */
+        export function run (p) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      languageOptions: {
+        globals: {
+          process: 'readonly',
+        },
+      },
+      output: `
+        /** @import * as process from 'process'; */
+        /**
+         * @param {process.Process} p The process.
+         */
+        export function run (p) {}
       `,
     },
   ],

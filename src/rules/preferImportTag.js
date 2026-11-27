@@ -28,6 +28,17 @@ import {
 import semver from 'semver';
 import toValidIdentifier from 'to-valid-identifier';
 
+// Scope definitions that give a name a type meaning (or, for an import, any
+//   meaning), as the type-only names of `@import` have
+const typeDefinitionTypes = new Set([
+  'ClassName',
+  'ImportBinding',
+  // typescript-eslint
+  'TSEnumName',
+  'TSModuleName',
+  'Type',
+]);
+
 export default iterateJsdoc(({
   context,
   indent,
@@ -88,6 +99,93 @@ export default iterateJsdoc(({
       tag.delimiter = '';
       return tag;
     });
+
+  /** @type {Set<string>|undefined} */
+  let takenNames;
+
+  /**
+   * The names the top of the file already gives a type or import meaning:
+   *   an import, a `require()` alias, a class, a TypeScript type, enum or
+   *   namespace, a `@typedef` or an `@import`. An `@import` added by the fixer
+   *   (which is type-only, so a variable or function of the same name is fine)
+   *   must not take one of them, or the file no longer type-checks or a type
+   *   changes what it refers to.
+   * @returns {Set<string>}
+   */
+  const getTakenNames = () => {
+    if (takenNames) {
+      return takenNames;
+    }
+
+    const {
+      globalScope,
+    } = /** @type {import('eslint').Scope.ScopeManager & {globalScope: import('eslint').Scope.Scope}} */ (
+      sourceCode.scopeManager
+    );
+    const topScopes = [
+      globalScope,
+      // The module scope, or the function scope of CommonJS
+      ...globalScope.childScopes.filter(({
+        block,
+      }) => {
+        return block === sourceCode.ast;
+      }),
+    ];
+
+    const names = new Set(/** @type {string[]} */ ([
+      ...topScopes.flatMap(({
+        variables,
+      }) => {
+        return variables.filter(({
+          defs,
+        }) => {
+          return defs.some(({
+            node,
+            type,
+          }) => {
+            return typeDefinitionTypes.has(type) || (
+              type === 'Variable' &&
+              node.init?.type === 'CallExpression' &&
+              node.init.callee.type === 'Identifier' &&
+              node.init.callee.name === 'require'
+            );
+          });
+        }).map(({
+          name,
+        }) => {
+          return name;
+        });
+      }),
+      ...typedefs.map(({
+        name,
+      }) => {
+        return name;
+      }),
+      ...imports.flatMap((imprt) => {
+        const parsedImport = parseImportsExports(
+          estreeToString(imprt, {
+            jtppStringificationRules: generate,
+          }).replace(/^\s*@/v, '').trim(),
+        );
+        return [
+          ...Object.values(parsedImport.namedImports ?? {}),
+          ...Object.values(parsedImport.namespaceImports ?? {}),
+        ].flat().flatMap((importInfo) => {
+          const {
+            default: defaultName,
+            names: localNames,
+            namespace,
+          } = /** @type {{default?: string, names?: object, namespace?: string}} */ (importInfo);
+          return [
+            defaultName, namespace, ...Object.keys(localNames ?? {}),
+          ];
+        });
+      }),
+    ].filter(Boolean)));
+    takenNames = names;
+
+    return names;
+  };
 
   /**
    * Helper to insert an import statement at the top of the file.
@@ -450,11 +548,15 @@ export default iterateJsdoc(({
         }
       }
 
+      // The fixes below add an `@import` with a new name, so they are not
+      //   offered when the file already uses that name
+      const namespaceName = toValidIdentifier(element.value);
+
       if (!pathSegments.length) {
         utils.reportJSDoc(
           'Inline `import()` found; prefer `@import`',
           tag,
-          enableFixer ? (fixer) => {
+          enableFixer && !getTakenNames().has(namespaceName) ? (fixer) => {
             getFixer(toValidIdentifier(element.value), [])();
             return createImportInserter(
               `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */`,
@@ -469,7 +571,7 @@ export default iterateJsdoc(({
         utils.reportJSDoc(
           'Inline `import()` found; prefer `@import`',
           tag,
-          enableFixer ? (fixer) => {
+          enableFixer && !getTakenNames().has(namespaceName) ? (fixer) => {
             getFixer(toValidIdentifier(element.value), [])();
             return createImportInserter(
               `/** @import ${toValidIdentifier(element.value)} from '${element.value}'; */`,
@@ -479,10 +581,13 @@ export default iterateJsdoc(({
         return;
       }
 
+      const importedName = outputType === 'namespaced-import' ?
+        namespaceName :
+        toValidIdentifier(/** @type {string} */ (pathSegments.at(-1)));
       utils.reportJSDoc(
         'Inline `import()` found; prefer `@import`',
         tag,
-        enableFixer ? (fixer) => {
+        enableFixer && !getTakenNames().has(importedName) ? (fixer) => {
           if (outputType === 'namespaced-import') {
             getFixer(toValidIdentifier(element.value), [
               ...pathSegments,
