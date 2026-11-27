@@ -154,6 +154,26 @@ function quux (...foo) {
 
 }
 // Message: There must be an identifier after @param tag.
+
+/**
+ * @param {string} [url The URL.
+ */
+function load (url) {}
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {string} [url=] The URL.
+ */
+function load (url) {}
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {{
+ *   a: string
+ * }}
+ */
+function quux (opts) {}
+// Message: There must be an identifier after @param tag.
 ````
 
 
