@@ -1916,6 +1916,83 @@ export default /** @type {import('../index.js').TestCases} */ ({
           function quux (a) {}
       `,
     },
+    {
+      code: `
+          /**
+           * @param {object[]} employees The employees.
+           * @param {string} employees[].name The name.
+           */
+          function quux (staff) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "staff". Got "employees".',
+          suggestions: [
+            {
+              desc: 'Rename @param "employees" to "staff".',
+              output: `
+          /**
+           * @param {object[]} staff The employees.
+           * @param {string} staff[].name The name.
+           */
+          function quux (staff) {}
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          badParamNames: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {object[]} staff The employees.
+           * @param {string} staff[].name The name.
+           */
+          function quux (staff) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string} a The a.
+           * @param {object[]} employees The employees.
+           * @param {string} employees[].name The name.
+           */
+          function quux (a) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "employees" does not match an existing function parameter.',
+          suggestions: [
+            {
+              desc: 'Remove the extra @param "employees".',
+              output: `
+          /**
+           * @param {string} a The a.
+           */
+          function quux (a) {}
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          extraParams: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {string} a The a.
+           */
+          function quux (a) {}
+      `,
+    },
   ],
   valid: [
     {
