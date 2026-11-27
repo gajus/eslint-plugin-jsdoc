@@ -188,6 +188,28 @@ function quux () {}
  */
 // "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":false}]
 // Message: Unexpected inline JSDoc tag. Did you mean to use {@sth}, \@sth, or `@sth`?
+
+/**
+ * @param cmd The command, e.g. `npm i @angular/core`.
+ *   See @angular for the rest.
+ */
+function run (cmd) {}
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@angular}, \@angular, or `@angular`?
+
+/**
+ * @param cmd The command, e.g. `npm i @angular/core`.
+ *   See @angular for the rest.
+ */
+function run (cmd) {}
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@angular}, \@angular, or `@angular`?
+
+/**
+ * @returns The {@link @types/node#Buffer} value,
+ *   as typed by @types.
+ */
+function read () {}
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@types}, \@types, or `@types`?
 ````
 
 
