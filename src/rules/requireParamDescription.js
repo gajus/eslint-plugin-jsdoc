@@ -32,10 +32,18 @@ export default iterateJsdoc(({
 
         if (setDefaultDestructuredRootDescription) {
           utils.reportJSDoc(`Missing root description for @${targetTagName}.`, jsdocParameter, () => {
-            utils.changeTag(jsdocParameter, {
-              description: defaultDestructuredRootDescription,
-              postName: ' ',
-            });
+            // After the name, which is on the line where a type over
+            //   several lines ends, not on the tag line
+            utils.changeTag(jsdocParameter, ...jsdocParameter.source.map(({
+              tokens,
+            }) => {
+              return tokens.name ?
+                {
+                  description: defaultDestructuredRootDescription,
+                  postName: ' ',
+                } :
+                {};
+            }));
           });
           return;
         }

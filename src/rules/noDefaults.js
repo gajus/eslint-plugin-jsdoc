@@ -23,18 +23,34 @@ export default iterateJsdoc(({
   const paramTags = utils.getPresentTags([
     'param', 'arg', 'argument',
   ]);
+
+  /**
+   * Sets the name on its own line, which is the line where a type over
+   *   several lines ends, not the tag line.
+   * @param {import('comment-parser').Spec} tag
+   * @param {string} name
+   * @returns {void}
+   */
+  const setName = (tag, name) => {
+    utils.changeTag(tag, ...tag.source.map(({
+      tokens,
+    }) => {
+      return tokens.name ?
+        {
+          name,
+        } :
+        {};
+    }));
+  };
+
   for (const tag of paramTags) {
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
-        utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/v, '$1'),
-        });
+        setName(tag, tag.name.replace(/([^=]*)(=.+)?/v, '$1'));
       });
     } else if (tag.default) {
       utils.reportJSDoc(`Defaults are not permitted on @${tag.tag}.`, tag, () => {
-        utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/v, '[$1]'),
-        });
+        setName(tag, tag.name.replace(/([^=]*)(=.+)?/v, '[$1]'));
       });
     }
   }
