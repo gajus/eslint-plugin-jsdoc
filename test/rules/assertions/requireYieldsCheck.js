@@ -1,3 +1,7 @@
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
@@ -791,6 +795,169 @@ export default /** @type {import('../index.js').TestCases} */ ({
           next: true,
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id: string) {
+            const user = (yield call(fetchUser, id)) as User;
+          }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id: string) {
+            const user = (yield call(fetchUser, id))!;
+          }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id: string) {
+            const user = (yield call(fetchUser, id)) satisfies User;
+          }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id: string) {
+            const user = <User>(yield call(fetchUser, id));
+          }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            const user = new (yield getUserClass())();
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            (yield getHandler())(id);
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            throw yield getError(id);
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            for (const user of yield getUsers()) {
+              use(user);
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            while (yield hasMore()) {
+              next();
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            do {
+              next();
+            } while (yield hasMore());
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            for (let more = yield hasMore(); more;) {
+              more = next();
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            switch (yield getKind(id)) {
+            case 1:
+              use(id);
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          async function * load (id) {
+            await (yield getUser(id));
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @yields {unknown} The effects.
+           */
+          function * load (id) {
+            use(yield getUser(id));
+          }
+      `,
     },
   ],
 });
