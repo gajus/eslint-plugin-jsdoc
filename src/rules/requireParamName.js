@@ -40,15 +40,28 @@ export default iterateJsdoc(({
         paramTags.indexOf(jsdocParameter)
       ];
 
-      if (!name) {
+      // A name comment-parser rejected (`[url`, `[url=]`) is still in the
+      //   text, so adding one would only be glued to it
+      if (!name || jsdocParameter.problems.some(({
+        critical,
+      }) => {
+        return critical;
+      })) {
         report(message, null, jsdocParameter);
         return;
       }
 
       utils.reportJSDoc(message, jsdocParameter, () => {
+        // The name goes after the type, which may end on a later line
         const {
           tokens,
-        } = jsdocParameter.source[0];
+        } = jsdocParameter.source[Math.max(0, jsdocParameter.source.findLastIndex(({
+          tokens: {
+            type,
+          },
+        }) => {
+          return type;
+        }))];
         tokens.name = name;
         if (tokens.type) {
           tokens.postType = ' ';
