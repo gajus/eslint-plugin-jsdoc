@@ -386,7 +386,8 @@ const alignTransform = ({
     if (!intoTags) {
       if (tokens.description === '') {
         tokens.postDelimiter = '';
-      } else if (!preserveMainDescriptionPostDelimiter) {
+      // Code keeps its own indentation, as in the tags below
+      } else if (!preserveMainDescriptionPostDelimiter && !isFence && !inFence) {
         tokens.postDelimiter = ' ';
       }
 

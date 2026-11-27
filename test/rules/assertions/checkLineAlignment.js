@@ -1625,6 +1625,45 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (obj, foo) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Formats a value.
+         *
+         * \`\`\`js
+         * if (a) {
+         *   b();
+         * }
+         * \`\`\`
+         * @param {number} value The value.
+         * @returns {string} The text.
+         */
+        function format (value) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Formats a value.
+         *
+         * \`\`\`js
+         * if (a) {
+         *   b();
+         * }
+         * \`\`\`
+         * @param   {number} value The value.
+         * @returns {string}       The text.
+         */
+        function format (value) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -1962,6 +2001,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * \`\`\`
          */
         function quux (opts) {}
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * Formats a value.
+         *
+         * \`\`\`js
+         * if (a) {
+         *   b();
+         * }
+         * \`\`\`
+         * @param {number} value The value.
+         */
+        function format (value) {}
       `,
       options: [
         'always',
