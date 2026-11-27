@@ -621,6 +621,20 @@ function quux (cfg) {}
 function quux (names) {}
 // "jsdoc/type-formatting": ["error"|"warn", {"arrayBrackets":"angle"}]
 // Message: Array bracket style should be angle
+
+/** @type {{
+ *   a: string;
+ * }} */
+let x;
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
+// Message: Inconsistent comma separator usage
+
+/** @type {{\r
+ *   a: string;\r
+ * }} */\r
+let x;
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
+// Message: Inconsistent comma separator usage
 ````
 
 
