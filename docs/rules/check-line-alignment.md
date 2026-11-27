@@ -662,6 +662,21 @@ function quux () {}
 function quux (obj, foo) {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
 // Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Formats a value.
+ *
+ * ```js
+ * if (a) {
+ *   b();
+ * }
+ * ```
+ * @param {number} value The value.
+ * @returns {string} The text.
+ */
+function format (value) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
 ````
 
 
@@ -876,6 +891,19 @@ function quux () {}
  * ```
  */
 function quux (opts) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Formats a value.
+ *
+ * ```js
+ * if (a) {
+ *   b();
+ * }
+ * ```
+ * @param {number} value The value.
+ */
+function format (value) {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
