@@ -560,5 +560,114 @@ function * quux (foo) {
 
 }
 // "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id: string) {
+  const user = (yield call(fetchUser, id)) as User;
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id: string) {
+  const user = (yield call(fetchUser, id))!;
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id: string) {
+  const user = (yield call(fetchUser, id)) satisfies User;
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id: string) {
+  const user = <User>(yield call(fetchUser, id));
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  const user = new (yield getUserClass())();
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  (yield getHandler())(id);
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  throw yield getError(id);
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  for (const user of yield getUsers()) {
+    use(user);
+  }
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  while (yield hasMore()) {
+    next();
+  }
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  do {
+    next();
+  } while (yield hasMore());
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  for (let more = yield hasMore(); more;) {
+    more = next();
+  }
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  switch (yield getKind(id)) {
+  case 1:
+    use(id);
+  }
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+async function * load (id) {
+  await (yield getUser(id));
+}
+
+/**
+ * @yields {unknown} The effects.
+ */
+function * load (id) {
+  use(yield getUser(id));
+}
 ````
 
