@@ -471,6 +471,63 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param cmd The command, e.g. \`npm i @angular/core\`.
+         *   See @angular for the rest.
+         */
+        function run (cmd) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@angular}, \\@angular, or `@angular`?',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param cmd The command, e.g. \`npm i @angular/core\`.
+         *   See @angular for the rest.
+         */
+        function run (cmd) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@angular}, \\@angular, or `@angular`?',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+        /**
+         * @param cmd The command, e.g. \`npm i @angular/core\`.
+         *   See \\@angular for the rest.
+         */
+        function run (cmd) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @returns The {@link @types/node#Buffer} value,
+         *   as typed by @types.
+         */
+        function read () {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@types}, \\@types, or `@types`?',
+        },
+      ],
+    },
   ],
   valid: [
     {
