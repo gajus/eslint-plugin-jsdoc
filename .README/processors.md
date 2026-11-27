@@ -188,7 +188,9 @@ matching `parser` and `sourceType` settings for the processor and host.
 Blank-line insertions into examples without `*` gutters and before code sharing
 the closing `*/` line are declined. So are edits that add example lines starting
 with `*`, which host JSDoc rules can interpret as gutters. Declined fixes and
-suggestions are removed, but their messages remain reported.
+suggestions are removed, but their messages remain reported. Fixes are kept only
+for example code on its own lines: code on the `@example` line itself (as in a
+one-line block) and edits starting or ending on a blank line stay report-only.
 
 #### `checkParams`
 
