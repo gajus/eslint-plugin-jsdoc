@@ -937,6 +937,23 @@ function quux (opts) {}
 function quux (a) {}
 // "jsdoc/check-param-names": ["error"|"warn", {"extraParams":true}]
 // Message: @param "b" does not match an existing function parameter.
+
+/**
+ * @param {object[]} employees The employees.
+ * @param {string} employees[].name The name.
+ */
+function quux (staff) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "staff". Got "employees".
+
+/**
+ * @param {string} a The a.
+ * @param {object[]} employees The employees.
+ * @param {string} employees[].name The name.
+ */
+function quux (a) {}
+// "jsdoc/check-param-names": ["error"|"warn", {"extraParams":true}]
+// Message: @param "employees" does not match an existing function parameter.
 ````
 
 
