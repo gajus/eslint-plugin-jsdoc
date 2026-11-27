@@ -234,6 +234,60 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param {string} [url The URL.
+           */
+          function load (url) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+          /**
+           * @param {string} [url=] The URL.
+           */
+          function load (url) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+          /**
+           * @param {{
+           *   a: string
+           * }}
+           */
+          function quux (opts) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
+      output: `
+          /**
+           * @param {{
+           *   a: string
+           * }} opts
+           */
+          function quux (opts) {}
+      `,
+    },
   ],
   valid: [
     {

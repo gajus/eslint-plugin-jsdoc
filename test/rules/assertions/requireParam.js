@@ -3428,6 +3428,98 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function join (a, b) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @since 1.2.0
+         * @param
+         */
+        function quux ({a}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.a" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @since 1.2.0
+         * @param root0
+         * @param root0.a
+         */
+        function quux ({a}) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {string} name The name,
+         *   which may be long.
+         * @param
+         */
+        function quux (name, {a}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.a" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @param {string} name The name,
+         *   which may be long.
+         * @param root0
+         * @param root0.a
+         */
+        function quux (name, {a}) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param
+         * @param
+         */
+        function quux ({a}, {b}) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration for the destructured parameter `{a}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.a" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root1" declaration for the destructured parameter `{b}`.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root1.b" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @param root0
+         * @param root0.a
+         * @param root1
+         * @param root1.b
+         */
+        function quux ({a}, {b}) {}
+      `,
+    },
   ],
   valid: [
     {

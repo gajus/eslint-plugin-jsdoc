@@ -169,6 +169,15 @@ function quux (foo, {bar}, baz) {
 // Message: Missing root description for @param.
 
 /**
+ * @param {{
+ *   bar: string
+ * }} root
+ */
+function quux ({bar}) {}
+// "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":true}]
+// Message: Missing root description for @param.
+
+/**
  * @param {number} foo Foo description
  * @param {object} root
  * @param {boolean} baz Baz description

@@ -134,6 +134,15 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * Loads the user.
+ */
+function * load (id: string) {
+  const user = (yield call(fetchUser, id)) as User;
+  use(user);
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
  *
  */
 function * quux (foo) {

@@ -1,5 +1,29 @@
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
+    {
+      code: `
+          /**
+           * Loads the user.
+           */
+          function * load (id: string) {
+            const user = (yield call(fetchUser, id)) as User;
+            use(user);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
     {
       code: `
           /**

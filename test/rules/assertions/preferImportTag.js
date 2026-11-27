@@ -1417,6 +1417,16 @@ let linter;
         export function run (p) {}
       `,
     },
+    {
+      code: '/** @type {{\n *   a: import(\'foo\').Bar,\n * }} */\nlet x;\n',
+      errors: [
+        {
+          line: 1,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: '/** @import * as foo from \'foo\'; */\n/** @type {{a: foo.Bar}}\n */\nlet x;\n',
+    },
   ],
   valid: [
     {
