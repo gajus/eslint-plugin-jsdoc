@@ -189,6 +189,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * @param {{
+           *   bar: string
+           * }} root
+           */
+          function quux ({bar}) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing root description for @param.',
+        },
+      ],
+      options: [
+        {
+          setDefaultDestructuredRootDescription: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {{
+           *   bar: string
+           * }} root The root object
+           */
+          function quux ({bar}) {}
+      `,
+    },
+    {
+      code: `
+          /**
            * @param {number} foo Foo description
            * @param {object} root
            * @param {boolean} baz Baz description

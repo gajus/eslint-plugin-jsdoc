@@ -286,6 +286,67 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
     },
+    {
+      code: `
+          /**
+           * Creates the store.
+           * @param {{
+           *   a: string,
+           *   b: number
+           * }} [opts={}] The options.
+           */
+          function create (opts = {}) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Defaults are not permitted on @param.',
+        },
+      ],
+      output: `
+          /**
+           * Creates the store.
+           * @param {{
+           *   a: string,
+           *   b: number
+           * }} [opts] The options.
+           */
+          function create (opts = {}) {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * Creates the store.
+           * @param {{
+           *   a: string,
+           *   b: number
+           * }} [opts={}] The options.
+           */
+          function create (opts = {}) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Optional param names are not permitted on @param.',
+        },
+      ],
+      options: [
+        {
+          noOptionalParamNames: true,
+        },
+      ],
+      output: `
+          /**
+           * Creates the store.
+           * @param {{
+           *   a: string,
+           *   b: number
+           * }} opts The options.
+           */
+          function create (opts = {}) {}
+      `,
+    },
   ],
   valid: [
     {
