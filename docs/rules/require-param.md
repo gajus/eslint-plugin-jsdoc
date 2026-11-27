@@ -1471,6 +1471,14 @@ function quux ({verbose}, {logger}) {}
  */
 function quux ({path}, {path: dest}) {}
 // Message: Missing JSDoc @param "source.path" declaration.
+
+/**
+ * Joins two values.
+ * @arg {string} a The first.
+ * @returns {string} The joined value.
+ */
+function join (a, b) {}
+// Message: Missing JSDoc @param "b" declaration.
 ````
 
 
@@ -2243,5 +2251,26 @@ export function quux(this: {count: number}, a: string) {}
  * @param a The a.
  */
 export function quux(this: {count: number}, a: string) {}
+
+/**
+ * Joins two values.
+ * @arg {string} a The first.
+ * @argument {string} b The second.
+ */
+function join (a, b) {}
+
+/**
+ * Joins two values.
+ * @param {string} a The first.
+ */
+function join (a) {}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+
+/**
+ * Joins two values.
+ * @arg {string} a The first.
+ */
+function join (a) {}
+// Settings: {"jsdoc":{"tagNamePreference":{"arg":{"message":"Use `@param` for parameters.","replacement":"param"}}}}
 ````
 

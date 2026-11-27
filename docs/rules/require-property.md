@@ -155,5 +155,16 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+
+/**
+ * @typedef {object} Pt
+ * @prop {number} x The x.
+ */
+
+/**
+ * @typedef {object} Pt
+ * @prop {number} x The x.
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"prop":{"message":"Use `@property` for properties.","replacement":"property"}}}}
 ````
 
