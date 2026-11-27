@@ -258,8 +258,27 @@ export default iterateJsdoc(({
 
       return tagName;
     })) {
-      const line = utils.setTagDescription(tag, ...escapeInlineTags(tagName)) +
-          tag.source[0].number;
+      const [
+        ,
+        escapeInlineTag,
+      ] = escapeInlineTags(tagName);
+
+      // Escape the first line whose `@tagName` is not ignored; a line which
+      //   has it only in a code span or a `{@link @scope/pkg}` reference is
+      //   kept as it is, so escaping it would never end the loop
+      const lineIdx = tag.source.findIndex(({
+        tokens: {
+          description: lineDescription,
+        },
+      }) => {
+        return escapeInlineTag(lineDescription) !== lineDescription;
+      });
+      const {
+        tokens,
+      } = tag.source[lineIdx];
+      tokens.description = escapeInlineTag(tokens.description);
+
+      const line = lineIdx + tag.source[0].number;
       utils.reportJSDoc(
         `Unexpected inline JSDoc tag. Did you mean to use {@${tagName}}, \\@${tagName}, or \`@${tagName}\`?`,
         {
