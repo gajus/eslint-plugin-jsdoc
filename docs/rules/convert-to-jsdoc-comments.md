@@ -7,6 +7,9 @@ Converts single line or non-JSDoc, multiline comments into JSDoc comments.
 Note that this rule is experimental. As usual with fixers, please confirm
 the results before committing.
 
+TypeScript triple-slash directives (e.g., `/// <reference types="node" />`)
+are left as they are, as they only work as `///` comments.
+
 <a name="user-content-convert-to-jsdoc-comments-fixer"></a>
 <a name="convert-to-jsdoc-comments-fixer"></a>
 ## Fixer
@@ -317,6 +320,11 @@ function quux () {}
 // closes */ here
 function quux () {}
 // Message: Line comments should be JSDoc-style.
+
+/// <reference types="node" />
+// Does it.
+export function quux () {}
+// Message: Line comments should be JSDoc-style.
 ````
 
 
@@ -362,5 +370,15 @@ function quux () {}
 // Test comment
 var a = [];
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
+
+/// <reference types="node" />
+export function quux () {}
+
+/// <reference path="./globals.d.ts" />
+declare function quux (): void;
+
+///<amd-module name="quux" />
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"allowedPrefixes":[]}]
 ````
 
