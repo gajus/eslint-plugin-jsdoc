@@ -5,6 +5,9 @@ Converts single line or non-JSDoc, multiline comments into JSDoc comments.
 Note that this rule is experimental. As usual with fixers, please confirm
 the results before committing.
 
+TypeScript triple-slash directives (e.g., `/// <reference types="node" />`)
+are left as they are, as they only work as `///` comments.
+
 ## Fixer
 
 Converts comments into JSDoc comments.

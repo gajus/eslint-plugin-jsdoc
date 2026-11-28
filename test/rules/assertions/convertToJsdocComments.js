@@ -802,6 +802,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: null,
     },
+    {
+      code: `
+        /// <reference types="node" />
+        // Does it.
+        export function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      output: `
+        /// <reference types="node" />
+        /**
+         * Does it.
+         */
+        export function quux () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -902,6 +925,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
             'VariableDeclarator',
           ],
           contextsBeforeAndAfter: [],
+        },
+      ],
+    },
+    {
+      code: `
+        /// <reference types="node" />
+        export function quux () {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /// <reference path="./globals.d.ts" />
+        declare function quux (): void;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        ///<amd-module name="quux" />
+        function quux () {}
+      `,
+      options: [
+        {
+          allowedPrefixes: [],
         },
       ],
     },

@@ -18,6 +18,10 @@ const defaultAllowedPrefixes = [
   'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
 ];
 
+// TypeScript reads `/// <reference ... />` (and the AMD directives) only as
+//   `///` line comments, so converting one would silently drop the directive.
+const tripleSlashDirective = /^\/\s*<(?:reference|amd-module|amd-dependency)\s/v;
+
 // Shared by `create` and `meta.defaultOptions` so the two cannot drift.
 // `contexts` is omitted so `settings.contexts` still applies when unset.
 const defaultOptions = {
@@ -247,6 +251,7 @@ export default {
           prev.type !== 'Line' ||
           // @ts-expect-error Ok
           prev.loc.end.line !== current.loc.start.line - 1 ||
+          tripleSlashDirective.test(prev.value) ||
           /** @type {string[]} */
           (allowedPrefixes).some((prefix) => {
             return prev.value.trimStart().startsWith(prefix);
@@ -307,6 +312,7 @@ export default {
 
       if (
         !comment ||
+        comment.type === 'Line' && tripleSlashDirective.test(comment.value) ||
         /** @type {string[]} */
         (allowedPrefixes).some((prefix) => {
           return comment.value.trimStart().startsWith(prefix);
