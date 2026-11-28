@@ -243,6 +243,15 @@ export default class <NumType> {
  * @typedef {[T]} Single
  */
 // Message: @template U not in use
+
+/**
+ * @template T
+ * @template U
+ * @this {T}
+ * @returns {void}
+ */
+function quux () {}
+// Message: @template U not in use
 ````
 
 
@@ -498,5 +507,45 @@ function quux (x) {}
  * @param {{bar: string, [Symbol.dispose](): T}} Single
  */
 function quux () {}
+
+/**
+ * @template {HTMLElement} T
+ * @this {T}
+ * @param {Event} evt
+ * @returns {void}
+ */
+function onClick (evt) {}
+
+/**
+ * @template T
+ * @throws {T}
+ * @returns {void}
+ */
+function quux () {}
+
+/**
+ * @template T
+ * @yields {T}
+ */
+function * quux () {}
+
+/**
+ * @template T
+ * @callback Listener
+ * @this {T}
+ * @param {Event} evt
+ * @returns {void}
+ */
+
+/**
+ * @template T
+ */
+class Foo {
+  /**
+   * @this {Foo<T>}
+   * @returns {void}
+   */
+  bar () {}
+}
 ````
 
