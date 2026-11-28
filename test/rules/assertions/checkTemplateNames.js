@@ -531,6 +531,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @template U
+         * @this {T}
+         * @returns {void}
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@template U not in use',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -917,6 +934,61 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @param {{bar: string, [Symbol.dispose](): T}} Single
          */
         function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template {HTMLElement} T
+         * @this {T}
+         * @param {Event} evt
+         * @returns {void}
+         */
+        function onClick (evt) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @throws {T}
+         * @returns {void}
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @yields {T}
+         */
+        function * quux () {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @callback Listener
+         * @this {T}
+         * @param {Event} evt
+         * @returns {void}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         */
+        class Foo {
+          /**
+           * @this {Foo<T>}
+           * @returns {void}
+           */
+          bar () {}
+        }
       `,
     },
   ],

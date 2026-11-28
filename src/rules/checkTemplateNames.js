@@ -74,20 +74,17 @@ export default iterateJsdoc(({
   };
 
   const checkParamsAndReturnsTags = (jsdc = jsdoc) => {
-    const paramName = /** @type {string} */ (utils.getPreferredTagName({
-      tagName: 'param',
-    }));
-    const paramTags = getTags(jsdc, paramName);
-    for (const paramTag of paramTags) {
-      checkForUsedTypes(paramTag.type);
-    }
-
-    const returnsName = /** @type {string} */ (utils.getPreferredTagName({
-      tagName: 'returns',
-    }));
-    const returnsTags = getTags(jsdc, returnsName);
-    for (const returnsTag of returnsTags) {
-      checkForUsedTypes(returnsTag.type);
+    // A template may also be used only in the type of `@this`, `@throws`
+    //   or `@yields`, e.g., `@template T` with `@this {T}`
+    for (const tagName of [
+      'param', 'returns', 'this', 'throws', 'yields',
+    ]) {
+      const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
+        tagName,
+      }));
+      for (const tag of getTags(jsdc, preferredTagName)) {
+        checkForUsedTypes(tag.type);
+      }
     }
   };
 
